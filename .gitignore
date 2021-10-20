@@ -119,3 +119,5 @@ dist
 /android/.externalNativeBuild
 /android/.cxx
 /android/local.properties
+
+DS_Store
