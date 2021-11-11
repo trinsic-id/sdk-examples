@@ -4,7 +4,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Trinsic;
 
-var walletService = new WalletService("http://trinsic-staging.centralus.azurecontainer.io:5000");
+var walletService = new WalletService(null, null);
+var credentialService = new CredentialsService();
 
 // SETUP ACTORS
 // Create 3 different profiles for each participant in the scenario
@@ -20,17 +21,17 @@ var airline = await walletService.CreateWallet();
 
 // ISSUE CREDENTIAL
 // Sign a credential as the clinic and send it to Allison
-walletService.SetProfile(clinic);
+credentialService.Profile = clinic;
 
 var credentialJson = File.ReadAllText("./vaccination-certificate-unsigned.jsonld");
-var credential = await walletService.IssueCredential(document: JObject.Parse(credentialJson));
+var credential = await credentialService.IssueCredential(document: JObject.Parse(credentialJson));
 
 Console.WriteLine("Credential:");
 Console.WriteLine(credential.ToString(Formatting.Indented));
 
 // STORE CREDENTIAL
 // Alice stores the credential in her cloud wallet.
-walletService.SetProfile(allison);
+walletService.Profile = allison;
 
 var itemId = await walletService.InsertItem(credential);
 
@@ -38,10 +39,10 @@ var itemId = await walletService.InsertItem(credential);
 // Allison shares the credential with the venue.
 // The venue has communicated with Allison the details of the credential
 // that they require expressed as a JSON-LD frame.
-walletService.SetProfile(allison);
+credentialService.Profile = allison;
 
 var proofRequestJson = File.ReadAllText("./vaccination-certificate-frame.jsonld");
-var credentialProof = await walletService.CreateProof(itemId, JObject.Parse(proofRequestJson));
+var credentialProof = await credentialService.CreateProof(itemId, JObject.Parse(proofRequestJson));
 
 Console.WriteLine("Proof:");
 Console.WriteLine(credentialProof.ToString(Formatting.Indented));
@@ -49,8 +50,8 @@ Console.WriteLine(credentialProof.ToString(Formatting.Indented));
 
 // VERIFY CREDENTIAL
 // The airline verifies the credential
-walletService.SetProfile(airline);
+credentialService.Profile = airline;
 
-var valid = await walletService.VerifyProof(credentialProof);
+var valid = await credentialService.VerifyProof(credentialProof);
 
 Console.WriteLine($"Verification result: {valid}");
