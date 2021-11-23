@@ -121,3 +121,4 @@ dist
 /android/local.properties
 
 DS_Store
+.github/.idea/
