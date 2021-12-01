@@ -121,3 +121,5 @@ dist
 /android/local.properties
 
 DS_Store
+.github/.idea/
+android/.idea/deploymentTargetDropDown.xml

@@ -1,17 +1,19 @@
 package id.trinsic.android
 
-import TrinsicWalletService
-import trinsic.okapi.Keys
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.protobuf.ByteString
+import trinsic.TrinsicUtilities
+import trinsic.okapi.DidKey
+import trinsic.okapi.keys.v1.Keys
+import trinsic.services.AccountService
+import trinsic.services.CredentialsService
 import trinsic.services.WalletService
+import trinsic.services.account.v1.AccountOuterClass
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,40 +22,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n")
     fun testServicesButtonClick(view: View) {
-        val walletService = TrinsicWalletService("http://trinsic-staging.centralus.azurecontainer.io:5000/", null)
+        val config = TrinsicUtilities.getConfigFromUrl("http://staging-internal-unproxied.trinsic.cloud:80")
+        val accountService = AccountService(null, config)
+        val walletService = WalletService(null, config)
+        val credentialsService = CredentialsService(null, config)
 
         // SETUP ACTORS
         // Create 3 different profiles for each participant in the scenario
 
         // SETUP ACTORS
         // Create 3 different profiles for each participant in the scenario
-        val allison: WalletService.WalletProfile = walletService.createWallet("")
-        val clinic: WalletService.WalletProfile = walletService.createWallet("")
-        val airline: WalletService.WalletProfile = walletService.createWallet("")
-
-        // Store profile for later use
-        // File.WriteAllBytes("allison.bin", allison.ToByteString().ToByteArray());
-
-        // Create profile from existing data
-        // var allison = WalletProfile.Parser.ParseFrom(File.ReadAllBytes("allison.bin"));
+        val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val clinic: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val airline: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
 
         // ISSUE CREDENTIAL
         // Sign a credential as the clinic and send it to Allison
 
-        // Store profile for later use
-        // File.WriteAllBytes("allison.bin", allison.ToByteString().ToByteArray());
-
-        // Create profile from existing data
-        // var allison = WalletProfile.Parser.ParseFrom(File.ReadAllBytes("allison.bin"));
-
         // ISSUE CREDENTIAL
         // Sign a credential as the clinic and send it to Allison
-        walletService.setProfile(clinic)
+        credentialsService.profile = clinic
         val credentialJson = Gson().fromJson(view.context.assets.open("vaccination-certificate-unsigned.jsonld").bufferedReader(), java.util.HashMap::class.java)
 
-        val credential = walletService.issueCredential(credentialJson)
+        val credential = credentialsService.issueCredential(credentialJson)
 
         println("Credential: $credential")
 
@@ -62,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         // STORE CREDENTIAL
         // Alice stores the credential in her cloud wallet.
-        walletService.setProfile(allison)
+        walletService.profile = allison
         val itemId = walletService.insertItem(credential)
         println("item id = $itemId")
 
@@ -75,11 +68,11 @@ class MainActivity : AppCompatActivity() {
         // Allison shares the credential with the venue.
         // The venue has communicated with Allison the details of the credential
         // that they require expressed as a JSON-LD frame.
-        walletService.setProfile(allison)
+        credentialsService.profile = allison
 
         val proofRequestJson = Gson().fromJson(view.context.assets.open("vaccination-certificate-frame.jsonld").bufferedReader(), java.util.HashMap::class.java)
 
-        val credentialProof = walletService.createProof(itemId, proofRequestJson)
+        val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
 
         println("Proof: {credential_proof}")
 
@@ -88,8 +81,8 @@ class MainActivity : AppCompatActivity() {
 
         // VERIFY CREDENTIAL
         // The airline verifies the credential
-        walletService.setProfile(airline)
-        val valid = walletService.verifyProof(credentialProof)
+        credentialsService.profile = airline
+        val valid = credentialsService.verifyProof(credentialProof)
 
         this.findViewById<TextView>(R.id.generateKeySeed123Text).text = ("Verification result: $valid")
     }
@@ -97,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     fun generateKey123ButtonClick(view: View) {
         val request: Keys.GenerateKeyRequest =
             Keys.GenerateKeyRequest.newBuilder()
-                .setKeyType(Keys.KeyType.Ed25519)
+                .setKeyType(Keys.KeyType.KEY_TYPE_ED25519)
                 .setSeed(ByteString.copyFrom(byteArrayOf(1, 2, 3)))
                 .build()
 

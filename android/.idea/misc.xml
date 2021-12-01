@@ -5,10 +5,11 @@
       <map>
         <entry key="..\:/work/okapi/android/app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
         <entry key="..\:/work/sdk-examples/android/app/src/main/res/layout/activity_main.xml" value="0.327445652173913" />
+        <entry key="..\:/work/sdk-examples/android/app/src/main/res/xml/automotive_app_desc.xml" value="0.5630208333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
