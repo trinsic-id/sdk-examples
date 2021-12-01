@@ -13,7 +13,7 @@ import trinsic.okapi.keys.v1.Keys
 import trinsic.services.AccountService
 import trinsic.services.CredentialsService
 import trinsic.services.WalletService
-import trinsic.services.account.v1.Account
+import trinsic.services.account.v1.AccountOuterClass
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun testServicesButtonClick(view: View) {
-        val config = TrinsicUtilities.getConfigFromUrl("https://staging-internal.trinsic.cloud:443")
+        val config = TrinsicUtilities.getConfigFromUrl("http://staging-internal-unproxied.trinsic.cloud:80")
         val accountService = AccountService(null, config)
         val walletService = WalletService(null, config)
         val credentialsService = CredentialsService(null, config)
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         // SETUP ACTORS
         // Create 3 different profiles for each participant in the scenario
-        val allison: Account.AccountProfile = accountService.signIn(null).profile
-        val clinic: Account.AccountProfile = accountService.signIn(null).profile
-        val airline: Account.AccountProfile = accountService.signIn(null).profile
+        val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val clinic: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val airline: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
 
         // ISSUE CREDENTIAL
         // Sign a credential as the clinic and send it to Allison

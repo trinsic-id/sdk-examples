@@ -122,3 +122,4 @@ dist
 
 DS_Store
 .github/.idea/
+android/.idea/deploymentTargetDropDown.xml
