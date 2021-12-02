@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    suspend fun testServicesButtonClick(view: View) {
+    fun testServicesButtonClick(view: View) {
         val config = TrinsicUtilities.getConfigFromUrl("http://staging-internal-unproxied.trinsic.cloud:80")
         val accountService = AccountService(null, config)
         val walletService = WalletService(null, config)
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         // ISSUE CREDENTIAL
         credentialsService.profile = clinic
-        val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.jsonld").bufferedReader(), java.util.HashMap::class.java)
+        val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.json").bufferedReader(), java.util.HashMap::class.java)
         val credential = credentialsService.issueCredential(credentialJson)
         println("Credential: $credential")
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         // SHARE CREDENTIAL
         credentialsService.profile = allison
-        val proofRequestJson = Gson().fromJson(view.context.assets.open("drivers-license-frame.jsonld").bufferedReader(), java.util.HashMap::class.java)
+        val proofRequestJson = Gson().fromJson(view.context.assets.open("drivers-license-frame.json").bufferedReader(), java.util.HashMap::class.java)
         val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
         println("Proof: {credential_proof}")
 
