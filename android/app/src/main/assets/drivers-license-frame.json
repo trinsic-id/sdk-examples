@@ -1,22 +1,3 @@
-{
-    "@context": [
-      "https://www.w3.org/2018/credentials/v1",
-      "https://w3id.org/vdl/v1",
-      "https://w3id.org/security/bbs/v1"
-    ],
-    "type": [
-      "VerifiableCredential",
-      "Iso18013DriversLicenseCredential"
-    ],
-    "credentialSubject": {
-      "@explicit": true,
-      "license": {
-        "type": "Iso18013DriversLicense",
-        "@explicit": true,
-        "birth_date": {},
-        "document_number": {},
-        "expiry_date": {},
-        "issuing_authority": {}
-      }
-    }
-  }
+2021-12-02 11:06:50.021 4205-4205/id.trinsic.android I/System.out: Credential: {credentialSubject={id=did:key:z6MkhdEKMp6Buh8tPB1BV5etVkqx32q5nbVmzWPLpWSHyshm, license={type=Iso18013DriversLicense, document_number=542426814, family_name=TURNER, given_name=SUSAN, birth_date=1998-08-28, issue_date=2018-01-15T10:00:00Z, expiry_date=2022-08-27T12:00:00Z, issuing_country=US, issuing_authority=UT, un_distinguishing_sign=USA}}, proof={type=BbsBlsSignature2020, created=2021-12-02T16:06:50Z, proofPurpose=assertionMethod, proofValue=gZSVk0WZx89wWco2Im2uHtkeotvMU5pQMt0Z9TEiSmHODbdg3WjklT1QrnUGOk6gTn0ukTa/hewGhxLbryFYVqWZYXiEAvtnHOZEcgWI07VcKWw9zfvJA3cTwLfmsnZQqUVr6Z5ZDnMp/dLro3GDsA==, verificationMethod=did:key:z5TcEf2MZpKgCvjqTszCa9D5eHpJZ7srp4trLkaRo9tccXoHF2XQEH7WoxyAdcvwXAVrMGUGkxVxpzd3QDy7hX32hWyqyLj8e45QtHAHwMCLiwBR9mDbfgkTW5XevH4mZ157A52D8jVuKg5sBzkq1kfPNLCLdH38JxmrfLRA6Kqg4rHFUL1iwkk2KB4XA6nzuGjgHS2i6#zUC72Utp8KyovMZueGw4YScH2JxM4Mq4iZ3ZkrZtikFwetduc5UTAEJgTHx64dM7L7bTfSU3KBmbFm1Ca3TJZefh5HMJtVB5xCVXGtrZWtbf8EWo8rkhNMBCEDym2AwaXcDqfdU}, type=[VerifiableCredential, Iso18013DriversLicenseCredential], @context=[https://www.w3.org/2018/credentials/v1, https://w3id.org/vdl/v1, https://w3id.org/security/bbs/v1]}
+2021-12-02 11:06:50.167 4205-4205/id.trinsic.android I/System.out: item id = urn:uuid:d0f51433-5697-465d-8fea-281f471573fc
+2021-12-02 11:06:50.359 4205-4205/id.trinsic.android I/System.out: Proof: {credential_proof}

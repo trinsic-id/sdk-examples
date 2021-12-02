@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
 
         // SETUP ACTORS
         val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val clinic: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val airline: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val motorVehicleDepartment: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val policeOfficer: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
 
         // ISSUE CREDENTIAL
-        credentialsService.profile = clinic
+        credentialsService.profile = motorVehicleDepartment
         val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.json").bufferedReader(), java.util.HashMap::class.java)
         val credential = credentialsService.issueCredential(credentialJson)
         println("Credential: $credential")
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         println("Proof: {credential_proof}")
 
         // VERIFY CREDENTIAL
-        credentialsService.profile = airline
+        credentialsService.profile = policeOfficer
         val valid = credentialsService.verifyProof(credentialProof)
 
         this.findViewById<TextView>(R.id.generateKeySeed123Text).text = ("Verification result: $valid")
