@@ -1,2 +1,0 @@
-id.trinsic.didcommgrpc
-string app_name

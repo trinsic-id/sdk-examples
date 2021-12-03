@@ -30,58 +30,29 @@ class MainActivity : AppCompatActivity() {
         val credentialsService = CredentialsService(null, config)
 
         // SETUP ACTORS
-        // Create 3 different profiles for each participant in the scenario
-
-        // SETUP ACTORS
-        // Create 3 different profiles for each participant in the scenario
         val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val clinic: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val airline: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val motorVehicleDepartment: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+        val policeOfficer: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
 
         // ISSUE CREDENTIAL
-        // Sign a credential as the clinic and send it to Allison
-
-        // ISSUE CREDENTIAL
-        // Sign a credential as the clinic and send it to Allison
-        credentialsService.profile = clinic
-        val credentialJson = Gson().fromJson(view.context.assets.open("vaccination-certificate-unsigned.jsonld").bufferedReader(), java.util.HashMap::class.java)
-
+        credentialsService.profile = motorVehicleDepartment
+        val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.json").bufferedReader(), java.util.HashMap::class.java)
         val credential = credentialsService.issueCredential(credentialJson)
-
         println("Credential: $credential")
 
         // STORE CREDENTIAL
-        // Alice stores the credential in her cloud wallet.
-
-        // STORE CREDENTIAL
-        // Alice stores the credential in her cloud wallet.
         walletService.profile = allison
         val itemId = walletService.insertItem(credential)
         println("item id = $itemId")
 
         // SHARE CREDENTIAL
-        // Allison shares the credential with the venue.
-        // The venue has communicated with Allison the details of the credential
-        // that they require expressed as a JSON-LD frame.
-
-        // SHARE CREDENTIAL
-        // Allison shares the credential with the venue.
-        // The venue has communicated with Allison the details of the credential
-        // that they require expressed as a JSON-LD frame.
         credentialsService.profile = allison
-
-        val proofRequestJson = Gson().fromJson(view.context.assets.open("vaccination-certificate-frame.jsonld").bufferedReader(), java.util.HashMap::class.java)
-
+        val proofRequestJson = Gson().fromJson(view.context.assets.open("drivers-license-frame.json").bufferedReader(), java.util.HashMap::class.java)
         val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
-
         println("Proof: {credential_proof}")
 
         // VERIFY CREDENTIAL
-        // The airline verifies the credential
-
-        // VERIFY CREDENTIAL
-        // The airline verifies the credential
-        credentialsService.profile = airline
+        credentialsService.profile = policeOfficer
         val valid = credentialsService.verifyProof(credentialProof)
 
         this.findViewById<TextView>(R.id.generateKeySeed123Text).text = ("Verification result: $valid")
