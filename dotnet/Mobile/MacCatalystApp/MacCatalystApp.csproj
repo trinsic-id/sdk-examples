@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-maccatalyst</TargetFramework>
+    <RuntimeIdentifier>maccatalyst-x64</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>14.2</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Trinsic" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Trinsic" Version="1.2.2" />
+  </ItemGroup>
+</Project>
