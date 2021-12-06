@@ -4,10 +4,10 @@
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
-    <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.2.1" />
+    <PackageReference Include="Trinsic" Version="1.2.2" />
   </ItemGroup>
 
   <Target Name="HelloRuntime" AfterTargets="Build">
