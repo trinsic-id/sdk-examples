@@ -42,9 +42,14 @@ public class AppDelegate : UIApplicationDelegate
 
     private static async void SignIn()
     {
-        var account = new AccountService(serverConfig: null);
-        var profile = await account.SignInAsync();
+        var accountService = new AccountService(serverConfig: null);
+        var profile = await accountService.SignInAsync();
 
-        Console.WriteLine(profile);
+        Console.WriteLine($"Profile: {profile}");
+
+        var walletService = new WalletService(profile, serverConfig: null);
+        var items = await walletService.Search();
+
+        Console.WriteLine($"Items: {items}");
     }
 }

@@ -6,11 +6,9 @@
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
   </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="Trinsic" Version="1.2.2" />
   </ItemGroup>
 
-  <Target Name="HelloRuntime" AfterTargets="Build">
-    <Message Text="RuntimeId $(RuntimeIdentifier)" />
-  </Target>
 </Project>
