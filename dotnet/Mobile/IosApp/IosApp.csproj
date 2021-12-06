@@ -6,9 +6,9 @@
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.2.2" />
+    <PackageReference Include="Trinsic" Version="1.2.3" />
   </ItemGroup>
 
 </Project>
