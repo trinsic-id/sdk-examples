@@ -1,6 +1,8 @@
 ﻿using System;
 using Blazor.Models;
 using Blazor.Security;
+using Blazored.LocalStorage;
+using Google.Protobuf;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components;
@@ -17,18 +19,15 @@ namespace Blazor.Shared
         public SignInModel Model { get; set; } = new();
         public ProtectionModel UnprotectModel { get; set; } = new();
 
-
         [Inject]public AuthenticationStateProvider? StateProvider { get; set; }
+        [Inject]public ILocalStorageService? LocalStorage { get; set; }
 
         protected bool protection = false;
         protected AccountProfile? profile;
 
         private async void SignIn()
         {
-            var httpClient = new HttpClient(new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()));
-            var channel = GrpcChannel.ForAddress("https://staging-internal.trinsic.cloud", new GrpcChannelOptions { HttpClient = httpClient });
-
-            var accountService = new AccountService(serverConfig: null, existingChannel: channel);
+            var accountService = new AccountService();
             profile = await accountService.SignInAsync(new()
             {
                 Name = Model.FullName ?? String.Empty,
@@ -43,15 +42,22 @@ namespace Blazor.Shared
             }
             else
             {
+                await LocalStorage!.SetItemAsStringAsync(
+                    key: "currentProfile",
+                    data: Convert.ToBase64String(profile.ToByteArray()));
+
                 (StateProvider! as AccountProfileStateProvider)!.NotifyProfileChanged(profile);
             }
         }
 
-        private void OnUnprotect()
+        private async void OnUnprotect()
         {
             if (profile == null) throw new ArgumentException("profile must be set");
 
             profile = AccountService.Unprotect(profile, UnprotectModel.SecurityCode!);
+            await LocalStorage!.SetItemAsStringAsync(
+                    key: "currentProfile",
+                    data: Convert.ToBase64String(profile.ToByteArray()));
 
             (StateProvider! as AccountProfileStateProvider)!.NotifyProfileChanged(profile);
         }
