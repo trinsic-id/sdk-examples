@@ -51,7 +51,7 @@ dependencies {
     implementation 'io.grpc:grpc-okhttp:1.42.1'
     implementation 'io.grpc:grpc-protobuf:1.42.1'
     implementation 'io.grpc:grpc-stub:1.42.1'
-    implementation 'net.java.dev.jna:jna:5.8.0'
+    implementation 'net.java.dev.jna:jna:5.10.0'
 
     implementation 'id.trinsic:okapi:1.2.0'
     implementation 'id.trinsic:services:1.1.2'
