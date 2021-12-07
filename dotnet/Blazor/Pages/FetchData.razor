@@ -1,19 +1,14 @@
-﻿@page "/fetchdata"
+﻿@page "/wallet"
 @inject HttpClient Http
+@inject ILocalStorageService LocalStorage
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Wallet</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Wallet Items</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>List the contents of your wallet.</p>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
+    @*<table class="table">
         <thead>
             <tr>
                 <th>Date</th>
@@ -33,25 +28,17 @@ else
                 </tr>
             }
         </tbody>
-    </table>
-}
+    </table>*@
 
 @code {
-    private WeatherForecast[]? forecasts;
-
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
+        var data = Convert.FromBase64String(await LocalStorage.GetItemAsStringAsync("currentProfile"));
+        var profile = AccountProfile.Parser.ParseFrom(data);
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
+        var service = new WalletService(profile);
+        var items = await service.SearchAsync("SELECT c.id FROM c");
 
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        Console.WriteLine(items);
     }
 }

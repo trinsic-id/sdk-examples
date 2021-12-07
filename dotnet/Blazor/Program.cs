@@ -3,13 +3,17 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazor.Security;
+using Blazor.Models;
+using Blazored.LocalStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped<AuthenticationStateProvider, AccountProfileStateProvider>();
+builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton<AuthenticationStateProvider, AccountProfileStateProvider>();
+builder.Services.AddSingleton<AccountProfileState>();
+builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 
 await builder.Build().RunAsync();
