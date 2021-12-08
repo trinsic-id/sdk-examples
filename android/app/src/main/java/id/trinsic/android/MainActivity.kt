@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun testServicesButtonClick(view: View) {
-        val config = TrinsicUtilities.getConfigFromUrl("http://staging-internal-unproxied.trinsic.cloud:80")
+        val config = TrinsicUtilities.getConfigFromUrl("https://staging-internal.trinsic.cloud:443")
         val accountService = AccountService(null, config)
         val walletService = WalletService(null, config)
         val credentialsService = CredentialsService(null, config)
