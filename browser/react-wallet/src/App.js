@@ -5,20 +5,22 @@ import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <BrowserRouter> 
-        <Navbar>
-          <Navbar.Logo href="/#">
-            <TrinsicLogo className="h-12" />
-          </Navbar.Logo>
-          <Navbar.List></Navbar.List>
-        </Navbar>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <>
+      <Navbar className="bg-white shadow-md fixed w-full">
+        <Navbar.Logo href="/#">
+          <TrinsicLogo className="h-12" />
+        </Navbar.Logo>
+        <Navbar.List></Navbar.List>
+      </Navbar>
+      <div className="bg-gray-100">
+        <BrowserRouter> 
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </>
   );
 }
 
