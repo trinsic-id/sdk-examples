@@ -1,61 +1,47 @@
 package id.trinsic.android
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import com.google.protobuf.ByteString
-import trinsic.TrinsicUtilities
 import trinsic.okapi.DidKey
 import trinsic.okapi.keys.v1.Keys
-import trinsic.services.AccountService
-import trinsic.services.CredentialsService
-import trinsic.services.WalletService
-import trinsic.services.account.v1.AccountOuterClass
 
 
 class MainActivity : AppCompatActivity() {
+    val demo = DriversLicenseDemo()
+    var credential: HashMap<*, *>? = null
+    var credentialId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        demo.setupActors()
     }
 
-    @SuppressLint("SetTextI18n")
-    fun testServicesButtonClick(view: View) {
-        val config = TrinsicUtilities.getConfigFromUrl("https://staging-internal.trinsic.cloud:443")
-        val accountService = AccountService(null, config)
-        val walletService = WalletService(null, config)
-        val credentialsService = CredentialsService(null, config)
+    fun issueCredential_Click(view: View) {
+        credential = demo.issueCredential(view.context.assets.open("drivers-license-unsigned.json").bufferedReader().readText())
+        // TODO - Push to display
+        this.findViewById<TextView>(R.id.credentialView).text = credential.toString()
+    }
 
-        // SETUP ACTORS
-        val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val motorVehicleDepartment: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val policeOfficer: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+    fun saveCredential_Click(view: View) {
+        credentialId = demo.saveCredential(credential!!)
+        // TODO - Push to display
 
-        // ISSUE CREDENTIAL
-        credentialsService.profile = motorVehicleDepartment
-        val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.json").bufferedReader(), java.util.HashMap::class.java)
-        val credential = credentialsService.issueCredential(credentialJson)
-        println("Credential: $credential")
+        this.findViewById<TextView>(R.id.credentialIdView).text = credentialId
+    }
 
-        // STORE CREDENTIAL
-        walletService.profile = allison
-        val itemId = walletService.insertItem(credential)
-        println("item id = $itemId")
+    fun loadCredential_Click(view: View) {
+        // TODO - Lucas, can you make this load from local device store?
+    }
 
-        // SHARE CREDENTIAL
-        credentialsService.profile = allison
-        val proofRequestJson = Gson().fromJson(view.context.assets.open("drivers-license-frame.json").bufferedReader(), java.util.HashMap::class.java)
-        val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
-        println("Proof: {credential_proof}")
+    fun provideProof_Click(view: View) {
+        val isProven = demo.createAndVerifyProof(view.context.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
+        // TODO - Push to display
 
-        // VERIFY CREDENTIAL
-        credentialsService.profile = policeOfficer
-        val valid = credentialsService.verifyProof(credentialProof)
-
-        this.findViewById<TextView>(R.id.generateKeySeed123Text).text = ("Verification result: $valid")
+        this.findViewById<TextView>(R.id.verifyResultView).text = ("Is Proven = $isProven")
     }
 
     fun generateKey123ButtonClick(view: View) {
@@ -67,7 +53,6 @@ class MainActivity : AppCompatActivity() {
 
         val response: Keys.GenerateKeyResponse = DidKey.generate(request)
 
-        val textView = this.findViewById<TextView>(R.id.generateKeySeed123Text)
-        textView.text = response.toString()
+        println("Generated Key Response = $response")
     }
 }
