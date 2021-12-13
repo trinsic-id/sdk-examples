@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+// allows for asyncronous actions in the store
+import thunkMiddleware from 'redux-thunk';
+// import my app and reducers for the store
 import App from './App';
+import rootReducer, { initialState } from './reducers';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middlewareEnhancer = applyMiddleware(thunkMiddleware);
+const enhancer = composeEnhancers(middlewareEnhancer);
+const store = createStore(rootReducer, initialState, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
