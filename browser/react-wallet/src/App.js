@@ -15,6 +15,7 @@ function App() {
         </Navbar>
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          
         </Routes>
       </BrowserRouter>
     </div>
