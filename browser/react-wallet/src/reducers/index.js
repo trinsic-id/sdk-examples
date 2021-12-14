@@ -1,13 +1,16 @@
-import templateReducer, { templates } from './Templates';
 import { combineReducers } from 'redux';
+import templateReducer, { templates } from './Templates';
+import authenticationReducer, { authentication} from './Authentication';
 
 export const initialState = {
-  templates
+  templates,
+  authentication
 }
 
 
 const rootReducer = combineReducers({
-  templates: templateReducer
+  templates: templateReducer,
+  authentication: authenticationReducer
 })
 
 export default rootReducer;

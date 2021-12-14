@@ -5,10 +5,19 @@ export const authentication = {
   user: {}
 }
 
-export default function templateReducer(state = templates, action) {
+export default function authenticationReducer(state = authentication, action) {
   switch (action.type) {
-    case GET_CREDENTIAL_TEMPLATES:
-      return action.templates
+    case LOGIN:
+      return Object.assign({}, state, {
+        loggedIn: true,
+        user: action.profile
+      })
+    case LOGOUT:
+      console.log("logging out")
+      return Object.assign({}, state, {
+        loggedIn: false,
+        user: {}
+      })
     default:
       return state;
   }
