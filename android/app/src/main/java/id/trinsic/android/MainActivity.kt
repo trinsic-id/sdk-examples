@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.protobuf.ByteString
+import org.json.JSONObject
 import trinsic.okapi.DidKey
 import trinsic.okapi.keys.v1.Keys
 
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     val demo = DriversLicenseDemo()
     var credential: HashMap<*, *>? = null
     var credentialId: String? = null
+    var proofDocument: HashMap<*, *>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     fun issueCredential_Click(view: View) {
         credential = demo.issueCredential(view.context.assets.open("drivers-license-unsigned.json").bufferedReader().readText())
-        // TODO - Push to display
+        // Push to display
         this.findViewById<TextView>(R.id.credentialView).text = credential.toString()
     }
 
@@ -38,9 +40,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun provideProof_Click(view: View) {
-        val isProven = demo.createAndVerifyProof(view.context.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
-        // TODO - Push to display
-
+        proofDocument = demo.createProof(
+            view.context.assets.open("drivers-license-frame.json").bufferedReader().readText(),
+            credentialId!!
+        )
+        // Push to display
+        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(proofDocument).toString()
+    }
+    fun verifyProof_Click(view: View) {
+        val isProven = demo.verifyProof(proofDocument!!)
         this.findViewById<TextView>(R.id.verifyResultView).text = ("Is Proven = $isProven")
     }
 
@@ -53,6 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         val response: Keys.GenerateKeyResponse = DidKey.generate(request)
 
-        println("Generated Key Response = $response")
+        this.findViewById<TextView>(R.id.credentialView).text = response.toString()
     }
 }

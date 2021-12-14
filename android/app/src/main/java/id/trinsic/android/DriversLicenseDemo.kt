@@ -45,11 +45,10 @@ class DriversLicenseDemo {
         println("item id = $itemId")
 
         return itemId
-
         // TODO - Lucas, please make this save to local device store
     }
 
-    fun createAndVerifyProof(credentialFrameString: String, itemId: String): Boolean {
+    fun createProof(credentialFrameString: String, itemId: String): HashMap<*,*> {
         // SHARE CREDENTIAL
         credentialsService.profile = allison
         val proofRequestJson = Gson().fromJson(
@@ -58,7 +57,10 @@ class DriversLicenseDemo {
         )
         val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
         println("Proof: {credential_proof}")
+        return credentialProof
+    }
 
+    fun verifyProof(credentialProof: HashMap<*,*>): Boolean {
         // TODO - Verify on a different device?
         // VERIFY CREDENTIAL
         credentialsService.profile = policeOfficer
