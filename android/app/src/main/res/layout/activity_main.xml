@@ -7,37 +7,99 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/generateKeySeed123Button"
+        android:id="@+id/generateKey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="29dp"
         android:onClick="generateKey123ButtonClick"
         android:text="Generate Key Seed=1,2,3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/generateKeySeed123Text"
-        android:layout_width="wrap_content"
+        android:id="@+id/credentialView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="NULL"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="serif-monospace"
+        android:scrollbars="vertical"
+        android:text="Credential JSON"
+        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generateKeySeed123Button" />
+        app:layout_constraintTop_toBottomOf="@+id/provideProofButton" />
+
+    <TextView
+        android:id="@+id/credentialIdView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="serif-monospace"
+        android:text="Credential ID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/issueCredential"
+        app:layout_constraintTop_toTopOf="@+id/saveCredential" />
+
+    <TextView
+        android:id="@+id/verifyResultView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="serif-monospace"
+        android:text="Verify Result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/credentialIdView"
+        app:layout_constraintTop_toTopOf="@+id/provideProofButton" />
 
     <Button
-        android:id="@+id/serviceTestButton"
+        android:id="@+id/issueCredential"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:onClick="testServicesButtonClick"
-        android:text="Test Services"
-        app:layout_constraintEnd_toStartOf="@+id/generateKeySeed123Button"
-        app:layout_constraintHorizontal_bias="0.571"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="issueCredential_Click"
+        android:text="Issue Credential"
+        app:layout_constraintEnd_toStartOf="@+id/credentialView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/generateKey" />
+
+    <Button
+        android:id="@+id/saveCredential"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="saveCredential_Click"
+        android:text="Save Credential"
+        app:layout_constraintEnd_toStartOf="@+id/credentialView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/issueCredential" />
+
+    <Button
+        android:id="@+id/provideProofButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="provideProof_Click"
+        android:text="Provide Proof"
+        app:layout_constraintEnd_toStartOf="@+id/credentialView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/issueCredential" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
