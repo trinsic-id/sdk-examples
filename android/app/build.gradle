@@ -54,5 +54,5 @@ dependencies {
     implementation 'net.java.dev.jna:jna:5.10.0'
 
     implementation 'id.trinsic:okapi:1.2.0'
-    implementation 'id.trinsic:services:1.1.2'
+    implementation 'id.trinsic:services:1.2.0'
 }
