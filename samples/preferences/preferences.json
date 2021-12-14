@@ -1,7 +1,7 @@
 {
     "@context": [
         "https://www.w3.org/2018/credentials/v1",
-        "https://w3id.org/security/bbs/v1"   
+        "https://trinsic.id/credentials/v1"   
     ],
     "type": [
         "VerifiableCredential",
@@ -12,11 +12,12 @@
         "id": "did:ion:123455",
         "address": "123 Sesame Street",
         "phone" : "+18013409809",
-        "dateOfBirth": "11-23-1994",
+        "dateOfBirth": "01-01-1990",
         "givenName": "Michael",
         "familyName": "Boyd",
         "shirtSize": "M",
         "pantWidth": "32",
         "pantHeight": "32"
     }
+
 }
