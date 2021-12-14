@@ -9,8 +9,8 @@ import LoginPage from './pages/LoginPage';
 
 function App(props) {
   return (
-    <>
-      <Navbar className="bg-white shadow-md fixed w-full">
+    <div className="min-h-screen bg-gray-100">
+      <Navbar className="bg-white shadow-md w-full">
         <Navbar.Logo href="/#">
           <TrinsicLogo className="h-12" />
         </Navbar.Logo>
@@ -18,15 +18,17 @@ function App(props) {
             {props.loggedIn && <Navbar.Item onClick={props.logout}>Sign Out</Navbar.Item> }
         </Navbar.List>
       </Navbar>
-      <div className="bg-gray-100">
+      <div>
         <BrowserRouter> 
           <>
             <Route path="/login" component={LoginPage} />
-            <PrivateRoute path="/" component={HomePage} />
+            <PrivateRoute path="/">
+              <HomePage />
+            </PrivateRoute>
           </>
         </BrowserRouter>
       </div>
-    </>
+    </div>
   );
 }
 
