@@ -1,4 +1,4 @@
-// const trinsic = require("@trinsic/trinsic-web")
+const trinsic = require("@trinsic/trinsic-web")
 
 export const ERROR = 'ERROR';
 
@@ -25,6 +25,8 @@ export const login = (email, name) => {
   // catch (e) {
   //   console.error(e);
   // }
+
+  
   if (email && name) {
     return {
       type: LOGIN,

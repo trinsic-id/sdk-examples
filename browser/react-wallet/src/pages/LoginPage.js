@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../actions';
+import Button from '../components/Button';
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -29,8 +30,8 @@ export class LoginPage extends React.Component {
       return <Redirect to="/" />
     }
     return (
-      <div className='w-full h-screen flex items-center justify-center'>
-        <div className='w-1/6 bg-white rounded shadow-md p-8 pt-12 mt-4'>
+      <div className='w-full flex mt-8 items-center justify-center'>
+        <div className='max-w-sm bg-white rounded shadow-md p-8 pt-12 mt-4'>
           <h1 className='text-3xl font-bold mb-4'>Login</h1>
           <hr />
 
@@ -57,12 +58,7 @@ export class LoginPage extends React.Component {
               />
             </div>
 
-            <button
-              type='submit'
-              className='mt-8 w-full bg-blue-500 py-2 rounded font-semibold shadow-sm text-white hover:bg-blue-600 transition'
-            >
-              Submit
-            </button>
+            <Button className="w-full mt-4" type="submit">Submit</Button>
           </form>
         </div>
       </div>
