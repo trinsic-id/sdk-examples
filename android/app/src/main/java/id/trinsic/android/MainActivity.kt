@@ -1,9 +1,13 @@
 package id.trinsic.android
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import com.google.protobuf.ByteString
 import org.json.JSONObject
 import trinsic.okapi.DidKey
@@ -19,16 +23,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val providedCredentialText = this.findViewById<EditText>(R.id.providedCredentialText)
+        providedCredentialText.imeOptions = EditorInfo.IME_ACTION_DONE
+        providedCredentialText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
         demo.setupActors()
     }
 
     fun issueCredential_Click(view: View) {
         credential = demo.issueCredential(view.context.assets.open("drivers-license-unsigned.json").bufferedReader().readText())
         // Push to display
-        this.findViewById<TextView>(R.id.credentialView).text = credential.toString()
+        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(credential).toString(2)
     }
 
     fun saveCredential_Click(view: View) {
+        if (credential == null) {
+            // TODO - Import from text view.
+            credential = Gson().fromJson(this.findViewById<EditText>(R.id.providedCredentialText).text.toString(), java.util.HashMap::class.java)
+        }
         credentialId = demo.saveCredential(credential!!)
         // TODO - Push to display
 
@@ -45,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             credentialId!!
         )
         // Push to display
-        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(proofDocument).toString()
+        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(proofDocument).toString() // provide indent spaces for pretty-print, turned off for demo.
     }
     fun verifyProof_Click(view: View) {
         val isProven = demo.verifyProof(proofDocument!!)
