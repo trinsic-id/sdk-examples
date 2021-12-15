@@ -90,7 +90,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:onClick="saveCredential_Click"
-        android:text="Save Credential"
+        android:text="Save Cloud Credential"
         app:layout_constraintEnd_toStartOf="@+id/credentialView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
