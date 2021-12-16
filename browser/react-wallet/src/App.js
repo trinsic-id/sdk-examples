@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { logout } from './actions';
 import TrinsicLogo from './components/Icons/TrinsicLogo';
 import Navbar from './components/Navbar';
@@ -18,16 +18,10 @@ function App(props) {
             {props.loggedIn && <Navbar.Item onClick={props.logout}>Sign Out</Navbar.Item> }
         </Navbar.List>
       </Navbar>
-      <div>
-        <BrowserRouter> 
-          <>
-            <Route path="/login" component={LoginPage} />
-            <PrivateRoute path="/">
-              <HomePage />
-            </PrivateRoute>
-          </>
-        </BrowserRouter>
-      </div>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+      </Routes>
     </div>
   );
 }
