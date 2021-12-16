@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { login } from '../actions';
 import Button from '../components/Button';
 
@@ -27,7 +27,7 @@ export class LoginPage extends React.Component {
 
   render() {
     if (this.props.loggedIn) {
-      return <Redirect to="/" />
+      return <Navigate to="/" />
     }
     return (
       <div className='w-full flex mt-8 items-center justify-center'>

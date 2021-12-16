@@ -55,8 +55,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="55.5641"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#006BE5" />
-          <stop offset="1" stop-color="#1A84FF" />
+          <stop stopColor="#006BE5" />
+          <stop offset="1" stopColor="#1A84FF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3730_1762"
@@ -66,8 +66,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="27.9458"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#006BE5" />
-          <stop offset="1" stop-color="#1A84FF" />
+          <stop stopColor="#006BE5" />
+          <stop offset="1" stopColor="#1A84FF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3730_1762"
@@ -77,8 +77,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="11.2744"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#006BE5" />
-          <stop offset="1" stop-color="#1A84FF" />
+          <stop stopColor="#006BE5" />
+          <stop offset="1" stopColor="#1A84FF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3730_1762"
@@ -88,8 +88,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_3730_1762"
@@ -99,8 +99,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_3730_1762"
@@ -110,8 +110,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_3730_1762"
@@ -121,8 +121,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_3730_1762"
@@ -132,8 +132,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_3730_1762"
@@ -143,8 +143,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_3730_1762"
@@ -154,8 +154,8 @@ export const TrinsicLogo = ({ className, ...props }) => {
           y2="107.148"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DBE0E6" />
-          <stop offset="1" stop-color="#F9FAFB" />
+          <stop stopColor="#DBE0E6" />
+          <stop offset="1" stopColor="#F9FAFB" />
         </linearGradient>
       </defs>
     </svg>

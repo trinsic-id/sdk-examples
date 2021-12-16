@@ -1,25 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-function PrivateRoute({ children, loggedIn, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        loggedIn ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
+function PrivateRoute({ children, loggedIn }) {
+  return loggedIn ? children : <Navigate to="/login" />;
 }
 
 const mapStateToProps = (state) => {

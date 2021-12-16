@@ -1,45 +1,42 @@
 const trinsic = require("@trinsic/trinsic-web")
 
 export const ERROR = 'ERROR';
+export const ResponseStatus = { 
+  "SUCCESS": 0,
+  "WALLET_ACCESS_DENIED": 10,
+  "WALLET_EXISTS": 11,
+  "ITEM_NOT_FOUND": 20,
+  "SERIALIZATION_ERROR": 200,
+  "UNKNOWN_ERROR": 100
+}
 
 export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
-  // const service = new trinsic.AccountClient();
-  // const request = new trinsic.AccountDetails();
-  // request.setEmail(email);
-  // request.setName(name);
+  return async (dispatch) => {
+    const service = new trinsic.AccountService()
+    const request = new trinsic.AccountDetails();
+    request.setEmail(email);
+    request.setName(name);
+    let response = await service.signIn(request);
 
-  // try {
-  //   let response = await service.signIn(request);
-
-  //   if (response.getStatus().valueOf() !== 200) {
-  //     console.error("Invalid sign in");
-  //     return;
-  //   }
-
-  //   return {
-  //     type: LOGIN,
-  //     profile: response.getProfile()
-  //   }
-  // }
-  // catch (e) {
-  //   console.error(e);
-  // }
-
-  
-  if (email && name) {
-    return {
-      type: LOGIN,
-      profile: {
-        email,
-        name
-      }
+    if (response.getStatus().valueOf() !== ResponseStatus.SUCCESS) {
+      console.error("Invalid sign in");
+      dispatch({
+        type: ERROR,
+        status: response.getStatus()
+      });
     }
+
+    else dispatch({
+      type: LOGIN,
+      profile: response.getProfile().toObject()
+    })
   }
 }
 
 export const LOGOUT = 'LOGOUT';
 export const logout = () => {
+  localStorage.getItem
   return {
     type: LOGOUT
   }
