@@ -10,7 +10,8 @@ export class LoginPage extends React.Component {
 
     this.state = {
       name: "",
-      email: ""
+      email: "",
+      goToVerify: false
     }
   }
 
@@ -23,11 +24,14 @@ export class LoginPage extends React.Component {
   login = (e) => {
     e.preventDefault();
     this.props.login(this.state.email, this.state.name)
+    this.setState({
+      goToVerify: true
+    })
   }
 
   render() {
-    if (this.props.loggedIn) {
-      return <Navigate to="/" />
+    if (this.state.goToVerify) {
+      return <Navigate to="/verify" />
     }
     return (
       <div className='w-full flex mt-8 items-center justify-center'>

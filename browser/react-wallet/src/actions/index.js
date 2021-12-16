@@ -13,13 +13,13 @@ export const ResponseStatus = {
 export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
   return async (dispatch) => {
-    const service = new trinsic.AccountService()
+    const service = new trinsic.AccountService();
     const request = new trinsic.AccountDetails();
     request.setEmail(email);
     request.setName(name);
     let response = await service.signIn(request);
 
-    if (response.getStatus().valueOf() !== ResponseStatus.SUCCESS) {
+    if (response.getStatus() !== ResponseStatus.SUCCESS) {
       console.error("Invalid sign in");
       dispatch({
         type: ERROR,
@@ -29,6 +29,34 @@ export const login = (email, name) => {
 
     else dispatch({
       type: LOGIN,
+      user: { name, email },
+      profile: response.getProfile().toObject()
+    })
+  }
+}
+
+export const VERIFY_EMAIL = 'VERIFY_EMAIL';
+export const verifyEmail = (securityCode) => {
+  return async (dispatch, getState) => {
+    const service = new trinsic.AccountService();
+    const request = new trinsic.AccountDetails();
+    const auth = getState().authentication;
+    request.setSms(securityCode);
+    // request.setEmail(auth.user.email);
+    // request.setName(auth.user.name);
+    let response = await service.signIn(request);
+    console.log(response.getStatus())
+    if (response.getStatus() !== ResponseStatus.SUCCESS) {
+      console.error("Invalid sign in");
+      dispatch({
+        type: ERROR,
+        status: response.getStatus()
+      });
+    }
+
+    else dispatch({
+      type: VERIFY_EMAIL,
+      user: auth.user,
       profile: response.getProfile().toObject()
     })
   }
