@@ -36,7 +36,7 @@ export const login = (email, name) => {
 
 export const LOGOUT = 'LOGOUT';
 export const logout = () => {
-  localStorage.getItem
+  localStorage.clear();
   return {
     type: LOGOUT
   }
