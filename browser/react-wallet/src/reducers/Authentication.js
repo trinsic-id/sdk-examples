@@ -1,22 +1,30 @@
-import { LOGIN, LOGOUT } from '../actions';
+import { LOGIN, LOGOUT, VERIFY_EMAIL } from '../actions';
 // initialState
 export const authentication = {
   loggedIn: false,
-  user: {}
+  user: {},
+  profile: {}
 }
 
 export default function authenticationReducer(state = authentication, action) {
   switch (action.type) {
     case LOGIN:
       return Object.assign({}, state, {
+        user: action.user,
+        profile: action.profile
+      })
+    case VERIFY_EMAIL:
+      return Object.assign({}, state, {
         loggedIn: true,
-        user: action.profile
+        user: action.user,
+        profile: action.profile
       })
     case LOGOUT:
       console.log("logging out")
       return Object.assign({}, state, {
         loggedIn: false,
-        user: {}
+        user: {},
+        profile: {}
       })
     default:
       return state;
