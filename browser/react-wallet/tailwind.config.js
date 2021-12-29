@@ -73,6 +73,9 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
+      animation: {
+        fadeIn: "fadeIn 700ms ease-in-out"
+      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
@@ -88,6 +91,12 @@ module.exports = {
       fontSize: {
         micro: ["0.625rem", "1.000rem"],
       },
+      keyframes: theme => ({
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 }
+        },
+      }),
       margin: {
         "1/4": "0.0625rem",
         "1/2": "0.125rem",
@@ -136,6 +145,7 @@ module.exports = {
       transitionProperty: {
         'height': 'height',
         'spacing': 'margin, padding',
+        'width': 'width'
       }
     },
   },
