@@ -31,7 +31,7 @@ export class LoginPage extends React.Component {
 
   render() {
     if (this.state.goToVerify) {
-      return <Navigate to="/verify" />
+      return <Navigate to="/security" />
     }
     return (
       <div className='w-full flex mt-8 items-center justify-center'>
