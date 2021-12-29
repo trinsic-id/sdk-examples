@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.vertical-navbar {
-  transition: all 700ms ease;
-  --webkit-transition: all 700ms ease;
-}
-
 .vertical-navbar-link {
   display: none;
 }
@@ -15,11 +10,11 @@
   display: none;
 }
 
-.vertical-navbar:hover * .vertical-navbar-text {
+.vertical-navbar:hover * .vertical-navbar-link {
   display: block;
 }
 
-.vertical-navbar:hover * .vertical-navbar-link {
+.vertical-navbar:hover * .vertical-navbar-text {
   display: block;
 }
 
@@ -30,4 +25,37 @@
 
 .vertical-navbar:hover * .vertical-navbar-menu-icon {
   transform: rotate(-180deg);
+}
+
+.fade-in-text {
+  animation: fadeIn ease-in 1s;
+  -webkit-animation: fadeIn ease-in 1s;
+  -moz-animation: fadeIn ease-in 1s;
+  -o-animation: fadeIn ease-in 1s;
+  -ms-animation: fadeIn ease-in 1s;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
