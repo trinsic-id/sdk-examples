@@ -10,6 +10,22 @@ export const ResponseStatus = {
   "UNKNOWN_ERROR": 100
 }
 
+const getProfileFromState = (getState) => {
+  const profileObject = getState().authentication.profile;
+  
+  let profile = new trinsic.AccountProfile();
+  profile.setAuthData(profileObject.authData);
+  profile.setAuthToken(profileObject.authToken);
+  profile.setProfileType(profileObject.profileType);
+
+  let protection = new trinsic.TokenProtection();
+  protection.setEnabled(profileObject.protection.enabled);
+  protection.setMethod(profileObject.protection.method);
+  profile.setProtection(protection);
+
+  return profile;
+}
+
 export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
   return async (dispatch) => {
@@ -30,7 +46,7 @@ export const login = (email, name) => {
     else dispatch({
       type: LOGIN,
       user: { name, email },
-      profile: response.getProfile().toObject()
+      profile: response.getProfile()
     })
   }
 }
@@ -82,3 +98,18 @@ export const getCredentialTemplates = () => {
 export const CREATE_CREDENTIAL_TEMPLATE = 'CREATE_CREDENTIAL_TEMPLATE';
 
 
+export const GET_WALLET_ITEMS = 'GET_WALLET_ITEMS';
+export const getWalletItems = () => {
+  return async (dispatch, getState) => {
+    const service = new trinsic.WalletService();
+    const profile = getProfileFromState(getState);
+    service.updateActiveProfile(profile);
+    
+    let response = await service.search();
+
+    dispatch({
+      type: GET_WALLET_ITEMS,
+      items: response.toObject().itemsList
+    })
+  }
+}

@@ -4,9 +4,9 @@ import { logout } from './actions';
 import TrinsicLogo from './components/Icons/TrinsicLogo';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
-import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
+import WalletPage from './pages/WalletPage';
 
 function App(props) {
   return (
@@ -21,8 +21,8 @@ function App(props) {
       </Navbar>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/verify" element={<VerifyEmailPage />} />
-        <Route path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+        <Route path="/security" element={<VerifyEmailPage />} />
+        <Route path="/*" element={<PrivateRoute><WalletPage /></PrivateRoute>} />
       </Routes>
     </div>
   );
