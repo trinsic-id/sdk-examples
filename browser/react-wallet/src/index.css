@@ -10,12 +10,20 @@
   display: none;
 }
 
+.vertical-navbar-spacer {
+  display: block;
+}
+
 .vertical-navbar:hover * .vertical-navbar-link {
   display: block;
 }
 
 .vertical-navbar:hover * .vertical-navbar-text {
   display: block;
+}
+
+.vertical-navbar:hover * .vertical-navbar-spacer {
+  display: none;
 }
 
 .vertical-navbar-menu-icon {
