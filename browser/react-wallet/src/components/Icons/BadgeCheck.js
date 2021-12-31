@@ -2,8 +2,6 @@ import React from 'react';
 
 export const BadgeCheck = ({ className, ...props }) => {
   let classArray = [
-    "h-6",
-    "w-6",
     "fill-none",
     className
   ];

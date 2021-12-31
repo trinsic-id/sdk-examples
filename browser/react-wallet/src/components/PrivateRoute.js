@@ -8,7 +8,7 @@ function PrivateRoute({ children, loggedIn }) {
 
 const mapStateToProps = (state) => {
   const { loggedIn } = state.authentication;
-  console.log(loggedIn)
+
   return {
     loggedIn
   };

@@ -80,11 +80,16 @@ export const NavbarItem = ({ children, className, navigateTo, ...props}) => {
   ];
 
   let baseClass = classArray.join(' ');
+  let n = useNavigate();
 
-  let navigate = useNavigate();
+  const navigate = () => {
+    if (navigateTo) {
+      n(navigateTo)
+    }
+  }
 
   return (
-    <li onClick={() => navigate(navigateTo)} {...props} className={baseClass}>
+    <li onClick={() => navigate()} {...props} className={baseClass}>
       {children}
     </li>
   );
@@ -114,7 +119,7 @@ export class VerticalNavbar extends React.Component {
 
   render() {
     return (
-      <nav className={[...this.classArray, this.props.className].join(' ')}>
+      <nav {...this.props} className={[...this.classArray, this.props.className].join(' ')}>
         {this.props.children}
       </nav>
     );
