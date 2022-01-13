@@ -4,10 +4,10 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import asyncio
 import json
+import subprocess
 from os.path import abspath, join, dirname
 
 from trinsic.services import AccountService, CredentialsService
-
 # Press the green button in the gutter to run the script.
 from trinsic.trinsic_util import trinsic_test_config
 
@@ -32,7 +32,21 @@ async def issue_credential():
 
     credential = await credential_service.issue_credential(drivers_license_unsigned)
 
-    print(f"Signed driver's license:\n{json.dumps(credential)}")
+    json_cred = json.dumps(credential)
+    print(f"Signed driver's license:\n{json_cred}")
+    # ADB export
+    try:
+        # adb_port = int(input("Enter adb port for emulator:"))
+        adb_json = json_cred.replace(' ', '%s').replace('"', r'\"')
+        adb_path = r"C:\Users\Scott\AppData\Local\Android\Sdk\platform-tools\adb.exe"
+        chunk_size = 64
+        for start in range(0, len(adb_json), chunk_size):
+            end = min(start + chunk_size, len(adb_json) - 1)
+            text_chunk = adb_json[start:end]
+            proc = subprocess.Popen([adb_path, 'shell', 'input', 'text', f'"{text_chunk}"'])
+            proc.wait()
+    except:
+        pass
     credential_service.close()
     account_service.close()
 
