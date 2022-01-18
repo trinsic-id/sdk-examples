@@ -1,61 +1,67 @@
 package id.trinsic.android
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.protobuf.ByteString
-import trinsic.TrinsicUtilities
+import org.json.JSONObject
 import trinsic.okapi.DidKey
 import trinsic.okapi.keys.v1.Keys
-import trinsic.services.AccountService
-import trinsic.services.CredentialsService
-import trinsic.services.WalletService
-import trinsic.services.account.v1.AccountOuterClass
 
 
 class MainActivity : AppCompatActivity() {
+    val demo = DriversLicenseDemo()
+    var credential: HashMap<*, *>? = null
+    var credentialId: String? = null
+    var proofDocument: HashMap<*, *>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val providedCredentialText = this.findViewById<EditText>(R.id.providedCredentialText)
+        providedCredentialText.imeOptions = EditorInfo.IME_ACTION_DONE
+        providedCredentialText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
+        demo.setupActors()
     }
 
-    @SuppressLint("SetTextI18n")
-    fun testServicesButtonClick(view: View) {
-        val config = TrinsicUtilities.getConfigFromUrl("http://staging-internal-unproxied.trinsic.cloud:80")
-        val accountService = AccountService(null, config)
-        val walletService = WalletService(null, config)
-        val credentialsService = CredentialsService(null, config)
+    fun issueCredential_Click(view: View) {
+        credential = demo.issueCredential(view.context.assets.open("drivers-license-unsigned.json").bufferedReader().readText())
+        // Push to display
+        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(credential).toString(2)
+    }
 
-        // SETUP ACTORS
-        val allison: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val motorVehicleDepartment: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
-        val policeOfficer: AccountOuterClass.AccountProfile = accountService.signIn(null).profile
+    fun saveCredential_Click(view: View) {
+        if (credential == null) {
+            // TODO - Import from text view.
+            credential = Gson().fromJson(this.findViewById<EditText>(R.id.providedCredentialText).text.toString(), java.util.HashMap::class.java)
+        }
+        credentialId = demo.saveCredential(credential!!)
+        // TODO - Push to display
 
-        // ISSUE CREDENTIAL
-        credentialsService.profile = motorVehicleDepartment
-        val credentialJson = Gson().fromJson(view.context.assets.open("drivers-license-unsigned.json").bufferedReader(), java.util.HashMap::class.java)
-        val credential = credentialsService.issueCredential(credentialJson)
-        println("Credential: $credential")
+        this.findViewById<TextView>(R.id.credentialIdView).text = credentialId
+    }
 
-        // STORE CREDENTIAL
-        walletService.profile = allison
-        val itemId = walletService.insertItem(credential)
-        println("item id = $itemId")
+    fun loadCredential_Click(view: View) {
+        // TODO - Lucas, can you make this load from local device store?
+    }
 
-        // SHARE CREDENTIAL
-        credentialsService.profile = allison
-        val proofRequestJson = Gson().fromJson(view.context.assets.open("drivers-license-frame.json").bufferedReader(), java.util.HashMap::class.java)
-        val credentialProof = credentialsService.createProof(itemId, proofRequestJson)
-        println("Proof: {credential_proof}")
-
-        // VERIFY CREDENTIAL
-        credentialsService.profile = policeOfficer
-        val valid = credentialsService.verifyProof(credentialProof)
-
-        this.findViewById<TextView>(R.id.generateKeySeed123Text).text = ("Verification result: $valid")
+    fun provideProof_Click(view: View) {
+        proofDocument = demo.createProof(
+            view.context.assets.open("drivers-license-frame.json").bufferedReader().readText(),
+            credentialId!!
+        )
+        // Push to display
+        this.findViewById<TextView>(R.id.credentialView).text = JSONObject(proofDocument).toString() // provide indent spaces for pretty-print, turned off for demo.
+    }
+    fun verifyProof_Click(view: View) {
+        val isProven = demo.verifyProof(proofDocument!!)
+        this.findViewById<TextView>(R.id.verifyResultView).text = ("Is Proven = $isProven")
     }
 
     fun generateKey123ButtonClick(view: View) {
@@ -67,7 +73,6 @@ class MainActivity : AppCompatActivity() {
 
         val response: Keys.GenerateKeyResponse = DidKey.generate(request)
 
-        val textView = this.findViewById<TextView>(R.id.generateKeySeed123Text)
-        textView.text = response.toString()
+        this.findViewById<TextView>(R.id.credentialView).text = response.toString()
     }
 }
