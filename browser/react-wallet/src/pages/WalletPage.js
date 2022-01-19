@@ -8,6 +8,8 @@ import ItemsListPage from './ItemsListPage';
 import PrivateRoute from '../components/PrivateRoute';
 import { getWalletItems } from '../actions';
 import WalletNavbar from '../components/WalletNavbar';
+import CredentialTemplatesPage from './CredentialTemplatesPage';
+import CreateCredentialTemplatePage from './CreateCredentialTemplatePage';
 
 export class WalletPage extends React.Component {
   constructor(props) {
@@ -19,8 +21,8 @@ export class WalletPage extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    await this.props.getItems();
+  componentDidMount() {
+    this.props.getItems();
   }
 
   navigateTo = (location) => {
@@ -51,7 +53,9 @@ export class WalletPage extends React.Component {
             <Route path="/issue" element={<PrivateRoute><IssueCredentialPage /></PrivateRoute>} />
             <Route path="/verify" element={<PrivateRoute><VerifyCredentialPage /></PrivateRoute>} />
             <Route path="/store" element={<PrivateRoute><StoreItemPage /></PrivateRoute>} />
-            <Route path="/items" element={<PrivateRoute><ItemsListPage /></PrivateRoute>} />
+            <Route path="/" element={<PrivateRoute><ItemsListPage /></PrivateRoute>} />
+            <Route path="/templates" element={<PrivateRoute><CredentialTemplatesPage /></PrivateRoute>} />
+            <Route path="/templates/generator" element={<PrivateRoute><CreateCredentialTemplatePage /></PrivateRoute>} />
           </Routes>
         </div>
       </div>

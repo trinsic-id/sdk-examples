@@ -1,0 +1,16 @@
+[
+  {
+    "id": "id",
+    "name": "name",
+    "version": "1.0",
+    "uri": "uri",
+    "ecosystemId": "__default"
+  },
+  {
+    "id": "id",
+    "name": "name",
+    "version": "1.0",
+    "uri": "uri",
+    "ecosystemId": "__default"
+  }
+]

@@ -1,13 +1,98 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getWalletItems } from '../actions';
+import Modal from '../components/Modal';
 
 export class ItemsListPage extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      showDetailsModal: false,
+      attributes: [],
+      values: []
+    };
+  }
+  componentDidMount() {
+    this.props.fetchItems();
+  }
+
+  showDetails = (item) => {
+    this.setState({
+      showDetailsModal: true,
+      attributes: Object.keys(item),
+      values: Object.values(item)
+    });
+  }
+
+  closeModal = () => {
+    this.setState({
+      showDetailsModal: false
+    });
+  }
+
+  renderAttribute = (i) => {
+    if (typeof(this.state.values[i]) === 'object') {
+      return JSON.stringify(this.state.values[i])
+    }
+
+    return this.state.values[i];
+  }
 
   render() {
     return (
       <div>
-        Items List
+        <table className="w-full min-w-lg divide-y divide-gray-200 break-all bg-white shadow">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="text-left pl-4">ID</th>
+              <th>Type</th>
+              <th>Issuance Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.items.map((item, i) => 
+              <tr key={i} className='hover:bg-gray-100 text-center cursor-pointer' onClick={() => this.showDetails(item)}>
+                <td className="text-left pl-4">{item.id}</td>
+                <td>{JSON.stringify(item.type)}</td>
+                <td>{new Date(item.issuanceDate).toLocaleDateString()}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <Modal open={this.state.showDetailsModal} onClose={this.closeModal}>
+          <table className="w-full min-w-lg divide-y divide-gray-200 break-all bg-white shadow">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="text-left pl-4">Attribute</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.attributes.map((attribute, i) => 
+                <tr key={i} className='hover:bg-gray-100 text-left'>
+                  <td className="pl-4 whitespace-nowrap">{attribute}</td>
+                  <td className="pl-4">{this.renderAttribute(i)}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </Modal>
       </div>
     );
   }
 }
-export default ItemsListPage;
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.wallet.items
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchItems: () => dispatch(getWalletItems())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsListPage);
