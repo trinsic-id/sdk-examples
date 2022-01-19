@@ -4,10 +4,10 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import asyncio
 import json
-import subprocess
 from os.path import abspath, join, dirname
 
-from trinsic.services import AccountService, CredentialsService
+from trinsic.proto.services.account.v1 import AccountDetails, ConfirmationMethod
+from trinsic.services import AccountService, CredentialsService, WalletService
 # Press the green button in the gutter to run the script.
 from trinsic.trinsic_util import trinsic_test_config
 
@@ -20,7 +20,7 @@ def drivers_license_frame_path() -> str:
     return abspath(join(samples_licensing_dir(), 'drivers-license-unsigned.json'))
 
 
-async def issue_credential():
+async def issue_credential(email: str):
     # Create the police officer to verify
     account_service = AccountService(server_config=trinsic_test_config())
     motor_vehicle_dept, _ = await account_service.sign_in()
@@ -34,24 +34,14 @@ async def issue_credential():
 
     json_cred = json.dumps(credential)
     print(f"Signed driver's license:\n{json_cred}")
-    # ADB export
-    try:
-        # adb_port = int(input("Enter adb port for emulator:"))
-        adb_json = json_cred.replace(' ', '%s').replace('"', r'\"')
-        adb_path = r"C:\Users\Scott\AppData\Local\Android\Sdk\platform-tools\adb.exe"
-        chunk_size = 64
-        for start in range(0, len(adb_json), chunk_size):
-            end = min(start + chunk_size, len(adb_json) - 1)
-            text_chunk = adb_json[start:end]
-            proc = subprocess.Popen([adb_path, 'shell', 'input', 'text', f'"{text_chunk}"'])
-            proc.wait()
-    except:
-        pass
+    print(f"Sending credential to:{email}")
+    await credential_service.send(credential, email)
+
     credential_service.close()
     account_service.close()
 
 
-async def verify_credential():
+async def verify_credential() -> bool:
     # Create the police officer to verify
     account_service = AccountService(server_config=trinsic_test_config())
     police_officer, _ = await account_service.sign_in()
@@ -63,11 +53,25 @@ async def verify_credential():
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
     credential_service.close()
     account_service.close()
+    return is_valid
+
+
+async def signin(email: str):
+    account_service = AccountService(server_config=trinsic_test_config())
+    new_account, confirm_method = await account_service.sign_in(details=AccountDetails(email=email))
+    print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
+    verify_code = input("Code sent to email, enter it here:")
+    new_account_unprotect = account_service.unprotect(new_account, verify_code.encode('utf-8'))
+    # Check wallet contents
+    wallet_service = WalletService(new_account_unprotect, server_config=trinsic_test_config())
+    search_results = await wallet_service.search()
+    print(f"Wallet content count={search_results.count}, items={search_results.items}")
 
 
 async def main():
-    await issue_credential()
-
+    email = 'polygonguru@gmail.com'
+    # await signin(email)
+    await issue_credential(email)
     await verify_credential()
 
 
