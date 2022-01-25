@@ -48,7 +48,7 @@ class DriversLicenseDemo {
             java.util.HashMap::class.java
         )
         val proof = credentialsService.createProof(itemId, proofRequestJson).get()
-        println("Proof: {credential_proof}")
+        println("Proof: $proof")
         this.credentialProof = proof.mapKeys { x -> x.key.toString() }
         return this.credentialProof
     }
@@ -57,7 +57,7 @@ class DriversLicenseDemo {
         val hashMap = java.util.HashMap<Any, Any>();
         this.credentialProof.forEach { (t, u) -> hashMap[t] = u }
         val result = credentialsService.send(hashMap, sendToEmail).get()
-        Log.d("Send Proof", "Send Proof Result {result}")
+        Log.d("Send Proof", "Send Proof Result $result")
     }
 
     @Throws(JSONException::class)
