@@ -69,7 +69,7 @@ async def signin(email: str):
 
 
 async def main():
-    email = 'polygonguru@gmail.com'
+    email = input('Enter email to send credential:')
     # await signin(email)
     await issue_credential(email)
     await verify_credential()
