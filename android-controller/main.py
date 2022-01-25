@@ -6,6 +6,7 @@ import asyncio
 import json
 from os.path import abspath, join, dirname
 
+import trinsicokapi.okapi_utils
 from trinsic.proto.services.account.v1 import AccountDetails, ConfirmationMethod
 from trinsic.services import AccountService, CredentialsService, WalletService
 # Press the green button in the gutter to run the script.
@@ -41,14 +42,11 @@ async def issue_credential(email: str):
     account_service.close()
 
 
-async def verify_credential() -> bool:
+async def verify_credential(proof_document) -> bool:
     # Create the police officer to verify
     account_service = AccountService(server_config=trinsic_test_config())
     police_officer, _ = await account_service.sign_in()
     credential_service = CredentialsService(police_officer, trinsic_test_config())
-    # Get the item-id to verify
-    credential_string = input("Enter the credential proof as JSON:")
-    proof_document = json.loads(credential_string)
     is_valid = await credential_service.verify_proof(proof_document)
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
     credential_service.close()
@@ -56,7 +54,7 @@ async def verify_credential() -> bool:
     return is_valid
 
 
-async def signin(email: str):
+async def signin(email: str) -> dict:
     account_service = AccountService(server_config=trinsic_test_config())
     new_account, confirm_method = await account_service.sign_in(details=AccountDetails(email=email))
     print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
@@ -65,14 +63,18 @@ async def signin(email: str):
     # Check wallet contents
     wallet_service = WalletService(new_account_unprotect, server_config=trinsic_test_config())
     search_results = await wallet_service.search()
-    print(f"Wallet content count={search_results.count}, items={search_results.items}")
+    print(f"Wallet content items={search_results.items}")
+
+    return trinsicokapi.okapi_utils.struct_to_dictionary(search_results.items[-1].json_struct)
 
 
 async def main():
     email = input('Enter email to send credential:')
-    # await signin(email)
     await issue_credential(email)
-    await verify_credential()
+    signin_email = input('Enter email to sign in')
+    proof = await signin(signin_email)
+    print(f"Proof:\n{json.dumps(proof)}")
+    await verify_credential(proof['data'])
 
 
 if __name__ == '__main__':

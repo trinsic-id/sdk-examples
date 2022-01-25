@@ -20,11 +20,13 @@ class DriversLicenseDemo {
 
     private lateinit var allison: AccountOuterClass.AccountProfile
     private lateinit var allisonUnprotected: AccountOuterClass.AccountProfile
+    private lateinit var credentialProof: Map<String, Any>
 
     fun signin(email: String) {
         allison = accountService.signIn(AccountOuterClass.AccountDetails.newBuilder().setEmail(email).build()).get().profile
         Log.d("Login","Login started, check email for code")
     }
+
     fun unprotectAccount(code: String) {
         allisonUnprotected = accountService.unprotect(allison, code)
         Log.d("Login","Login complete, account unprotected")
@@ -32,6 +34,7 @@ class DriversLicenseDemo {
         accountService.profile = allisonUnprotected
         credentialsService.profile = allisonUnprotected
     }
+
     fun getLatestCredential(): Map<String, Value> {
         val walletContents = walletService.search(null).get()
         val latestCredJson = walletContents.itemsList[walletContents.itemsCount-1].jsonStruct
@@ -44,9 +47,17 @@ class DriversLicenseDemo {
             credentialFrameString,
             java.util.HashMap::class.java
         )
-        val credentialProof = credentialsService.createProof(itemId, proofRequestJson).get()
-        println("Proof: {credential_proof}")
-        return credentialProof.mapKeys { x -> x.key.toString() }
+        val proof = credentialsService.createProof(itemId, proofRequestJson).get()
+        println("Proof: $proof")
+        this.credentialProof = proof.mapKeys { x -> x.key.toString() }
+        return this.credentialProof
+    }
+
+    fun sendCredential(sendToEmail: String) {
+        val hashMap = java.util.HashMap<Any, Any>();
+        this.credentialProof.forEach { (t, u) -> hashMap[t] = u }
+        val result = credentialsService.send(hashMap, sendToEmail).get()
+        Log.d("Send Proof", "Send Proof Result $result")
     }
 
     @Throws(JSONException::class)

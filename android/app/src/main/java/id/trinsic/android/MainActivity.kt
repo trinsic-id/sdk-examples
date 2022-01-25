@@ -16,6 +16,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     val demo = DriversLicenseDemo()
     var credentialId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,5 +48,10 @@ class MainActivity : AppCompatActivity() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("proof JSON", proofJson)
         clipboard.setPrimaryClip(clip)
+    }
+
+    fun sendCredentialButton_click(view: View) {
+        val targetEmailEditText = this.findViewById<TextView>(R.id.targetEmail)
+        demo.sendCredential(targetEmailEditText.text.toString())
     }
 }
