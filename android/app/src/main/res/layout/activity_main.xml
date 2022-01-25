@@ -42,6 +42,14 @@
                 android:text="Create Proof" android:onClick="createProofButton_click" />
         </TableRow>
         <TableRow>
+            <TextView android:text="Target:" />
+            <EditText android:id="@+id/targetEmail" android:layout_width="225dp"/>
+
+            <Button
+                android:id="@+id/sendCredential"
+                android:text="Send Cred"  android:onClick="sendCredentialButton_click"/>
+        </TableRow>
+        <TableRow>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
