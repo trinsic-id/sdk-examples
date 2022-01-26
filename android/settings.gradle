@@ -3,14 +3,17 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            name = "Github Packages"
-            url = "https://maven.pkg.github.com/trinsic-id/okapi"
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
+        flatDir {
+            dirs 'libs'
         }
+//        maven {
+//            name = "Github Packages"
+//            url = "https://maven.pkg.github.com/trinsic-id/okapi"
+//            credentials {
+//                username = System.getenv("GITHUB_ACTOR") // This is your github username
+//                password = System.getenv("GITHUB_TOKEN") // This is a github personal access token: https://github.com/settings/tokens with `read:packages` permission
+//            }
+//        }
     }
 }
 rootProject.name = "Sample"

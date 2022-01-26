@@ -18,3 +18,7 @@ export * from './ChevronUpIcon';
 export * from './CloudIcon';
 export * from './ArrowLeftIcon';
 export * from './BellIcon';
+export * from './BadgeCheck';
+export * from './QRCodeIcon';
+export * from './ChevronDoubleLeftIcon';
+export * from './ChevronDoubleRightIcon';
