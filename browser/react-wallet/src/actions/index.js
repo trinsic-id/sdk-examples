@@ -152,7 +152,6 @@ export const getWalletItems = () => {
     const profile = getProfileFromState(getState);
     const service = new trinsic.WalletService(options);
     service.updateActiveProfile(profile);
-    console.log(service.getMetadata())
     
     let response = await service.search();
     let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
@@ -210,7 +209,6 @@ export const issueCredential = (templateId, values) => {
     service.updateActiveProfile(profile);
 
     let request = new trinsic.IssueFromTemplateRequest();
-    console.log(templateId, values)
     request.setTemplateId(templateId);
     request.setValuesJson(JSON.stringify(values));
 
