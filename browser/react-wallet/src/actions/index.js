@@ -1,4 +1,5 @@
 const trinsic = require("@trinsic/trinsic-web");
+export const ResponseStatus = trinsic.ResponseStatus;
 const serverConfig = new trinsic.ServerConfig();
 serverConfig.setEndpoint("dev-internal.trinsic.cloud");
 serverConfig.setPort(443);
@@ -6,15 +7,6 @@ serverConfig.setUseTls(true);
 const options = { server: serverConfig };
 
 export const ERROR = 'ERROR';
-export const ResponseStatus = { 
-  "SUCCESS": 0,
-  "WALLET_ACCESS_DENIED": 10,
-  "WALLET_EXISTS": 11,
-  "UNAUTHENTICATED": 16,
-  "ITEM_NOT_FOUND": 20,
-  "SERIALIZATION_ERROR": 200,
-  "UNKNOWN_ERROR": 100
-}
 
 const getProfileFromState = (getState) => {
   const profileObject = getState().authentication.profile;
