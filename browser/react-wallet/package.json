@@ -8,7 +8,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@trinsic/trinsic": "^1.2.1",
-    "@trinsic/trinsic-web": "../../../sdk/web",
+    "@trinsic/trinsic-web": "^1.3.0",
     "@uiw/react-textarea-code-editor": "^1.4.15",
     "generate-schema": "^2.6.0",
     "react": "^17.0.2",

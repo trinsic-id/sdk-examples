@@ -42,6 +42,7 @@ export class VerifyEmailPage extends React.Component {
                 type="text"
                 className='block w-full border border-black  rounded mt-1 py-1 px-2'
                 onChange={this.onChange}
+                value={this.state.securityCode}
               />
             </div>
 
@@ -61,7 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    verify: (email, name) => dispatch(verifyEmail(email, name))
+    verify: (securityCode) => dispatch(verifyEmail(securityCode))
   }
 }
 

@@ -5,7 +5,7 @@ export class VerifyCredentialPage extends React.Component {
   render() {
     return (
       <div>
-        Verify Credential
+        Verify Credential (Coming soon with verification templates)
       </div>
     );
   }
