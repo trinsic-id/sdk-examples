@@ -1,0 +1,2 @@
+trinsic-okapi
+trinsic-sdk
