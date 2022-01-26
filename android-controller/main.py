@@ -27,7 +27,7 @@ def trinsic_dev_config():
 async def issue_credential(email: str):
     # Create the police officer to verify
     account_service = AccountService(server_config=trinsic_dev_config())
-    motor_vehicle_dept, _ = await account_service.sign_in()
+    motor_vehicle_dept = await account_service.sign_in()
     credential_service = CredentialsService(motor_vehicle_dept, trinsic_dev_config())
 
     # Load from the demo data directory
@@ -48,7 +48,7 @@ async def issue_credential(email: str):
 async def verify_credential(proof_document) -> bool:
     # Create the police officer to verify
     account_service = AccountService(server_config=trinsic_dev_config())
-    police_officer, _ = await account_service.sign_in()
+    police_officer = await account_service.sign_in()
     credential_service = CredentialsService(police_officer, trinsic_dev_config())
     is_valid = await credential_service.verify_proof(proof_document)
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
@@ -59,8 +59,8 @@ async def verify_credential(proof_document) -> bool:
 
 async def signin(email: str) -> dict:
     account_service = AccountService(server_config=trinsic_dev_config())
-    new_account, confirm_method = await account_service.sign_in(details=AccountDetails(email=email))
-    print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
+    new_account = await account_service.sign_in(details=AccountDetails(email=email))
+    # print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
     verify_code = input("Code sent to email, enter it here:")
     new_account_unprotect = account_service.unprotect(new_account, verify_code.encode('utf-8'))
     # Check wallet contents
@@ -74,7 +74,7 @@ async def signin(email: str) -> dict:
 async def main():
     email = input('Enter email to send credential:')
     await issue_credential(email)
-    signin_email = input('Enter email to sign in')
+    signin_email = input('Enter email to sign in:')
     proof = await signin(signin_email)
     print(f"Proof:\n{json.dumps(proof)}")
     await verify_credential(proof['data'])
