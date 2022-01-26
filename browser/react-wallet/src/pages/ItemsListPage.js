@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CodeEditor from '@uiw/react-textarea-code-editor';
 import { getWalletItems } from '../actions';
+import Button from '../components/Button';
 import Modal from '../components/Modal';
 
 export class ItemsListPage extends React.Component {
@@ -10,7 +12,9 @@ export class ItemsListPage extends React.Component {
     this.state = {
       showDetailsModal: false,
       attributes: [],
-      values: []
+      values: [],
+      item: {},
+      showProof: false,
     };
   }
   componentDidMount() {
@@ -19,6 +23,7 @@ export class ItemsListPage extends React.Component {
 
   showDetails = (item) => {
     this.setState({
+      item: item,
       showDetailsModal: true,
       attributes: Object.keys(item),
       values: Object.values(item)
@@ -27,7 +32,8 @@ export class ItemsListPage extends React.Component {
 
   closeModal = () => {
     this.setState({
-      showDetailsModal: false
+      showDetailsModal: false,
+      showProof: false
     });
   }
 
@@ -69,14 +75,28 @@ export class ItemsListPage extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.attributes.map((attribute, i) => 
-                <tr key={i} className='hover:bg-gray-100 text-left'>
-                  <td className="pl-4 whitespace-nowrap">{attribute}</td>
-                  <td className="pl-4">{this.renderAttribute(i)}</td>
-                </tr>
-              )}
+              {this.state.attributes.map((attribute, i) => {
+                if (attribute !== "proof") {
+                  return (
+                    <tr key={i} className='hover:bg-gray-100 text-left'>
+                      <td className="pl-4 whitespace-nowrap">{attribute}</td>
+                      <td className="pl-4">{this.renderAttribute(i)}</td>
+                    </tr>
+                  );
+                }
+                return <div></div>;
+              })}
             </tbody>
           </table>
+          <Button className="w-full" onClick={() => this.setState({ showProof: true })}>Generate Proof</Button>
+          {this.state.showProof && 
+            <CodeEditor
+              name="proof" 
+              language="json" 
+              className="w-ful rounded bg-gray-100" 
+              value={JSON.stringify(this.state.item.proof)} 
+            />
+          }
         </Modal>
       </div>
     );

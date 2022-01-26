@@ -36,10 +36,10 @@ export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
   return async (dispatch) => {
     const service = new trinsic.AccountService(options);
-    const request = new trinsic.AccountDetails();
-    request.setEmail(email);
-    request.setName(name);
-    let response = await service.signIn();
+    const details = new trinsic.AccountDetails();
+    details.setEmail(email);
+    details.setName(name);
+    let response = await service.signIn(details);
 
     if (response.getStatus() !== ResponseStatus.SUCCESS) {
       console.error("Invalid sign in");
@@ -62,15 +62,15 @@ export const verifyEmail = (securityCode) => {
   return async (dispatch, getState) => {
     const service = new trinsic.AccountService(options);
     const auth = getState().authentication;
-    service.updateActiveProfile(auth.profile);
+    const profile = getProfileFromState(getState);
+    service.updateActiveProfile(profile);
 
-    // let profile = await service.unprotect(auth.profile, securityCode);
+    let unprotectedProfile = await service.unprotect(profile, securityCode);
 
     dispatch({
       type: VERIFY_EMAIL,
       user: auth.user,
-      // profile: profile.toObject()
-      profile: auth.profile
+      profile: unprotectedProfile.toObject()
     })
   }
 }
@@ -137,10 +137,7 @@ export const createCredentialTemplate = (name, fields) => {
       request.getFieldsMap().set(field[0], templateField)
     });
 
-    console.log(fields);
-
     let response = await service.createCredentialTemplate(request);
-    console.log(response);
 
     dispatch({
       type: CREATE_CREDENTIAL_TEMPLATE,
@@ -153,9 +150,9 @@ export const GET_WALLET_ITEMS = 'GET_WALLET_ITEMS';
 export const getWalletItems = () => {
   return async (dispatch, getState) => {
     const profile = getProfileFromState(getState);
-    options.profile = profile;
     const service = new trinsic.WalletService(options);
     service.updateActiveProfile(profile);
+    console.log(service.getMetadata())
     
     let response = await service.search();
     let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
