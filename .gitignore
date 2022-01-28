@@ -125,3 +125,4 @@ DS_Store
 android/.idea/deploymentTargetDropDown.xml
 
 .ionide/
+android-controller/.idea/

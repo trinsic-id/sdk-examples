@@ -1,0 +1,2 @@
+Java samples are used as tests, and therefore are stored with the [Java SDK here](https://github.com/trinsic-id/sdk/tree/main/java/src/test/java/trinsic)
+[Kotlin Samples here](https://github.com/trinsic-id/sdk/tree/main/java/src/test/kotlin)
