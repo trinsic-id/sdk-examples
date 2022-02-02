@@ -7,7 +7,7 @@ import json
 from os.path import abspath, join, dirname
 
 import trinsicokapi.okapi_utils
-from trinsic.proto.services.account.v1 import AccountDetails, ConfirmationMethod
+from trinsic.proto.services.account.v1 import AccountDetails, ConfirmationMethod, AccountProfile
 from trinsic.proto.services.common.v1 import ServerConfig
 from trinsic.services import AccountService, CredentialsService, WalletService
 
@@ -57,14 +57,18 @@ async def verify_credential(proof_document) -> bool:
     return is_valid
 
 
-async def signin(email: str) -> dict:
+async def signin(email: str) -> AccountProfile:
     account_service = AccountService(server_config=trinsic_dev_config())
     new_account = await account_service.sign_in(details=AccountDetails(email=email))
     # print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
     verify_code = input("Code sent to email, enter it here:")
     new_account_unprotect = account_service.unprotect(new_account, verify_code.encode('utf-8'))
+    return new_account_unprotect
+
+
+async def check_wallet_contents(profile: AccountProfile) -> dict:
     # Check wallet contents
-    wallet_service = WalletService(new_account_unprotect, server_config=trinsic_dev_config())
+    wallet_service = WalletService(profile, server_config=trinsic_dev_config())
     search_results = await wallet_service.search()
     print(f"Wallet content items={search_results.items}")
 
@@ -73,11 +77,10 @@ async def signin(email: str) -> dict:
 
 async def main():
     signin_email = input('Enter email to sign in:')
-    await signin(signin_email)
+    account_profile = await signin(signin_email)
     email = input('Enter email to send credential:')
     await issue_credential(email)
-    signin_email = input('Enter email to sign in:')
-    proof = await signin(signin_email)
+    proof = await check_wallet_contents(account_profile)
     print(f"Proof:\n{json.dumps(proof)}")
     await verify_credential(proof['data'])
 
