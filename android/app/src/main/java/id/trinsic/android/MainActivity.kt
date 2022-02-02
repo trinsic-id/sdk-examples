@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     fun unprotectButton_click(view: View) {
         val oberonEditText = this.findViewById<EditText>(R.id.oberonCode)
         demo.unprotectAccount(oberonEditText.text.toString())
+        this.findViewById<Button>(R.id.unprotect).text = "Done"
     }
 
     fun createProofButton_click(view: View) {
@@ -53,5 +55,6 @@ class MainActivity : AppCompatActivity() {
     fun sendCredentialButton_click(view: View) {
         val targetEmailEditText = this.findViewById<TextView>(R.id.targetEmail)
         demo.sendCredential(targetEmailEditText.text.toString())
+        this.findViewById<Button>(R.id.sendCredential).text = "Done"
     }
 }
