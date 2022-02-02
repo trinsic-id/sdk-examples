@@ -72,6 +72,8 @@ async def signin(email: str) -> dict:
 
 
 async def main():
+    signin_email = input('Enter email to sign in:')
+    await signin(signin_email)
     email = input('Enter email to send credential:')
     await issue_credential(email)
     signin_email = input('Enter email to sign in:')
