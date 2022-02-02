@@ -80,6 +80,7 @@ async def main():
     account_profile = await signin(signin_email)
     email = input('Enter email to send credential:')
     await issue_credential(email)
+    input('Press enter when the proof has been returned')
     proof = await check_wallet_contents(account_profile)
     print(f"Proof:\n{json.dumps(proof)}")
     await verify_credential(proof['data'])
