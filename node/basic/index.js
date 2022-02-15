@@ -1,12 +1,22 @@
-import trinsic from "@trinsic/trinsic";
-const { WalletService } = trinsic;
+import { WalletService, AccountService } from "@trinsic/trinsic";
 
-async function getConfig() {
+async function accountSignIn() {
 
-  const service = new WalletService();
-  const configuration = await service.getProviderConfiguration();
+  // sign in with new account
+  const service = new AccountService();
+  const response = await service.signIn();
 
-  console.log(configuration);
+  console.log(response.toObject());
+
+  // insert a JSON item in the wallet
+  const profile = response.getProfile();
+  const walletService = new WalletService({ profile });
+  const itemId = await walletService.insertItem({
+    "item": "examle",
+    "valid": true
+  });
+
+  console.log(`Item inserted: ${itemId}`)
 }
 
-getConfig();
+accountSignIn();
