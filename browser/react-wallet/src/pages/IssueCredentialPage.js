@@ -107,6 +107,7 @@ export class IssueCredentialPage extends React.Component {
   }
 
   renderTemplateFields() { 
+    if (!this.state.selectedTemplate) return;
     const fields = this.state.selectedTemplate.fields;
     const keys = Object.keys(fields);
     return keys.map((key, index) => 
