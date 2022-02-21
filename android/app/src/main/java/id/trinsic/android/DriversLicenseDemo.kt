@@ -13,10 +13,9 @@ import trinsic.services.WalletService
 import trinsic.services.account.v1.AccountOuterClass
 
 class DriversLicenseDemo {
-    val config = TrinsicUtilities.getConfigFromUrl("https://dev-internal.trinsic.cloud:443")
-    val accountService = AccountService(null, config)
-    val walletService = WalletService(null, config)
-    val credentialsService = CredentialsService(null, config)
+    val accountService = AccountService(null)
+    val walletService = WalletService(null)
+    val credentialsService = CredentialsService(null)
 
     private lateinit var allison: AccountOuterClass.AccountProfile
     private lateinit var allisonUnprotected: AccountOuterClass.AccountProfile

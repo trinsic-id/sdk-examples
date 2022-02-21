@@ -7,8 +7,7 @@ import json
 from os.path import abspath, join, dirname
 
 import trinsicokapi.okapi_utils
-from trinsic.proto.services.account.v1 import AccountDetails, ConfirmationMethod, AccountProfile
-from trinsic.proto.services.common.v1 import ServerConfig
+from trinsic.proto.services.account.v1 import AccountDetails, AccountProfile
 from trinsic.services import AccountService, CredentialsService, WalletService
 
 
@@ -20,15 +19,11 @@ def drivers_license_frame_path() -> str:
     return abspath(join(samples_licensing_dir(), 'drivers-license-unsigned.json'))
 
 
-def trinsic_dev_config():
-    return ServerConfig(endpoint="dev-internal.trinsic.cloud", port=443, use_tls=True)
-
-
 async def issue_credential(email: str):
     # Create the police officer to verify
-    account_service = AccountService(server_config=trinsic_dev_config())
+    account_service = AccountService()
     motor_vehicle_dept = await account_service.sign_in()
-    credential_service = CredentialsService(motor_vehicle_dept, trinsic_dev_config())
+    credential_service = CredentialsService(motor_vehicle_dept)
 
     # Load from the demo data directory
     with open(drivers_license_frame_path(), 'r') as fid:
@@ -47,9 +42,9 @@ async def issue_credential(email: str):
 
 async def verify_credential(proof_document) -> bool:
     # Create the police officer to verify
-    account_service = AccountService(server_config=trinsic_dev_config())
+    account_service = AccountService()
     police_officer = await account_service.sign_in()
-    credential_service = CredentialsService(police_officer, trinsic_dev_config())
+    credential_service = CredentialsService(police_officer)
     is_valid = await credential_service.verify_proof(proof_document)
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
     credential_service.close()
@@ -58,7 +53,7 @@ async def verify_credential(proof_document) -> bool:
 
 
 async def signin(email: str) -> AccountProfile:
-    account_service = AccountService(server_config=trinsic_dev_config())
+    account_service = AccountService()
     new_account = await account_service.sign_in(details=AccountDetails(email=email))
     # print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
     verify_code = input("Code sent to email, enter it here:")
@@ -68,7 +63,7 @@ async def signin(email: str) -> AccountProfile:
 
 async def check_wallet_contents(profile: AccountProfile) -> dict:
     # Check wallet contents
-    wallet_service = WalletService(profile, server_config=trinsic_dev_config())
+    wallet_service = WalletService(profile)
     search_results = await wallet_service.search()
     print(f"Wallet content items={search_results.items}")
 
