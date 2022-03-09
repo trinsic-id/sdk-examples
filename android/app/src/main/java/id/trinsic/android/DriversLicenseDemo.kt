@@ -11,6 +11,7 @@ import trinsic.services.AccountService
 import trinsic.services.CredentialsService
 import trinsic.services.WalletService
 import trinsic.services.account.v1.AccountOuterClass
+import trinsic.services.common.v1.CommonOuterClass
 
 class DriversLicenseDemo {
     val accountService = AccountService(null)
@@ -36,8 +37,16 @@ class DriversLicenseDemo {
 
     fun getLatestCredential(): Map<String, Value> {
         val walletContents = walletService.search(null).get()
+        val driversLicenseCred = walletContents.itemsList.first { jsonPayload: CommonOuterClass.JsonPayload? ->
+            jsonPayload!!.jsonStruct.fieldsMap["data"]!!.structValue.fieldsMap["type"]!!.listValue.valuesList.any { x ->
+                x.stringValue.equals(
+                    "Iso18013DriversLicenseCredential"
+                )
+            }
+        }
+
         val latestCredJson = walletContents.itemsList[walletContents.itemsCount-1].jsonStruct
-        return latestCredJson.fieldsMap
+        return driversLicenseCred.jsonStruct.fieldsMap
     }
 
     fun createProof(credentialFrameString: String, itemId: String): Map<String, Any> {
