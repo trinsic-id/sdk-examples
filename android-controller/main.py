@@ -9,6 +9,9 @@ from os.path import abspath, join, dirname
 import trinsicokapi.okapi_utils
 from trinsic.proto.services.account.v1 import AccountDetails, AccountProfile
 from trinsic.services import AccountService, CredentialsService, WalletService
+from trinsicokapi import oberon
+from trinsicokapi.proto.okapi.security.v1 import CreateOberonKeyRequest, CreateOberonTokenRequest, \
+    CreateOberonProofRequest
 
 
 def samples_licensing_dir() -> str:
@@ -17,6 +20,17 @@ def samples_licensing_dir() -> str:
 
 def drivers_license_frame_path() -> str:
     return abspath(join(samples_licensing_dir(), 'drivers-license-unsigned.json'))
+
+
+def verify_okapi_oberon() -> None:
+    id = bytes('test@example.com'.encode('utf-8'))
+    nonce = bytes('123'.encode('utf-8'))
+
+    key = oberon.create_key(CreateOberonKeyRequest())
+    token = oberon.create_token(CreateOberonTokenRequest(data=id, sk=key.sk))
+    proof = oberon.create_proof(CreateOberonProofRequest(data=id, token=token.token, nonce=nonce))
+
+    print(f'Proof length={len(proof.proof)}')
 
 
 async def issue_credential(email: str):
@@ -71,6 +85,7 @@ async def check_wallet_contents(profile: AccountProfile) -> dict:
 
 
 async def main():
+    verify_okapi_oberon()
     signin_email = input('Enter email to sign in:')
     account_profile = await signin(signin_email)
     email = input('Enter email to send credential:')
