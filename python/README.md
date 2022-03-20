@@ -1,0 +1,2 @@
+Python samples are used as tests, and therefore are stored with the [Python SDK here](https://github.com/trinsic-id/sdk/tree/main/python/samples)
+Make sure to `pip install trinsic-sdk` before running them.

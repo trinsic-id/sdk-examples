@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IosApp", "IosApp\IosApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacCatalystApp", "MacCatalystApp\MacCatalystApp.csproj", "{49707212-2586-40C7-A295-C6FDD281CF6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidApp", "AndroidApp\AndroidApp.csproj", "{46D3450E-9402-4A7D-8CE6-174936534544}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{49707212-2586-40C7-A295-C6FDD281CF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49707212-2586-40C7-A295-C6FDD281CF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49707212-2586-40C7-A295-C6FDD281CF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D3450E-9402-4A7D-8CE6-174936534544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D3450E-9402-4A7D-8CE6-174936534544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D3450E-9402-4A7D-8CE6-174936534544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D3450E-9402-4A7D-8CE6-174936534544}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
