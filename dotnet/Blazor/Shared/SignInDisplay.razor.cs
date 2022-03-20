@@ -26,7 +26,7 @@ namespace Blazor.Shared
         protected bool protection = false;
         protected string? authToken;
 
-        private async void SignIn()
+        private async Task SignIn()
         {
             authToken = await AccountService!.SignInAsync(new()
             {
@@ -38,7 +38,6 @@ namespace Blazor.Shared
             });
 
             var profile = AccountProfile.Parser.ParseFrom(Convert.FromBase64String(authToken));
-            Console.WriteLine(profile);
 
             if  (profile.Protection.Enabled)
             {
@@ -46,16 +45,17 @@ namespace Blazor.Shared
             }
             else
             {
-                (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged(authToken);
+                (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
             }
+            StateHasChanged();
         }
 
-        private async void OnUnprotect()
+        private async Task OnUnprotect()
         {
             authToken = AccountService.Unprotect(authToken!, UnprotectModel.SecurityCode!);
             await TokenProvider!.SaveAsync(authToken);
 
-            (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged(authToken);
+            (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
         }
     }
 }
