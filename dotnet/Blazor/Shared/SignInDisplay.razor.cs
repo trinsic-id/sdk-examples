@@ -20,20 +20,24 @@ namespace Blazor.Shared
         public ProtectionModel UnprotectModel { get; set; } = new();
 
         [Inject]public AuthenticationStateProvider? StateProvider { get; set; }
-        [Inject]public ILocalStorageService? LocalStorage { get; set; }
+        [Inject]public ITokenProvider? TokenProvider { get; set; }
+        [Inject]public AccountService? AccountService { get; set; }
 
         protected bool protection = false;
-        protected AccountProfile? profile;
+        protected string? authToken;
 
         private async void SignIn()
         {
-            var accountService = new AccountService();
-            profile = await accountService.SignInAsync(new()
+            authToken = await AccountService!.SignInAsync(new()
             {
-                Name = Model.FullName ?? String.Empty,
-                Email = Model.Email ?? String.Empty
+                Details = new()
+                {
+                    Name = Model.FullName ?? string.Empty,
+                    Email = Model.Email ?? string.Empty
+                }
             });
 
+            var profile = AccountProfile.Parser.ParseFrom(Convert.FromBase64String(authToken));
             Console.WriteLine(profile);
 
             if  (profile.Protection.Enabled)
@@ -42,24 +46,16 @@ namespace Blazor.Shared
             }
             else
             {
-                await LocalStorage!.SetItemAsStringAsync(
-                    key: "currentProfile",
-                    data: Convert.ToBase64String(profile.ToByteArray()));
-
-                (StateProvider! as AccountProfileStateProvider)!.NotifyProfileChanged(profile);
+                (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged(authToken);
             }
         }
 
         private async void OnUnprotect()
         {
-            if (profile == null) throw new ArgumentException("profile must be set");
+            authToken = AccountService.Unprotect(authToken!, UnprotectModel.SecurityCode!);
+            await TokenProvider!.SaveAsync(authToken);
 
-            profile = AccountService.Unprotect(profile, UnprotectModel.SecurityCode!);
-            await LocalStorage!.SetItemAsStringAsync(
-                    key: "currentProfile",
-                    data: Convert.ToBase64String(profile.ToByteArray()));
-
-            (StateProvider! as AccountProfileStateProvider)!.NotifyProfileChanged(profile);
+            (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged(authToken);
         }
     }
 }

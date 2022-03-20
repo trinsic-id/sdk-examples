@@ -33,10 +33,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var data = Convert.FromBase64String(await LocalStorage.GetItemAsStringAsync("currentProfile"));
-        var profile = AccountProfile.Parser.ParseFrom(data);
-
-        var service = new WalletService(profile);
+        var service = new WalletService();
         var items = await service.SearchAsync("SELECT c.id FROM c");
 
         Console.WriteLine(items);
