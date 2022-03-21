@@ -5,9 +5,9 @@ namespace Blazor.Models
 {
     public class AccountProfileState
     {
-        private AccountProfile? currentProfile;
+        private string? currentProfile;
 
-        public AccountProfile? CurrentProfile
+        public string? CurrentProfile
         {
             get => currentProfile;
             set

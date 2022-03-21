@@ -1,6 +1,7 @@
 ﻿@page "/wallet"
 @inject HttpClient Http
-@inject ILocalStorageService LocalStorage
+@inject WalletService WalletService
+@inject ITokenProvider TokenProvider
 
 <PageTitle>Wallet</PageTitle>
 
@@ -33,11 +34,8 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var data = Convert.FromBase64String(await LocalStorage.GetItemAsStringAsync("currentProfile"));
-        var profile = AccountProfile.Parser.ParseFrom(data);
-
-        var service = new WalletService(profile);
-        var items = await service.SearchAsync("SELECT c.id FROM c");
+        WalletService.Options.AuthToken = await TokenProvider.GetAsync();
+        var items = await WalletService.SearchAsync();
 
         Console.WriteLine(items);
     }

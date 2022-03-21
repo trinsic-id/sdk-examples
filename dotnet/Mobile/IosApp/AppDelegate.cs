@@ -43,11 +43,11 @@ public class AppDelegate : UIApplicationDelegate
     private static async void SignIn()
     {
         var accountService = new AccountService();
-        var profile = await accountService.SignInAsync();
+        var authToken = await accountService.SignInAsync(new());
 
-        Console.WriteLine($"Profile: {profile}");
+        Console.WriteLine($"AuthToken: {authToken}");
 
-        var walletService = new WalletService(profile);
+        var walletService = new WalletService();
         var items = await walletService.SearchAsync();
 
         Console.WriteLine($"Items: {items}");
