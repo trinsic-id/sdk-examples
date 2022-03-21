@@ -1,12 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { WalletService } from "@trinsic/trinsic-web";
+import { AccountService, SignInRequest } from "@trinsic/trinsic-web";
 
-const service = new WalletService("http://localhost:5000");
+const service = new AccountService();
 
 function App() {
-  service.getProviderConfiguration().then((response) => {
-    console.log(response.toObject());
+  service.signIn(new SignInRequest()).then((response) => {
+    console.log(`auth_token = ${response}`);
   });
 
   return (

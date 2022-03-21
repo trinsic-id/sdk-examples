@@ -1,13 +1,13 @@
-import { WalletService } from "@trinsic/trinsic-web";
+import { AccountService, SignInRequest } from "@trinsic/trinsic-web";
 
-async function generateKey() {
+async function signIn() {
 
-    const service = new WalletService("http://localhost:5000");
-    const configuration = await service.getProviderConfiguration();
+    const service = new AccountService();
+    const configuration = await service.signIn(new SignInRequest());
 
-    console.log(configuration.toObject());
+    console.log(`auth_token = ${configuration}`);
 
-    document.getElementById("did-document").innerText = JSON.stringify(configuration.toObject(), null, "\t");
+    document.getElementById("response").innerText = `auth_token = ${configuration}`
 }
 
-generateKey();
+signIn();
