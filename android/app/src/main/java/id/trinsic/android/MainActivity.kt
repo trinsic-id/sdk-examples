@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
+import java.util.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     fun createProofButton_click(view: View) {
         val credential = demo.getLatestCredential()
-        credentialId = credential["id"]?.stringValue
+        credentialId = credential["id"] as String
         val proof = demo.createProof(this.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
         val proofJson = JSONObject(proof).toString()
 
