@@ -6,9 +6,12 @@ import asyncio
 import json
 from os.path import abspath, join, dirname
 
-import trinsicokapi.okapi_utils
-from trinsic.proto.services.account.v1 import AccountDetails, AccountProfile
-from trinsic.services import AccountService, CredentialsService, WalletService
+from trinsic.account_service import AccountService
+from trinsic.credentials_service import CredentialsService
+from trinsic.proto.services.account.v1 import AccountDetails, SignInRequest
+from trinsic.proto.services.verifiablecredentials.v1 import IssueRequest, SendRequest, VerifyProofRequest
+from trinsic.trinsic_util import trinsic_config
+from trinsic.wallet_service import WalletService
 from trinsicokapi import oberon
 from trinsicokapi.proto.okapi.security.v1 import CreateOberonKeyRequest, CreateOberonTokenRequest, \
     CreateOberonProofRequest
@@ -37,51 +40,51 @@ async def issue_credential(email: str):
     # Create the police officer to verify
     account_service = AccountService()
     motor_vehicle_dept = await account_service.sign_in()
-    credential_service = CredentialsService(motor_vehicle_dept)
+    credential_service = CredentialsService(server_config=trinsic_config(motor_vehicle_dept))
 
     # Load from the demo data directory
     with open(drivers_license_frame_path(), 'r') as fid:
-        drivers_license_unsigned = json.load(fid)
+        drivers_license_unsigned = fid.read()
 
-    credential = await credential_service.issue_credential(drivers_license_unsigned)
+    issue_response = await credential_service.issue_credential(request=IssueRequest(document_json=drivers_license_unsigned))
 
-    json_cred = json.dumps(credential)
-    print(f"Signed driver's license:\n{json_cred}")
+    signed_doc = issue_response.signed_document_json
+    print(f"Signed driver's license:\n{signed_doc}")
     print(f"Sending credential to:{email}")
-    await credential_service.send(credential, email)
+    await credential_service.send(request=SendRequest(document_json=signed_doc, email=email))
 
     credential_service.close()
     account_service.close()
 
 
-async def verify_credential(proof_document) -> bool:
+async def verify_credential(proof_document: dict) -> bool:
     # Create the police officer to verify
     account_service = AccountService()
     police_officer = await account_service.sign_in()
-    credential_service = CredentialsService(police_officer)
-    is_valid = await credential_service.verify_proof(proof_document)
+    credential_service = CredentialsService(server_config=trinsic_config(police_officer))
+    verify_response = await credential_service.verify_proof(request=VerifyProofRequest(proof_document_json=json.dumps(proof_document)))
+    is_valid = verify_response.is_valid
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
     credential_service.close()
     account_service.close()
     return is_valid
 
 
-async def signin(email: str) -> AccountProfile:
+async def signin(email: str) -> str:
     account_service = AccountService()
-    new_account = await account_service.sign_in(details=AccountDetails(email=email))
-    # print(f"confirm_method={repr(ConfirmationMethod(confirm_method))}")
+    new_account = await account_service.sign_in(request=SignInRequest(details=AccountDetails(email=email)))
     verify_code = input("Code sent to email, enter it here:")
-    new_account_unprotect = account_service.unprotect(new_account, verify_code.encode('utf-8'))
+    new_account_unprotect = account_service.unprotect(profile=new_account, security_code=verify_code.encode('utf-8'))
     return new_account_unprotect
 
 
-async def check_wallet_contents(profile: AccountProfile) -> dict:
+async def check_wallet_contents(profile: str) -> dict:
     # Check wallet contents
-    wallet_service = WalletService(profile)
+    wallet_service = WalletService(server_config=trinsic_config(auth_token=profile))
     search_results = await wallet_service.search()
     print(f"Wallet content items={search_results.items}")
 
-    return trinsicokapi.okapi_utils.struct_to_dictionary(search_results.items[-1].json_struct)
+    return json.loads(search_results.items[-1])
 
 
 async def main():
