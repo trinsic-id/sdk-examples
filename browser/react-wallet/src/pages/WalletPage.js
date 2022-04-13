@@ -22,7 +22,7 @@ export class WalletPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getItems();
+    // this.props.getItems();
   }
 
   navigateTo = (location) => {

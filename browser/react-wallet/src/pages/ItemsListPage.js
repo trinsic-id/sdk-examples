@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CodeEditor from '@uiw/react-textarea-code-editor';
-import { getWalletItems } from '../actions';
+import { createProof, getWalletItems } from '../actions';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 
@@ -25,8 +25,8 @@ export class ItemsListPage extends React.Component {
     this.setState({
       item: item,
       showDetailsModal: true,
-      attributes: Object.keys(item),
-      values: Object.values(item)
+      attributes: Object.keys(item.data),
+      values: Object.values(item.data)
     });
   }
 
@@ -45,6 +45,13 @@ export class ItemsListPage extends React.Component {
     return this.state.values[i];
   }
 
+  generateProof = () => {
+    this.props.createProofRequest(this.state.item.id);
+    this.setState({
+      showProof: true
+    })
+  }
+
   render() {
     return (
       <div>
@@ -60,8 +67,8 @@ export class ItemsListPage extends React.Component {
             {this.props.items.map((item, i) => 
               <tr key={i} className='hover:bg-gray-100 text-center cursor-pointer' onClick={() => this.showDetails(item)}>
                 <td className="text-left pl-4">{item.id}</td>
-                <td>{JSON.stringify(item.type)}</td>
-                <td>{new Date(item.issuanceDate).toLocaleDateString()}</td>
+                <td>{JSON.stringify(item.data.type)}</td>
+                <td>{new Date(item.data.issuanceDate).toLocaleDateString()}</td>
               </tr>
             )}
           </tbody>
@@ -75,26 +82,31 @@ export class ItemsListPage extends React.Component {
               </tr>
             </thead>
             <tbody>
+              <tr className='hover:bg-gray-100 text-left'>
+                <td className="pl-4 whitespace-nowrap">Item ID</td>
+                <td className="pl-4">{this.state.item.id}</td>
+              </tr>
+              <tr className='hover:bg-gray-100 text-left'>
+                <td className="pl-4 whitespace-nowrap">Wallet ID</td>
+                <td className="pl-4">{this.state.item.walletId}</td>
+              </tr>
               {this.state.attributes.map((attribute, i) => {
-                if (attribute !== "proof") {
-                  return (
-                    <tr key={i} className='hover:bg-gray-100 text-left'>
-                      <td className="pl-4 whitespace-nowrap">{attribute}</td>
-                      <td className="pl-4">{this.renderAttribute(i)}</td>
-                    </tr>
-                  );
-                }
-                return <div></div>;
+                return (
+                  <tr key={i} className='hover:bg-gray-100 text-left'>
+                    <td className="pl-4 whitespace-nowrap">{attribute}</td>
+                    <td className="pl-4">{this.renderAttribute(i)}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>
-          <Button className="w-full" onClick={() => this.setState({ showProof: true })}>Generate Proof</Button>
+          <Button className="w-full" onClick={this.generateProof}>Generate Proof</Button>
           {this.state.showProof && 
             <CodeEditor
               name="proof" 
               language="json" 
               className="w-ful rounded bg-gray-100" 
-              value={JSON.stringify(this.state.item.proof)} 
+              value={JSON.stringify(this.props.proofDocument)} 
             />
           }
         </Modal>
@@ -105,13 +117,15 @@ export class ItemsListPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.wallet.items
+    items: state.wallet.items,
+    proofDocument: state.credentials.proofDocument
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchItems: () => dispatch(getWalletItems())
+    fetchItems: () => dispatch(getWalletItems()),
+    createProofRequest: (itemId) => dispatch(createProof(itemId)),
   }
 }
 
