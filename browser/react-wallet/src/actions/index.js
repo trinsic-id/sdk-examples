@@ -7,21 +7,21 @@ const api = axios.create({
 export const ResponseStatus = trinsic.ResponseStatus;
 export const ERROR = 'ERROR';
 
-const getProfileFromState = (getState) => {
-  const profileObject = getState().authentication.profile;
+// const getProfileFromState = (getState) => {
+//   const profileObject = getState().authentication.profile;
 
-  let profile = new trinsic.AccountProfile();
-  profile.setAuthData(profileObject.authData);
-  profile.setAuthToken(profileObject.authToken);
-  profile.setProfileType(profileObject.profileType);
+//   let profile = new trinsic.AccountProfile();
+//   profile.setAuthData(profileObject.authData);
+//   profile.setAuthToken(profileObject.authToken);
+//   profile.setProfileType(profileObject.profileType);
 
-  let protection = new trinsic.TokenProtection();
-  protection.setEnabled(profileObject.protection.enabled);
-  protection.setMethod(profileObject.protection.method);
-  profile.setProtection(protection);
+//   let protection = new trinsic.TokenProtection();
+//   protection.setEnabled(profileObject.protection.enabled);
+//   protection.setMethod(profileObject.protection.method);
+//   profile.setProtection(protection);
 
-  return profile;
-}
+//   return profile;
+// }
 
 export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
