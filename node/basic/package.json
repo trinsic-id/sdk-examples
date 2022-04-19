@@ -9,7 +9,7 @@
   "author": "Tomislav Markovski",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "^1.4.0",
+    "@trinsic/trinsic": "^1.4.1",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {

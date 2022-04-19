@@ -23,11 +23,8 @@ async function main() {
   base64Profile = await accountService.signIn(new SignInRequest().setDetails(new AccountDetails().setEmail("scott.phillips@trinsic.id").setName("Scott Phillips")))
   let code = rlsync.question("Enter the security code sent to your email:") ?? "";
   let p = AccountProfile.deserializeBinary(Buffer.from(base64Profile, "base64url"));
-  let profile = await accountService.unprotect(p, new TextEncoder().encode(code));
-  const base64UnprotectedProfile = Buffer
-      .from(profile.serializeBinary())
-      .toString('base64url');
-  accountService.options.setAuthToken(base64UnprotectedProfile)
+  let profile = await AccountService.unprotect(p, new TextEncoder().encode(code));
+  accountService.options.setAuthToken(profile)
 
   walletService = new WalletService(accountService.options);
   searchResponse = await walletService.search();
