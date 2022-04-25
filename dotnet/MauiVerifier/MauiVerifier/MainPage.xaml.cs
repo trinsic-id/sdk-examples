@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -25,6 +26,12 @@ public partial class MainPage : ContentPage
     }
 
     private async void OnShareCredential(object sender, EventArgs e) {
+
+        BusyIndicator.IsRunning = BusyIndicator.IsVisible = true;
+        ResultLabel.Text = "";
+
+        await Task.Yield();
+
         try {
             OidcClientOptions options = new() {
                 Authority = "https://connect.trinsic.cloud",
@@ -48,11 +55,16 @@ public partial class MainPage : ContentPage
             }
             else {
                 ResultLabel.Text = "Success!";
-                ResultEditor.Text = result.IdentityToken;//JsonSerializer.Serialize(token, new JsonSerializerOptions { WriteIndented = true });
+                // ResultEditor.Text = result.IdentityToken
+
+                await Navigation.PushAsync(new CredentialPage(result.IdentityToken), true);
             }
         }
         catch (Exception ex) {
             Console.WriteLine(ex);
+        }
+        finally {
+            BusyIndicator.IsRunning = BusyIndicator.IsVisible = false;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MauiVerifier
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts => {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    //fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
             return builder.Build();

@@ -4,7 +4,7 @@
              BackgroundColor="{DynamicResource SecondaryColor}">
 
     <ScrollView>
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
             <Label 
@@ -38,9 +38,16 @@
                 x:Name="ResultLabel"
                 HorizontalOptions="Center" />
             
+            <ActivityIndicator
+                x:Name="BusyIndicator"
+                Grid.Row="4"
+                IsRunning="false"
+                IsVisible="false" />
+            
             <Editor x:Name="ResultEditor"
                 Placeholder=""
-                Grid.Row="4"
+                Grid.Row="5"
+                IsReadOnly="true"
                 AutoSize="TextChanges" />
 
         </Grid>
