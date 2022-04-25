@@ -17,8 +17,11 @@ using IdentityModel.OidcClient.Browser;
 using IdentityModel.OidcClient.Results;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 using Microsoft.Maui.Essentials;
 using UIKit;
+using ListView=Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.ListView;
 
 namespace MauiVerifier;
 
@@ -26,6 +29,7 @@ public partial class CredentialPage : ContentPage
 {
     public CredentialPage(string token) {
         InitializeComponent();
+        ClaimsListView.On<iOS>().SetSeparatorStyle(SeparatorStyle.FullWidth);
 
         Token = token;
     }
@@ -43,7 +47,7 @@ public partial class CredentialPage : ContentPage
             Console.WriteLine("No presentation token found.");
             return;
         }
-
+        
         var credential = JsonSerializer.Deserialize<JsonElement>(credentialJson);
 
         CredentialTypeLabel.Text = ParseTitle(credential);
