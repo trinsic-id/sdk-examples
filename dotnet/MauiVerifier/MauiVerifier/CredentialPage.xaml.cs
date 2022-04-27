@@ -1,27 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading;
-using System.Threading.Tasks;
-using AuthenticationServices;
-using Foundation;
-using IdentityModel;
-using IdentityModel.Client;
-using IdentityModel.OidcClient;
-using IdentityModel.OidcClient.Browser;
-using IdentityModel.OidcClient.Results;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
-using Microsoft.Maui.Essentials;
-using UIKit;
-using ListView=Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.ListView;
 
 namespace MauiVerifier;
 
@@ -29,8 +11,7 @@ public partial class CredentialPage : ContentPage
 {
     public CredentialPage(string token) {
         InitializeComponent();
-        ClaimsListView.On<iOS>().SetSeparatorStyle(SeparatorStyle.FullWidth);
-
+        
         Token = token;
     }
     public string Token { get; set; }

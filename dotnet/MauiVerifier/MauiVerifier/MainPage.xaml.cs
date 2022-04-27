@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using AuthenticationServices;
-using Foundation;
-using IdentityModel;
 using IdentityModel.Client;
 using IdentityModel.OidcClient;
-using IdentityModel.OidcClient.Browser;
-using IdentityModel.OidcClient.Results;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
-using UIKit;
 
 namespace MauiVerifier;
 
@@ -55,8 +43,7 @@ public partial class MainPage : ContentPage
             }
             else {
                 ResultLabel.Text = "Success!";
-                // ResultEditor.Text = result.IdentityToken
-
+                
                 await Navigation.PushAsync(new CredentialPage(result.IdentityToken), true);
             }
         }
