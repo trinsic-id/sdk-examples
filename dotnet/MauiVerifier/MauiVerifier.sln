@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiVerifier", "MauiVerifier\MauiVerifier.csproj", "{000ECD64-6C4D-490E-B183-13E0BA96FE74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{000ECD64-6C4D-490E-B183-13E0BA96FE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{000ECD64-6C4D-490E-B183-13E0BA96FE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{000ECD64-6C4D-490E-B183-13E0BA96FE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{000ECD64-6C4D-490E-B183-13E0BA96FE74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
