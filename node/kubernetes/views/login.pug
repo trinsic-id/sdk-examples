@@ -1,0 +1,21 @@
+html
+  head
+    title= title
+    link(rel="stylesheet", href="tachyons.min.css")
+  body.ph3.pt0.pb4.mw7.center.sans-serif
+    h1.f2.mb0 #[span.blue Trinsic] Node
+    p.f5.mt1.mb4.lh-copy Trinsic Node Login
+    if userAccountString === undefined || userAccountString.length === 0
+      form(action="/login" method="POST")
+        ol.list.pl0
+          li.mv3
+          label.f6.b.db.mb2(for="inputEmail") Username
+          input.form-control(type="email" name="emailAddress" id="inputEmail" required autofocus)
+          input.f6.link.dim.br1.ba.bw1.ph3.pv2.mb2.dib.black.bg-white.pointer.ml2(type="submit" value="Login" name="login")
+    else if userLoggedIn === false
+      form(action="/verify_email" method="POST")
+        ol.list.pl0
+          li.mv3
+          label.f6.b.db.mb2(for="okapiCode") Token Code
+          input.form-control(type="number" name="unblindCode" id="okapiCode" required autofocus)
+          input.f6.link.dim.br1.ba.bw1.ph3.pv2.mb2.dib.black.bg-white.pointer.ml2(type="submit" value="Complete Login" name="unblindOkapi")
