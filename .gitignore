@@ -128,3 +128,7 @@ android/.idea/deploymentTargetDropDown.xml
 android-controller/.idea/
 
 .DS_Store
+ruby/.idea/
+node/basic/.idea/
+node/basic/index.js
+browser/react-wallet/.idea/
