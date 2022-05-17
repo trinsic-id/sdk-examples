@@ -3,7 +3,8 @@ import express from "express"
 import * as bodyParser from "body-parser"
 express.Router()
 
-import {AccountDetails, AccountService, SignInRequest, WalletService} from "@trinsic/trinsic"
+import {AccountDetails, AccountProfile, AccountService, SignInRequest, WalletService} from "@trinsic/trinsic"
+import {fromUint8Array, toUint8Array} from "js-base64";
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -50,6 +51,11 @@ async function start() {
     })
 
     app.post('/verify_email', async(req, res) => {
+        // for @trinsic/trinsic 1.4.0 - throws RST_STREAM_ERROR code 0
+        // const profile = await accountService.unprotect(AccountProfile.deserializeBinary(toUint8Array(systemState.userAccountString)), req.body.unblindCode)
+        // systemState.userAccountString = fromUint8Array(profile.serializeBinary(), true);
+
+        // for @trinsic/trinsic 1.4.2 - does not throw!
         systemState.userAccountString = await AccountService.unprotect(systemState.userAccountString, req.body.unblindCode);
         systemState.userLoggedIn = true
 

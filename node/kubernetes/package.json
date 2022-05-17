@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "^1.4.1",
+    "@trinsic/trinsic": "1.4.2",
+    "js-base64": "^3.7.2",
     "express": "^4.17.1",
     "marked": "^4.0.15",
     "pug": "^3.0.2",
