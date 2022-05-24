@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: trinsic-node-demo
+spec:
+  selector:
+    app: trinsic-node-demo
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trinsic-node-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trinsic-node-demo
+  template:
+    metadata:
+      labels:
+        app: trinsic-node-demo
+    spec:
+      containers:
+        - name: trinsic-node-demo
+          image: fundthmcalculus/fundthmcalculus:trinsic-node-test
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
