@@ -53,14 +53,6 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Include="Platforms\iOS\PlatformBrowser.cs" />
-      <Compile Update="CredentialPage.xaml.cs">
-        <DependentUpon>CredentialPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
-
     <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
         <OutputType>WinExe</OutputType>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
