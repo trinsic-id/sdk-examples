@@ -7,25 +7,27 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import trinsic.services.AccountService
-import trinsic.services.CredentialsService
-import trinsic.services.WalletService
+import trinsic.services.TrinsicService
+import trinsic.services.account.v1.AccountDetails
 import trinsic.services.account.v1.AccountOuterClass
+import trinsic.services.account.v1.SignInRequest
+import trinsic.services.universalwallet.v1.SearchRequest
 import trinsic.services.universalwallet.v1.UniversalWalletOuterClass
+import trinsic.services.verifiablecredentials.v1.CreateProofRequest
+import trinsic.services.verifiablecredentials.v1.SendRequest
 import trinsic.services.verifiablecredentials.v1.VerifiableCredentials
 
 class DriversLicenseDemo {
-    val accountService = AccountService(null)
-    val walletService = WalletService(null)
-    val credentialsService = CredentialsService(null)
+    val service = TrinsicService(null)
 
     private lateinit var allison: String
     private lateinit var allisonUnprotected: String
     private lateinit var credentialProof: Map<String, Any>
 
     fun signin(email: String) {
-        allison = accountService.signIn(
-            AccountOuterClass.SignInRequest.newBuilder()
-                .setDetails(AccountOuterClass.AccountDetails.newBuilder().setEmail(email).build())
+        allison = service.account().signIn(
+            SignInRequest.newBuilder()
+                .setDetails(AccountDetails.newBuilder().setEmail(email).build())
                 .build()
         ).get()
         Log.d("Login", "Login started, check email for code")
@@ -34,21 +36,19 @@ class DriversLicenseDemo {
     fun unprotectAccount(code: String) {
         allisonUnprotected = AccountService.unprotect(allison, code)
         Log.d("Login", "Login complete, account unprotected")
-        walletService.setProfile(allisonUnprotected)
-        accountService.setProfile(allisonUnprotected)
-        credentialsService.setProfile(allisonUnprotected)
+        service.setProfile(allisonUnprotected)
     }
 
     fun getLatestCredential(): HashMap<*, *> {
         val walletContents =
-            walletService.search(UniversalWalletOuterClass.SearchRequest.getDefaultInstance()).get()
+            service.wallet().search(SearchRequest.getDefaultInstance()).get()
         val driversLicenseCred = walletContents.itemsList.map { jsonString: String ->
             Gson().fromJson(jsonString, HashMap::class.java)
         }.sortedBy { jsonData: Map<*, *> ->
             ((jsonData["data"] as Map<*, *>)["proof"] as Map<*, *>)["created"] as String
         }.last { jsonData: Map<*, *> ->
             val data = jsonData["data"] as Map<*, *>
-            val typeList = data["type"] as List<String>
+            val typeList = data["type"] as List<*>
             typeList.any { x ->
                 x == "Iso18013DriversLicenseCredential"
             }
@@ -59,8 +59,8 @@ class DriversLicenseDemo {
 
     fun createProof(credentialFrameString: String, itemId: String): Map<String, Any> {
         // SHARE CREDENTIAL
-        val createProofResponse = credentialsService.createProof(
-            VerifiableCredentials.CreateProofRequest.newBuilder()
+        val createProofResponse = service.credential().createProof(
+            CreateProofRequest.newBuilder()
                 .setDocumentJson(credentialFrameString).setItemId(itemId).build()
         ).get()
         val proof =
@@ -74,8 +74,8 @@ class DriversLicenseDemo {
         val hashMap = java.util.HashMap<Any, Any>()
         this.credentialProof.forEach { (t, u) -> hashMap[t] = u }
         val docJson = Gson().toJson(hashMap)
-        credentialsService.send(
-            VerifiableCredentials.SendRequest.newBuilder().setEmail(sendToEmail)
+        service.credential().send(
+            SendRequest.newBuilder().setEmail(sendToEmail)
                 .setDocumentJson(docJson).build()
         )
     }
