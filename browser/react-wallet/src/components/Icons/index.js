@@ -22,3 +22,4 @@ export * from './BadgeCheck';
 export * from './QRCodeIcon';
 export * from './ChevronDoubleLeftIcon';
 export * from './ChevronDoubleRightIcon';
+export * from './UserGroupIcon';

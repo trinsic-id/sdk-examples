@@ -3,13 +3,15 @@ import templateReducer, { templates } from './Templates';
 import authenticationReducer, { authentication} from './Authentication';
 import walletReducer, { wallet } from './Wallet';
 import credentialReducer, { credentials } from './Credential';
+import ecosystemReducer, { ecosystems } from './Ecosystems';
 import { LOGOUT } from '../actions';
 
 export const initialState = {
   templates,
   authentication,
   wallet,
-  credentials
+  credentials,
+  ecosystems
 }
 
 
@@ -17,7 +19,8 @@ const appReducer = combineReducers({
   templates: templateReducer,
   authentication: authenticationReducer,
   wallet: walletReducer,
-  credentials: credentialReducer
+  credentials: credentialReducer,
+  ecosystems: ecosystemReducer
 })
 
 const rootReducer = (state, action) => {

@@ -6,10 +6,11 @@ import StoreItemPage from './StoreItemPage';
 import VerifyCredentialPage from './VerifyCredentialPage';
 import ItemsListPage from './ItemsListPage';
 import PrivateRoute from '../components/PrivateRoute';
-import { getWalletItems } from '../actions';
+import { getEcosystemInfo, getWalletItems } from '../actions';
 import WalletNavbar from '../components/WalletNavbar';
 import CredentialTemplatesPage from './CredentialTemplatesPage';
 import CreateCredentialTemplatePage from './CreateCredentialTemplatePage';
+import EcosystemsPage from './EcosystemsPage';
 
 export class WalletPage extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class WalletPage extends React.Component {
 
   componentDidMount() {
     this.props.getItems();
+    this.props.getEcosystemInfo();
   }
 
   navigateTo = (location) => {
@@ -46,9 +48,9 @@ export class WalletPage extends React.Component {
     }
     
     return (
-      <div className="flex">
+      <div className="flex pt-24">
         <WalletNavbar walletName={this.props.user.name}/>
-        <div id="content" className="ml-16 mr-8 mt-8 w-full">
+        <div id="content" className="w-full mt-8 ml-16 mr-8">
           <Routes>
             <Route path="/issue" element={<PrivateRoute><IssueCredentialPage /></PrivateRoute>} />
             <Route path="/verify" element={<PrivateRoute><VerifyCredentialPage /></PrivateRoute>} />
@@ -56,6 +58,7 @@ export class WalletPage extends React.Component {
             <Route path="/" element={<PrivateRoute><ItemsListPage /></PrivateRoute>} />
             <Route path="/templates" element={<PrivateRoute><CredentialTemplatesPage /></PrivateRoute>} />
             <Route path="/templates/generator" element={<PrivateRoute><CreateCredentialTemplatePage /></PrivateRoute>} />
+            <Route path="/ecosystems" element={<PrivateRoute><EcosystemsPage /></PrivateRoute>} />
           </Routes>
         </div>
       </div>
@@ -72,7 +75,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getItems: () => dispatch(getWalletItems())
+    getItems: () => dispatch(getWalletItems()),
+    getEcosystemInfo: () => dispatch(getEcosystemInfo())
   }
 }
 

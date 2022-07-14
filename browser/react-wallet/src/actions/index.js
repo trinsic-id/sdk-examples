@@ -194,3 +194,47 @@ export const closeNotification = () => {
     type: CLOSE_NOTIFICATION
   }
 }
+
+export const CREATE_ECOSYSTEM = 'CREATE_ECOSYSTEM';
+export const createEcosystem = (ecosystem) => {
+  return async (dispatch, getState) => {
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.ProviderService(serviceOptions);
+
+    let request = trinsic.CreateEcosystemRequest.fromPartial({
+      name: ecosystem.ecosystemName,
+      description: ecosystem.description,
+      uri: ecosystem.uri,
+      details: {
+        name: ecosystem.name,
+        email: ecosystem.email,
+        sms: ecosystem.sms
+      }
+    });
+
+    let response = await service.createEcosystem(request);
+
+    dispatch({
+      type: CREATE_ECOSYSTEM,
+      ecosystem: response.ecosystem
+    });
+  }
+}
+
+export const GET_ECOSYSTEM_INFO = 'GET_ECOSYSTEM_INFO';
+export const getEcosystemInfo = () => {
+  return async (dispatch, getState) => {
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.ProviderService(serviceOptions);
+
+    let request = trinsic.Ecosystem.fromPartial({});
+    let response = await service.ecosystemInfo(request);
+
+    dispatch({
+      type: GET_ECOSYSTEM_INFO,
+      ecosystem: response.ecosystem
+    });
+  }
+}
