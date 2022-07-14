@@ -3,7 +3,9 @@ import { LOGIN, LOGOUT, VERIFY_EMAIL } from '../actions';
 export const authentication = {
   loggedIn: false,
   user: {},
-  profile: {}
+  profile: {},
+  challenge: new Uint8Array(),
+  authToken: ""
 }
 
 export default function authenticationReducer(state = authentication, action) {
@@ -11,20 +13,24 @@ export default function authenticationReducer(state = authentication, action) {
     case LOGIN:
       return Object.assign({}, state, {
         user: action.user,
-        profile: action.profile
+        profile: action.profile,
+        challenge: action.challenge
       })
     case VERIFY_EMAIL:
       return Object.assign({}, state, {
         loggedIn: true,
         user: action.user,
-        profile: action.profile
+        profile: action.profile,
+        authToken: action.authToken
       })
     case LOGOUT:
       console.log("logging out")
       return Object.assign({}, state, {
         loggedIn: false,
         user: {},
-        profile: {}
+        profile: {},
+        challenge: new Uint8Array(),
+        authToken: ""
       })
     default:
       return state;
