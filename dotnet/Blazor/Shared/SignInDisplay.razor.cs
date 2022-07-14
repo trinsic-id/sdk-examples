@@ -36,8 +36,10 @@ namespace Blazor.Shared
                     Email = Model.Email ?? string.Empty
                 }
             });
+            
+            
 
-            var profile = AccountProfile.Parser.ParseFrom(Convert.FromBase64String(authToken));
+            var profile = AccountProfile.Parser.ParseFrom(Base64Url.DecodeBytes(authToken));
 
             if  (profile.Protection.Enabled)
             {

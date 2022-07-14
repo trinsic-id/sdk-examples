@@ -1,5 +1,5 @@
 ﻿@page "/wallet"
-@inject HttpClient Http
+@using Trinsic.Services.UniversalWallet.V1
 @inject WalletService WalletService
 @inject ITokenProvider TokenProvider
 
@@ -35,7 +35,7 @@
     protected override async Task OnInitializedAsync()
     {
         WalletService.Options.AuthToken = await TokenProvider.GetAsync();
-        var items = await WalletService.SearchAsync();
+        var items = await WalletService.SearchAsync(new SearchRequest());
 
         Console.WriteLine(items);
     }
