@@ -48,18 +48,18 @@ export class ItemsListPage extends React.Component {
   render() {
     return (
       <div>
-        <table className="w-full min-w-lg divide-y divide-gray-200 break-all bg-white shadow">
+        <table className="w-full break-all bg-white divide-y divide-gray-200 shadow min-w-lg">
           <thead>
             <tr className="bg-gray-200">
-              <th className="text-left pl-4">ID</th>
+              <th className="pl-4 text-left">ID</th>
               <th>Type</th>
               <th>Issuance Date</th>
             </tr>
           </thead>
           <tbody>
             {this.props.items.map((item, i) => 
-              <tr key={i} className='hover:bg-gray-100 text-center cursor-pointer' onClick={() => this.showDetails(item)}>
-                <td className="text-left pl-4">{item.id}</td>
+              <tr key={item.id} className='text-center cursor-pointer hover:bg-gray-100' onClick={() => this.showDetails(item)}>
+                <td className="pl-4 text-left">{item.id}</td>
                 <td>{JSON.stringify(item.type)}</td>
                 <td>{new Date(item.issuanceDate).toLocaleDateString()}</td>
               </tr>
@@ -67,10 +67,10 @@ export class ItemsListPage extends React.Component {
           </tbody>
         </table>
         <Modal open={this.state.showDetailsModal} onClose={this.closeModal}>
-          <table className="w-full min-w-lg divide-y divide-gray-200 break-all bg-white shadow">
+          <table className="w-full break-all bg-white divide-y divide-gray-200 shadow min-w-lg">
             <thead>
               <tr className="bg-gray-200">
-                <th className="text-left pl-4">Attribute</th>
+                <th className="pl-4 text-left">Attribute</th>
                 <th>Value</th>
               </tr>
             </thead>
@@ -78,13 +78,13 @@ export class ItemsListPage extends React.Component {
               {this.state.attributes.map((attribute, i) => {
                 if (attribute !== "proof") {
                   return (
-                    <tr key={i} className='hover:bg-gray-100 text-left'>
+                    <tr key={i} className='text-left hover:bg-gray-100'>
                       <td className="pl-4 whitespace-nowrap">{attribute}</td>
                       <td className="pl-4">{this.renderAttribute(i)}</td>
                     </tr>
                   );
                 }
-                return <div></div>;
+                return <tr key={i}></tr>;
               })}
             </tbody>
           </table>
@@ -93,7 +93,7 @@ export class ItemsListPage extends React.Component {
             <CodeEditor
               name="proof" 
               language="json" 
-              className="w-ful rounded bg-gray-100" 
+              className="bg-gray-100 rounded w-ful" 
               value={JSON.stringify(this.state.item.proof)} 
             />
           }

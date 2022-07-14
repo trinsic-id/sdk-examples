@@ -113,7 +113,7 @@ export const getWalletItems = () => {
     let response = await service.search();
     // let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
     // items = items.map(item => JSON.parse(Object.values(item.data).join('')))
-    let items = response.items.map(item => JSON.parse(item));
+    let items = response.items.map(item => JSON.parse(JSON.parse(item).data));
 
     dispatch({
       type: GET_WALLET_ITEMS,
