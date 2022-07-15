@@ -13,13 +13,13 @@ import {
 export const WalletNavbar = ({walletName, ...props}) => {
 
   return (
-    <VerticalNavbar id="vertical-navbar" className="bg-white w-12 hover:w-64 transition-width duration-700 ease-in-out z-20" {...props}>
+    <VerticalNavbar id="vertical-navbar" className="z-20 w-12 duration-700 ease-in-out bg-white hover:w-64 transition-width" {...props}>
       <VerticalNavbar.List className="flex-nowrap whitespace-nowrap">
         <VerticalNavbar.Item className="justify-end">
           <ChevronDoubleRightIcon className="vertical-navbar-menu-icon"/>
         </VerticalNavbar.Item>
-        <div className="vertical-navbar-spacer h-8" />
-        <VerticalNavbar.Text className="h-8 font-bold text-xl text-center w-full fade-in-text"><h2>{walletName}</h2></VerticalNavbar.Text>
+        <div className="h-8 vertical-navbar-spacer" />
+        <VerticalNavbar.Text className="w-full h-8 text-xl font-bold text-center fade-in-text"><h2>{walletName}</h2></VerticalNavbar.Text>
         <VerticalNavbar.Item navigateTo="/"> 
           <CreditCardIcon className="w-8"/>
           <VerticalNavbar.Link className="pl-2 fade-in-text">My Items</VerticalNavbar.Link>

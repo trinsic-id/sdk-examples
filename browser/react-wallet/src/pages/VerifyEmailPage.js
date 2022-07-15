@@ -29,7 +29,7 @@ export class VerifyEmailPage extends React.Component {
       return <Navigate to="/" />
     }
     return (
-      <div className='w-full flex mt-8 items-center justify-center'>
+      <div className='w-full flex pt-32 items-center justify-center'>
         <div className='max-w-sm bg-white rounded shadow-md p-8 pt-12 mt-4'>
           <h1 className='text-3xl font-bold mb-4'>Verify Email</h1>
           <hr />

@@ -4,7 +4,7 @@ import { Button } from "../components/Button";
 import { createCredentialTemplate } from "../actions";
 import { Input } from "../components/Inputs/Input";
 import { DynamicInput } from "../components/Inputs";
-
+const FieldType = require("@trinsic/trinsic").FieldType;
 
 class CreateCredentialTemplatePage extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class CreateCredentialTemplatePage extends React.Component {
 
     this.state = {
       templateName: "",
-      fields: []
+      fields: {}
     }
   }
 
@@ -23,9 +23,30 @@ class CreateCredentialTemplatePage extends React.Component {
   }
   
   onAttributesChange = (attributes, descriptions, optionals, types) => {
-    let fields = [];
+    let fields = {};
     attributes.forEach((attribute, index) => {
-      fields[index] = [attribute, descriptions[index], optionals[index], types[index]]
+      fields[attribute] = {};
+      fields[attribute].description = descriptions[index];
+      fields[attribute].optional = optionals[index];
+      switch (types[index]) {
+        case "string":
+          fields[attribute].type = FieldType.STRING;
+          break;
+        case "number":
+          fields[attribute].type = FieldType.NUMBER;
+          break;
+        case "bool":
+          fields[attribute].type = FieldType.BOOL;
+          break;
+        case "datetime":
+          fields[attribute].type = FieldType.DATETIME;
+          break;
+        default:
+          fields[attribute].type = FieldType.STRING;
+          break;
+      }
+      fields[attribute].type = types[index];
+      
     });
 
     this.setState({

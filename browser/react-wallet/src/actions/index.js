@@ -1,22 +1,33 @@
 const trinsic = require("@trinsic/trinsic");
 export const ResponseStatus = trinsic.ResponseStatus;
-const serverConfig = trinsic.ServiceOptions.fromPartial({ serverEndpoint: "dev-internal.trinsic.cloud", serverUseTls: true, serverPort: 443});
-const trinsicService = new trinsic.TrinsicService(serverConfig);
+
+const serviceOptions = trinsic.ServiceOptions.fromPartial({});
+
 export const ERROR = 'ERROR';
 
-const setTrinsicTokenFromState = (getState) => {
-  trinsicService.options.authToken = getState().authentication.profile;
+const getProfileFromState = (getState) => {
+  const profileObject = getState().authentication.profile;
+  let profile = trinsic.AccountProfile.fromPartial(profileObject);
+
+  return profile;
 }
 
 export const LOGIN = 'LOGIN';
 export const login = (email, name) => {
   return async (dispatch) => {
-    let response = await trinsicService.account().login({email: email, ecosystemId: "", invitationCode: ""});
+    const service = new trinsic.AccountService(serviceOptions);
 
+    const loginResponse = await service.login(
+      trinsic.LoginRequest.fromPartial({
+        email,
+      })
+    );
+    
     dispatch({
       type: LOGIN,
       user: { name, email },
-      loginResponse: response
+      profile: loginResponse,
+      challenge: loginResponse.challenge
     })
   }
 }
@@ -24,13 +35,17 @@ export const login = (email, name) => {
 export const VERIFY_EMAIL = 'VERIFY_EMAIL';
 export const verifyEmail = (securityCode) => {
   return async (dispatch, getState) => {
+    const service = new trinsic.AccountService(serviceOptions);
     const auth = getState().authentication;
-    let profileString = await trinsicService.account().loginConfirm(auth.loginResponse.challenge, securityCode);
+    const profile = getProfileFromState(getState);
+
+    const authToken = await service.loginConfirm(auth.challenge, securityCode);
 
     dispatch({
       type: VERIFY_EMAIL,
       user: auth.user,
-      profile: profileString
+      profile: Object.assign({}, profile, { authToken: authToken }),
+      authToken: authToken
     })
   }
 }
@@ -47,13 +62,18 @@ export const logout = () => {
 export const GET_CREDENTIAL_TEMPLATES = 'GET_CREDENTIAL_TEMPLATES';
 export const getCredentialTemplates = () => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.TemplateService(serviceOptions);
 
-    let response = await trinsicService.template().searchCredentialTemplate({query: "SELECT * FROM c", continuationToken: ""});
+    let request = trinsic.SearchCredentialTemplatesRequest.fromPartial({
+      query: "select * from c"
+    });
+    let response = await service.searchCredentialTemplate(request);
 
     dispatch({
       type: GET_CREDENTIAL_TEMPLATES,
-      items: JSON.parse(response.itemsJson).Documents
+      items: JSON.parse(response.itemsJson)
     });
   }
 }
@@ -61,29 +81,13 @@ export const getCredentialTemplates = () => {
 export const CREATE_CREDENTIAL_TEMPLATE = 'CREATE_CREDENTIAL_TEMPLATE';
 export const createCredentialTemplate = (name, fields) => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.TemplateService(serviceOptions);
 
-    const request = trinsic.CreateCredentialTemplateRequest.fromPartial({name: name});
-    fields.forEach(field => {
-      let templateField = trinsic.TemplateField.fromPartial({description: field[1], optional: field[2]});
-      switch (field[3]) {
-        case "string":
-          templateField.type = (trinsic.FieldType.STRING)
-          break;
-        case "number":
-          templateField.type = (trinsic.FieldType.NUMBER)
-          break;
-        case "bool":
-          templateField.type = (trinsic.FieldType.BOOL)
-          break;
-        case "datetime":
-          templateField.type = (trinsic.FieldType.DATETIME)
-          break;
-        default:
-          templateField.type = (trinsic.FieldType.STRING)
-          break;
-      }
-      request.fields[field[0]] = templateField
+    var request = trinsic.CreateCredentialTemplateRequest.fromPartial({
+      name: name,
+      fields: fields
     });
 
     let response = await trinsicService.template().createCredentialTemplate(request);
@@ -98,10 +102,14 @@ export const createCredentialTemplate = (name, fields) => {
 export const GET_WALLET_ITEMS = 'GET_WALLET_ITEMS';
 export const getWalletItems = () => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.WalletService(serviceOptions);
     
-    let response = await trinsicService.wallet().search();
-    let items = response.items.map(item => JSON.parse(item))
+    let response = await service.search();
+    // let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
+    // items = items.map(item => JSON.parse(Object.values(item.data).join('')))
+    let items = response.items.map(item => JSON.parse(JSON.parse(item).data));
 
     dispatch({
       type: GET_WALLET_ITEMS,
@@ -114,13 +122,19 @@ export const INSERTING_WALLET_ITEM = 'INSERTING_WALLET_ITEM';
 export const INSERTED_WALLET_ITEM = 'INSERTED_WALLET_ITEM';
 export const insertWalletItem = (item) => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.WalletService(serviceOptions);
     
     dispatch({
       type: INSERTING_WALLET_ITEM
     })
 
-    let response = await trinsicService.wallet().insertItem(item);
+    let request = trinsic.InsertItemRequest.fromPartial({
+      itemJson: JSON.stringify(item)
+    });
+
+    let response = await service.insertItem(request);
 
     dispatch({
       type: INSERTED_WALLET_ITEM,
@@ -132,13 +146,19 @@ export const insertWalletItem = (item) => {
 export const SEND_CREDENTIAL = 'SEND_CREDENTIAL';
 export const sendCredential = (credential, email) => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.CredentialService(serviceOptions);
     
-    let sendResponse = await trinsicService.credential().send( trinsic.SendRequest.fromPartial({ email: email, documentJson: credential}));
+    let request = trinsic.SendRequest.fromPartial({
+      documentJson: JSON.stringify(credential),
+      email: email
+    })
+    let response = await service.send(request);
     
     dispatch({
       type: SEND_CREDENTIAL,
-      response: sendResponse
+      response: response
     })
   }
 }
@@ -146,10 +166,16 @@ export const sendCredential = (credential, email) => {
 export const ISSUE_CREDENTIAL = 'ISSUE_CREDENTIAL';
 export const issueCredential = (templateId, values) => {
   return async (dispatch, getState) => {
-    setTrinsicTokenFromState(getState);
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.CredentialService(serviceOptions);
 
-    let request = trinsic.IssueFromTemplateRequest.fromPartial({templateId: templateId, valuesJson: JSON.stringify(values)});
-    let response = await trinsicService.credential().issueFromTemplate(request);
+    let request = trinsic.IssueFromTemplateRequest.fromPartial({
+      templateId: templateId,
+      valuesJson: JSON.stringify(values)
+    });
+    
+    let response = await service.issueFromTemplate(request);
 
     dispatch({
       type: ISSUE_CREDENTIAL,
@@ -162,5 +188,49 @@ export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';
 export const closeNotification = () => {
   return {
     type: CLOSE_NOTIFICATION
+  }
+}
+
+export const CREATE_ECOSYSTEM = 'CREATE_ECOSYSTEM';
+export const createEcosystem = (ecosystem) => {
+  return async (dispatch, getState) => {
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.ProviderService(serviceOptions);
+
+    let request = trinsic.CreateEcosystemRequest.fromPartial({
+      name: ecosystem.ecosystemName,
+      description: ecosystem.description,
+      uri: ecosystem.uri,
+      details: {
+        name: ecosystem.name,
+        email: ecosystem.email,
+        sms: ecosystem.sms
+      }
+    });
+
+    let response = await service.createEcosystem(request);
+
+    dispatch({
+      type: CREATE_ECOSYSTEM,
+      ecosystem: response.ecosystem
+    });
+  }
+}
+
+export const GET_ECOSYSTEM_INFO = 'GET_ECOSYSTEM_INFO';
+export const getEcosystemInfo = () => {
+  return async (dispatch, getState) => {
+    const profile = getProfileFromState(getState);
+    serviceOptions.authToken = profile.authToken;
+    const service = new trinsic.ProviderService(serviceOptions);
+
+    let request = trinsic.Ecosystem.fromPartial({});
+    let response = await service.ecosystemInfo(request);
+
+    dispatch({
+      type: GET_ECOSYSTEM_INFO,
+      ecosystem: response.ecosystem
+    });
   }
 }
