@@ -1,9 +1,9 @@
-import { AccountService, SignInRequest } from "@trinsic/trinsic-web";
+import { AccountService} from "@trinsic/trinsic";
 
 async function signIn() {
 
     const service = new AccountService();
-    const configuration = await service.signIn(new SignInRequest());
+    const configuration = await service.signIn();
 
     console.log(`auth_token = ${configuration}`);
 

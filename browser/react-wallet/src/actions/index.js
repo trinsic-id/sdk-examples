@@ -1,11 +1,7 @@
 const trinsic = require("@trinsic/trinsic");
 export const ResponseStatus = trinsic.ResponseStatus;
 
-const serviceOptions = trinsic.ServiceOptions.fromPartial({
-  serverEndpoint: "staging-internal.trinsic.cloud",
-  serverPort: 443,
-  serverUseTls: true
-});
+const serviceOptions = trinsic.ServiceOptions.fromPartial({});
 
 export const ERROR = 'ERROR';
 
@@ -94,7 +90,7 @@ export const createCredentialTemplate = (name, fields) => {
       fields: fields
     });
 
-    let response = await service.createCredentialTemplate(request);
+    let response = await trinsicService.template().createCredentialTemplate(request);
 
     dispatch({
       type: CREATE_CREDENTIAL_TEMPLATE,
