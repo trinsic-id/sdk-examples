@@ -90,7 +90,7 @@ export const createCredentialTemplate = (name, fields) => {
       fields: fields
     });
 
-    let response = await trinsicService.template().createCredentialTemplate(request);
+    let response = await service.createCredentialTemplate(request);
 
     dispatch({
       type: CREATE_CREDENTIAL_TEMPLATE,
