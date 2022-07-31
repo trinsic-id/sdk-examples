@@ -1,4 +1,4 @@
-FROM node:14.20-slim
+FROM node:18.7-slim
 COPY . .
 RUN npm install
 CMD [ "npx", "ts-node", "index.ts" ]
