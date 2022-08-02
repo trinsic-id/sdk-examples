@@ -46,9 +46,12 @@
     ]
   },
   "devDependencies": {
+    "@redux-devtools/extension": "3.2.2",
     "autoprefixer": "9.8.8",
     "postcss": "7.0.39",
     "postcss-loader": "4.3.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4"
+    "redux-devtools-extension": "^2.13.9",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "typescript": "4.7.4"
   }
 }

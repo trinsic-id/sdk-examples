@@ -14,6 +14,7 @@ import App from './App';
 import rootReducer, { initialState } from './reducers';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const persistConfig = {
   key: 'trinsic-wallet',
@@ -21,10 +22,7 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewareEnhancer = applyMiddleware(thunkMiddleware);
-const enhancer = composeEnhancers(middlewareEnhancer);
-const store = createStore(persistedReducer, initialState, enhancer);
+const store = createStore(persistedReducer, initialState, composeWithDevTools());
 let persistor = persistStore(store);
 
 ReactDOM.render(
