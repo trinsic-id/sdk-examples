@@ -16,7 +16,6 @@ export default function authenticationReducer(state = authentication, action) {
         loginResponse: action.loginResponse
       })
     case VERIFY_EMAIL:
-      debugger;
       return Object.assign({}, state, {
         loggedIn: true,
         user: action.user,
