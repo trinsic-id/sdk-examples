@@ -1,7 +1,6 @@
 const trinsic = require("@trinsic/trinsic/lib/browser");
 export const ResponseStatus = trinsic.ResponseStatus;
-const serverConfig = trinsic.ServiceOptions.fromPartial({ serverEndpoint: "dev-internal.trinsic.cloud", serverUseTls: true, serverPort: 443});
-const trinsicService = new trinsic.TrinsicService(serverConfig);
+const trinsicService = new trinsic.TrinsicService();
 export const ERROR = 'ERROR';
 
 const setTrinsicTokenFromState = (getState) => {
