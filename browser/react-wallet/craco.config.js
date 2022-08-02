@@ -1,6 +1,13 @@
 const {addBeforeLoader, loaderByName} = require("@craco/craco");
 
 module.exports = {
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    },
+  },
   style: {
     postcss: {
       plugins: [
@@ -10,6 +17,7 @@ module.exports = {
     },
   },
   webpack: {
+    mode: "development",
     configure: (webpackConfig) => {
       const wasmExtensionRegExp = /\.wasm$/;
       webpackConfig.resolve.extensions.push('.wasm');
