@@ -10,6 +10,6 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.4.0" />
+    <PackageReference Include="Trinsic" Version="1.7.0" />
   </ItemGroup>
 </Project>

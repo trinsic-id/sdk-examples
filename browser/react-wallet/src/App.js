@@ -11,12 +11,13 @@ import WalletPage from './pages/WalletPage';
 function App(props) {
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar className="bg-white shadow-md w-full">
+      <Navbar className="fixed w-full bg-white shadow-md">
         <Navbar.Logo href="/#">
           <TrinsicLogo className="h-12" />
         </Navbar.Logo>
-        <Navbar.List>
+        <Navbar.List className="justify-between">
             {props.loggedIn && <Navbar.Item onClick={props.logout}>Sign Out</Navbar.Item> }
+            {props.loggedIn && <Navbar.Item>Ecosystem: {props.ecosystem.name}</Navbar.Item> }
         </Navbar.List>
       </Navbar>
       <Routes>
@@ -30,7 +31,8 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.authentication.loggedIn
+    loggedIn: state.authentication.loggedIn,
+    ecosystem: state.ecosystems.currentEcosytem
   }
 }
 
