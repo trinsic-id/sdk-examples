@@ -4,7 +4,7 @@ import { Button } from "../components/Button";
 import { createCredentialTemplate } from "../actions";
 import { Input } from "../components/Inputs/Input";
 import { DynamicInput } from "../components/Inputs";
-const FieldType = require("@trinsic/trinsic").FieldType;
+import { FieldType} from "@trinsic/trinsic/browser";
 
 class CreateCredentialTemplatePage extends React.Component {
   constructor(props) {
