@@ -67,13 +67,14 @@ export const getCredentialTemplates = () => {
     const service = new trinsic.TemplateService(serviceOptions);
 
     let request = trinsic.SearchCredentialTemplatesRequest.fromPartial({
-      query: "select * from c"
+      query: "select * from c order by c.name"
     });
     let response = await service.searchCredentialTemplate(request);
+    let items = JSON.parse(response.itemsJson);
 
     dispatch({
       type: GET_CREDENTIAL_TEMPLATES,
-      items: JSON.parse(response.itemsJson)
+      items: items
     });
   }
 }
