@@ -1,4 +1,4 @@
-const trinsic = require("@trinsic/trinsic/browser");
+import * as trinsic from "@trinsic/trinsic/lib/browser/index"
 export const ResponseStatus = trinsic.ResponseStatus;
 const trinsicService = new trinsic.TrinsicService();
 export const ERROR = 'ERROR';

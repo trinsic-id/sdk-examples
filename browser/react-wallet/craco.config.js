@@ -1,5 +1,4 @@
-const { SourceMapDevToolPlugin } = require("webpack");
-const path = require("path");
+const {addBeforeLoader, loaderByName} = require("@craco/craco");
 
 module.exports = {
   style: {
@@ -11,41 +10,23 @@ module.exports = {
     },
   },
   webpack: {
-    mode: "development",
-    resolve: {
-      extensions: ['*', '.ts', '.mts', '.mjs', '.js', '.json']
-    },
-    entry: "./index.js",
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          exclude: /node_modules/,
-          loader: "ts-loader",
-          options: {
-            configFile: 'tsconfig.json'
+    configure: (webpackConfig) => {
+      const wasmExtensionRegExp = /\.wasm$/;
+      webpackConfig.resolve.extensions.push('.wasm');
+      webpackConfig.module.rules.forEach((rule) => {
+        (rule.oneOf || []).forEach((oneOf) => {
+          if (oneOf.loader && oneOf.loader.indexOf('file-loader') >= 0) {
+            oneOf.exclude.push(wasmExtensionRegExp);
           }
-        }
-      ],
-    },
-    devtool: "inline-source-map",
-    experiments: {
-      asyncWebAssembly: true,
-      topLevelAwait: true
-    },
-    plugins: [
-      new SourceMapDevToolPlugin({
-        filename: null,
-        test: /\.(ts|js)($|\?)/i,
-      })
-    ],
-    output: {
-      path: path.resolve(__dirname, ""),
-      filename: "bundle.js",
-    },
-    stats: {
-      errorDetails: true,
-    },
+        });
+      });
+      const wasmLoader = {
+        test: /\.wasm$/,
+        exclude: /node_modules/,
+        loaders: ['wasm-loader'],
+      };
+      addBeforeLoader(webpackConfig, loaderByName('file-loader'), wasmLoader);
+      return webpackConfig;
+    }
   }
 }
-  
