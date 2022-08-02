@@ -6,7 +6,7 @@
     "@craco/craco": "6.4.5",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "11.2.7",
-    "@testing-library/user-event": "12.8.3",
+    "@testing-library/user-event": "14.3.0",
     "@trinsic/trinsic": "1.6.1-rc2",
     "@uiw/react-textarea-code-editor": "2.0.3",
     "generate-schema": "2.6.0",
