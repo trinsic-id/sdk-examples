@@ -164,3 +164,30 @@ export const closeNotification = () => {
     type: CLOSE_NOTIFICATION
   }
 }
+
+export const CREATE_ECOSYSTEM = 'CREATE_ECOSYSTEM';
+export const createEcosystem = (state) => {
+  return async (dispatch, getState) => {
+    setTrinsicTokenFromState(getState);
+    // TODO - Implement me!
+    let response = await trinsicService.provider().createEcosystem( trinsic.CreateEcosystemRequest.fromPartial({}));
+
+    dispatch({
+      type: CREATE_ECOSYSTEM,
+      response: response
+    })
+  }
+}
+export const GET_ECOSYSTEM_INFO = 'GET_ECOSYSTEM_INFO';
+export const getEcosystemInfo = (state) => {
+  return async (dispatch, getState) => {
+    setTrinsicTokenFromState(getState);
+    // TODO - Implement me!
+    let response = await trinsicService.provider().ecosystemInfo( trinsic.EcosystemInfoRequest.fromPartial({}));
+
+    dispatch({
+      type: GET_ECOSYSTEM_INFO,
+      response: response
+    })
+  }
+}
