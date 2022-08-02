@@ -1,4 +1,4 @@
-const trinsic = require("@trinsic/trinsic/browser");
+const trinsic = require("@trinsic/trinsic/lib/browser");
 export const ResponseStatus = trinsic.ResponseStatus;
 
 const serviceOptions = trinsic.ServiceOptions.fromPartial({});
