@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
     "start": "npx ts-node index.ts"
   },
   "author": "Tomislav Markovski",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "file://C:/work/sdk/web",
+    "@trinsic/trinsic": "1.7.0",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {

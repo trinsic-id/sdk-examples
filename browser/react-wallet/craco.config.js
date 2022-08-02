@@ -1,6 +1,13 @@
-const { addBeforeLoader, loaderByName } = require('@craco/craco');
+const {addBeforeLoader, loaderByName} = require("@craco/craco");
 
 module.exports = {
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization, trinsicsdkversion"
+    },
+  },
   style: {
     postcss: {
       plugins: [
@@ -10,10 +17,10 @@ module.exports = {
     },
   },
   webpack: {
+    mode: "development",
     configure: (webpackConfig) => {
       const wasmExtensionRegExp = /\.wasm$/;
       webpackConfig.resolve.extensions.push('.wasm');
-
       webpackConfig.module.rules.forEach((rule) => {
         (rule.oneOf || []).forEach((oneOf) => {
           if (oneOf.loader && oneOf.loader.indexOf('file-loader') >= 0) {
@@ -21,17 +28,13 @@ module.exports = {
           }
         });
       });
-
       const wasmLoader = {
         test: /\.wasm$/,
         exclude: /node_modules/,
         loaders: ['wasm-loader'],
       };
-
       addBeforeLoader(webpackConfig, loaderByName('file-loader'), wasmLoader);
-
       return webpackConfig;
     }
   }
 }
-  

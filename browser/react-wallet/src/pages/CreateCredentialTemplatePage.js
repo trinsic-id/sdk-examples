@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button } from "../components/Button";
 import { createCredentialTemplate } from "../actions";
-import { Input } from "../components/Inputs/Input";
+import { Input } from "../components/Inputs";
 import { DynamicInput } from "../components/Inputs";
-const FieldType = require("@trinsic/trinsic").FieldType;
+import { FieldType} from "@trinsic/trinsic/lib/browser/index";
 
 class CreateCredentialTemplatePage extends React.Component {
   constructor(props) {

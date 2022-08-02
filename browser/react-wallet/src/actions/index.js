@@ -1,7 +1,7 @@
-const trinsic = require("@trinsic/trinsic");
+const trinsic = require("@trinsic/trinsic/lib/browser");
 export const ResponseStatus = trinsic.ResponseStatus;
 
-const serviceOptions = trinsic.ServiceOptions.fromPartial({});
+const serviceOptions = trinsic.ServiceOptions.fromPartial({serverEndpoint:"dev-internal.trinsic.cloud"});
 
 export const ERROR = 'ERROR';
 

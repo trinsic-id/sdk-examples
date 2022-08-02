@@ -1,8 +1,18 @@
 const path = require("path");
-const {IgnorePlugin} = require("webpack");
+const {SourceMapDevToolPlugin} = require("webpack");
 
 module.exports = {
+  mode: "development",
+  resolve: {
+    extensions: ['*', '.mjs', '.js', '.json']
+  },
   entry: "./index.js",
+  plugins: [
+    new SourceMapDevToolPlugin({
+      filename: null,
+      test: /\.(ts|js)($|\?)/i,
+    })
+  ],
   output: {
     path: path.resolve(__dirname, ""),
     filename: "bundle.js",
@@ -10,12 +20,4 @@ module.exports = {
   experiments: {
     asyncWebAssembly: true,
   },
-  resolve: {
-    fallback: {
-      Buffer: require.resolve("buffer")
-    },
-  },
-  plugins: [
-    new IgnorePlugin({ resourceRegExp: /^/u, contextRegExp: /grpc-web-node-http-transport/u })
-  ]
 };

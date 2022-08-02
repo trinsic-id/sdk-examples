@@ -11,8 +11,7 @@
   "author": "Tomislav Markovski",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "^1.6.1-rc2",
-    "buffer": "^6.0.3"
+    "@trinsic/trinsic": "1.7.1-rc2"
   },
   "devDependencies": {
     "@types/google-protobuf": "3.15.6",
