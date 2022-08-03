@@ -1,4 +1,5 @@
 import { LOGIN, LOGOUT, VERIFY_EMAIL } from '../actions';
+import {LoginResponse} from "@trinsic/trinsic";
 // initialState
 export const authentication = {
   loggedIn: false,
@@ -7,7 +8,9 @@ export const authentication = {
   loginResponse: {},
 }
 
-export default function authenticationReducer(state = authentication, action) {
+export interface AuthenticationAction { type: string; user: {name: string, email: string}; profile?: any; loginResponse?: LoginResponse; }
+
+export default function authenticationReducer(state = authentication, action: AuthenticationAction) {
   switch (action.type) {
     case LOGIN:
       return Object.assign({}, state, {

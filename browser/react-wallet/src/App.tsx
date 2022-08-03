@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import WalletPage from './pages/WalletPage';
 
-interface AppProps { loggedIn: boolean; logout: Function; ecosystem: { name: string | undefined; }; }
+interface AppProps { loggedIn: boolean; logout: Function; ecosystem?: { name: string | undefined; }; }
 
 function App(props: AppProps) {
   return (
@@ -19,7 +19,7 @@ function App(props: AppProps) {
         </Navbar.Logo>
         <Navbar.List className="justify-between">
             {props.loggedIn && <Navbar.Item className={""} onClick={props.logout}>Sign Out</Navbar.Item> }
-            {props.loggedIn && <Navbar.Item className={""}>Ecosystem: {props.ecosystem.name}</Navbar.Item> }
+            {props.loggedIn && <Navbar.Item className={""}>Ecosystem: {props.ecosystem?.name}</Navbar.Item> }
         </Navbar.List>
       </Navbar>
       <Routes>
