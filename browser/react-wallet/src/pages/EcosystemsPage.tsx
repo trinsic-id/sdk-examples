@@ -4,7 +4,7 @@ import { createEcosystem } from '../actions';
 import Button from '../components/Button';
 import { Input } from '../components/Inputs';
 import {Dispatch} from "redux";
-import {EcosystemType, OnChangeType} from '../types';
+import {EcosystemType, OnChangeType, PreventDefaultType} from '../types';
 
 export type EcosystemsStateType = {
     ecosystemName: string,
@@ -41,7 +41,7 @@ export class EcosystemsPage extends React.Component<EcosystemsPropsType, Ecosyst
         })
     }
 
-    submit(e: { preventDefault: () => void; }) {
+    submit(e: PreventDefaultType) {
         e.preventDefault()
         this.props.createEcosystem(this.state)
     }

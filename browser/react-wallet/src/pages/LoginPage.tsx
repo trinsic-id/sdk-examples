@@ -4,9 +4,19 @@ import { Navigate } from 'react-router-dom';
 import { login } from '../actions';
 import Button from '../components/Button';
 import {Dispatch} from "redux";
+import {OnChangeType, PreventDefaultType} from "../types";
 
-export class LoginPage extends React.Component {
-  constructor(props) {
+export type LoginStateType = {
+  name: string,
+  email: string,
+  goToVerify: boolean
+}
+export type LoginPropType = {
+  login(email: string, name: string): any
+};
+
+export class LoginPage extends React.Component<LoginPropType, LoginStateType> {
+  constructor(props: LoginPropType | Readonly<LoginPropType>) {
     super(props);
 
     this.state = {
@@ -16,13 +26,14 @@ export class LoginPage extends React.Component {
     }
   }
 
-  onChange = (e) => {
+  onChange(e: OnChangeType) {
+    // @ts-ignore
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
-  login = (e) => {
+  login(e: PreventDefaultType) {
     e.preventDefault();
     this.props.login(this.state.email, this.state.name)
     this.setState({
@@ -40,7 +51,7 @@ export class LoginPage extends React.Component {
           <h1 className='text-3xl font-bold mb-4'>Login</h1>
           <hr />
 
-          <form className='mt-4' onSubmit={this.login}>
+          <form className='mt-4' onSubmit={this.login.bind(this)}>
             <div className='mt-4'>
               <label className='font-bold'>Email</label>
               <input
@@ -48,7 +59,7 @@ export class LoginPage extends React.Component {
                 type="email"
                 className='block w-full border border-black  rounded mt-1 py-1 px-2'
                 placeholder='name@provider.com'
-                onChange={this.onChange}
+                onChange={this.onChange.bind(this)}
               />
             </div>
 
@@ -59,7 +70,7 @@ export class LoginPage extends React.Component {
                 type="text"
                 className='block w-full border border-black  rounded mt-1 py-1 px-2'
                 placeholder='John Doe'
-                onChange={this.onChange}
+                onChange={this.onChange.bind(this)}
               />
             </div>
 
@@ -71,7 +82,7 @@ export class LoginPage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: { authentication: { loggedIn: any; }; }) {
   return {
     loggedIn: state.authentication.loggedIn
   }

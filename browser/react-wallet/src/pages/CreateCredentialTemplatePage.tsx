@@ -5,6 +5,7 @@ import {createCredentialTemplate} from "../actions";
 import {DynamicInput, Input} from "../components/Inputs";
 import {CreateCredentialTemplateRequest, FieldType, TemplateField} from "@trinsic/trinsic/lib/browser";
 import {Dispatch} from "redux";
+import {PreventDefaultType} from "../types";
 
 interface CreateCredentialTemplateProps {
   createTemplate(name: string, fields: { [p: string]: TemplateField }): any
@@ -58,7 +59,7 @@ class CreateCredentialTemplatePage extends React.Component<CreateCredentialTempl
     })
   }
 
-  submit(e: { preventDefault: () => void; }) {
+  submit(e: PreventDefaultType) {
     e.preventDefault();
     const {name, fields} = this.state;
     this.props.createTemplate(name, fields);

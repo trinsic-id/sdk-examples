@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { verifyEmail } from '../actions';
 import Button from '../components/Button';
 import {Dispatch} from "redux";
-import {OnChangeType} from "../types";
+import {OnChangeType, PreventDefaultType} from "../types";
 
 export type VerifyEmailStateType = {
   securityCode: string
@@ -30,7 +30,7 @@ export class VerifyEmailPage extends React.Component<VerifyEmailPropsType, Verif
     })
   }
 
-  verify(e: { preventDefault: () => void; }) {
+  verify(e: PreventDefaultType) {
     e.preventDefault();
     this.props.verify(this.state.securityCode);
   }
