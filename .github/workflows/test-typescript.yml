@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest]
-        node-version: [ 16, 18 ]
+        node-version: [ 16 ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -34,7 +34,7 @@ jobs:
       - name: Build Node Demo
         run: |
           npm install
-          npm run demo
+          npm run start
         shell: pwsh
         working-directory: ./node/basic
       - name: Build Basic Webpack Demo
@@ -43,10 +43,8 @@ jobs:
           npm run build
         shell: pwsh
         working-directory: ./browser/basic-webpack
-      # TODO - Enable this @MichaelEdwardBlack
-      # - name: Build Browser Demo
-      #   run: |
-      #     npm install
-      #     npm run test
-      #   shell: pwsh
-      #   working-directory: ./browser/react-wallet
+      - name: Build Browser Demo
+        run: |
+          npm install
+          CI=false npm run build
+        working-directory: ./browser/react-wallet

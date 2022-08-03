@@ -5,7 +5,9 @@ export const wallet = {
   insertingItem: false
 }
 
-export default function walletReducer(state = wallet, action) {
+export interface WalletAction { type: string; items?: any; }
+
+export default function walletReducer(state: { insertingItem: boolean; items: any[] } = wallet, action: WalletAction) {
   switch (action.type) {
     case GET_WALLET_ITEMS:
       return Object.assign({}, state, {

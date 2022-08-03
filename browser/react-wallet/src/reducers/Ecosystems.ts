@@ -4,7 +4,9 @@ export const ecosystems = {
   currentEcosytem: { name: "" }
 }
 
-export default function ecosystemReducer(state = ecosystems, action) {
+export interface EcosystemAction { type: string; ecosystem: any; }
+
+export default function ecosystemReducer(state = ecosystems, action: EcosystemAction) {
   switch (action.type) {
     case CREATE_ECOSYSTEM:
       return Object.assign({}, state, {
