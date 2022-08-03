@@ -5,8 +5,8 @@ import {insertWalletItem} from '../actions';
 import Button from '../components/Button';
 import {Input} from '../components/Inputs';
 import {Toast} from '../components/Toast';
-import {Dispatch} from "redux";
 import {ActionState, OnChangeType, PreventDefaultType} from "../types";
+import {ThunkDispatch} from "redux-thunk";
 
 export type StoreItemStateType = {
     item: string, selectedFile: any, showToast: boolean
@@ -106,9 +106,9 @@ function mapStateToProps(state: ActionState) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+function mapDispatchToProps(dispatch: ThunkDispatch<ActionState, undefined, any>) {
     return {
-        insertItem: (item: any) => (insertWalletItem(item))
+        insertItem: (item: any) => dispatch(insertWalletItem(item))
     }
 }
 

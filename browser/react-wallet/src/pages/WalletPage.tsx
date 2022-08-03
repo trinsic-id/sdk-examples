@@ -11,18 +11,20 @@ import WalletNavbar from '../components/WalletNavbar';
 import CredentialTemplatesPage from './CredentialTemplatesPage';
 import CreateCredentialTemplatePage from './CreateCredentialTemplatePage';
 import EcosystemsPage from './EcosystemsPage';
-import {Dispatch} from "redux";
 import {ActionState} from "../types";
+import {ThunkDispatch} from "redux-thunk";
 
 interface WalletProps {
-    getItems(): any
-    getEcosystemInformation(): any
     wallet?: {
         items: any
     }
     user?: {
         name: string
     }
+
+    getItems(): any
+
+    getEcosystemInformation(): any
 }
 
 interface WalletState {
@@ -93,10 +95,10 @@ function mapStateToProps(state: ActionState) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+function mapDispatchToProps(dispatch: ThunkDispatch<ActionState, undefined, any>) {
     return {
-        getItems: () => getWalletItems(),
-        getEcosystemInformation: () => getEcosystemInfo()
+        getItems: () => dispatch(getWalletItems()),
+        getEcosystemInformation: () => dispatch(getEcosystemInfo())
     }
 }
 

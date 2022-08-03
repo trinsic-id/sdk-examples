@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createEcosystem } from '../actions';
+import {connect} from 'react-redux';
+import {createEcosystem} from '../actions';
 import Button from '../components/Button';
-import { Input } from '../components/Inputs';
-import {Dispatch} from "redux";
-import {EcosystemType, OnChangeType, PreventDefaultType} from '../types';
+import {Input} from '../components/Inputs';
+import {ActionState, EcosystemType, OnChangeType, PreventDefaultType} from '../types';
+import {ThunkDispatch} from "redux-thunk";
 
 export type EcosystemsStateType = {
     ecosystemName: string,
@@ -88,9 +88,9 @@ function mapStateToProps(state: { authentication: { user: any; }; }) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+function mapDispatchToProps(dispatch: ThunkDispatch<ActionState, undefined, any>) {
     return {
-        createEcosystem: (ecosystem: EcosystemType) => (createEcosystem(ecosystem))
+        createEcosystem: (ecosystem: EcosystemType) => dispatch(createEcosystem(ecosystem))
     }
 }
 
