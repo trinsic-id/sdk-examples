@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 // allows for asyncronous actions in the store
 import thunkMiddleware from 'redux-thunk';
 // allows for persistence of the store on hot reloading
@@ -22,7 +22,9 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = createStore(persistedReducer, initialState, composeWithDevTools());
+const store = createStore(persistedReducer, initialState, composeWithDevTools(
+    applyMiddleware(thunkMiddleware)
+));
 let persistor = persistStore(store);
 
 ReactDOM.render(

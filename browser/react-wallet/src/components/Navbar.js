@@ -167,4 +167,10 @@ export class Navbar extends React.Component {
   }
 }
 
+Navbar.Navbar = undefined;
+
+Navbar.Navbar = undefined;
+
+Navbar.Navbar = undefined;
+
 export default Navbar;
