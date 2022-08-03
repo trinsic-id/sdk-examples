@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { login } from '../actions';
 import Button from '../components/Button';
+import {Dispatch} from "redux";
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -70,15 +71,15 @@ export class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
   return {
     loggedIn: state.authentication.loggedIn
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    login: (email, name) => dispatch(login(email, name))
+    login: (email: string, name: string) => (login(email, name))
   }
 }
 

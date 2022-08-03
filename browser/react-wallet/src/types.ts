@@ -12,3 +12,5 @@ export type EcosystemType = { ecosystemName?: string; description?: string; uri?
 
 
 export type CredentialTemplatesStateType = { open: boolean, template: any }
+
+export type OnChangeType = { target: { name: any; value: any; }; }

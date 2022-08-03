@@ -4,9 +4,21 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import { getWalletItems } from '../actions';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
+import {Dispatch} from "redux";
 
-export class ItemsListPage extends React.Component {
-  constructor(props) {
+export type ItemsListStateType = {
+  showDetailsModal: boolean,
+  attributes: unknown[],
+  values: unknown[],
+  item: {},
+  showProof: boolean,
+}
+export type ItemsListPropType = {
+  fetchItems(): any
+};
+
+export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListStateType> {
+  constructor(props: ItemsListPropType | Readonly<ItemsListPropType>) {
     super(props);
     
     this.state = {
@@ -21,24 +33,25 @@ export class ItemsListPage extends React.Component {
     this.props.fetchItems();
   }
 
-  showDetails = (item) => {
+  showDetails(item: { [s: string]: unknown; } | ArrayLike<unknown>) {
     this.setState({
       item: item,
       showDetailsModal: true,
       attributes: Object.keys(item),
-      values: Object.values(item)
+      values: Object.values(item),
+      showProof: false
     });
   }
 
-  closeModal = () => {
+  closeModal() {
     this.setState({
       showDetailsModal: false,
       showProof: false
     });
   }
 
-  renderAttribute = (i) => {
-    if (typeof(this.state.values[i]) === 'object') {
+  renderAttribute(i: string | number) {
+    if (typeof (this.state.values[i]) === 'object') {
       return JSON.stringify(this.state.values[i])
     }
 
@@ -66,7 +79,7 @@ export class ItemsListPage extends React.Component {
             )}
           </tbody>
         </table>
-        <Modal open={this.state.showDetailsModal} onClose={this.closeModal}>
+        <Modal open={this.state.showDetailsModal} onClose={this.closeModal.bind(this)}>
           <table className="w-full break-all bg-white divide-y divide-gray-200 shadow min-w-lg">
             <thead>
               <tr className="bg-gray-200">
@@ -103,15 +116,15 @@ export class ItemsListPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state: { wallet: { items: any; }; }) {
   return {
     items: state.wallet.items
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchItems: () => dispatch(getWalletItems())
+    fetchItems: () => (getWalletItems())
   }
 }
 

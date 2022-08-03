@@ -5,6 +5,7 @@ import { insertWalletItem } from '../actions';
 import Button from '../components/Button';
 import { Input } from '../components/Inputs';
 import { Toast } from '../components/Toast';
+import {Dispatch} from "redux";
 
 export class StoreItemPage extends React.Component {
   constructor(props) {
@@ -82,15 +83,15 @@ export class StoreItemPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
   return {
     insertingItem: state.wallet.insertingItem
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    insertItem: (item) => dispatch(insertWalletItem(item))
+    insertItem: (item: any) => (insertWalletItem(item))
   }
 }
 
