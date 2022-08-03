@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 // allows for asyncronous actions in the store
 import thunkMiddleware from 'redux-thunk';
 // allows for persistence of the store on hot reloading
@@ -14,6 +14,7 @@ import App from './App';
 import rootReducer, { initialState } from './reducers';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const persistConfig = {
   key: 'trinsic-wallet',
@@ -21,10 +22,9 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewareEnhancer = applyMiddleware(thunkMiddleware);
-const enhancer = composeEnhancers(middlewareEnhancer);
-const store = createStore(persistedReducer, initialState, enhancer);
+const store = createStore(persistedReducer, initialState, composeWithDevTools(
+    applyMiddleware(thunkMiddleware)
+));
 let persistor = persistStore(store);
 
 ReactDOM.render(

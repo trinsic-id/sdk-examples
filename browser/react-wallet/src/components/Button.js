@@ -1,39 +1,53 @@
 import React from 'react';
 import Spinner from './Spinner';
+import * as PropTypes from "prop-types";
 
-export const Button = ({ className, color, variant, children, isBusy, disabled, ...props }) => {
-  let classArray = [
-    "font-bold",
-    "py-2",
-    "px-4",
-    disabled || isBusy ? "cursor-default" : "cursor-pointer",
-    className
-  ]
+export class Button extends React.Component {
+  render() {
+    let {className, color, variant, children, isBusy, disabled, ...props} = this.props;
+    let classArray = [
+      "font-bold",
+      "py-2",
+      "px-4",
+      disabled || isBusy ? "cursor-default" : "cursor-pointer",
+      className
+    ]
 
-  const intensity = isBusy || disabled ? 200 : 500;
-  const hoverIntensity = isBusy || disabled ? 200 : 600;
-  const defaultClass = `bg-${color}-${intensity} hover:bg-${color}-${hoverIntensity} text-white rounded-full`;
-  const outlineClass = `bg-transparent hover:bg-${color}-500 text-${color}-500 font-semibold hover:text-white border border-${color}-500 hover:border-transparent rounded-full`
+    const intensity = isBusy || disabled ? 200 : 500;
+    const hoverIntensity = isBusy || disabled ? 200 : 600;
+    const defaultClass = `bg-${color}-${intensity} hover:bg-${color}-${hoverIntensity} text-white rounded-full`;
+    const outlineClass = `bg-transparent hover:bg-${color}-500 text-${color}-500 font-semibold hover:text-white border border-${color}-500 hover:border-transparent rounded-full`
 
-  switch (variant) {
-    case "outline":
-      classArray.unshift(outlineClass);
-      break;
-    default:
-      classArray.unshift(defaultClass);
-      break;
+    switch (variant) {
+      case "outline":
+        classArray.unshift(outlineClass);
+        break;
+      default:
+        classArray.unshift(defaultClass);
+        break;
+    }
+    let baseClass = classArray.join(' ');
+
+    return (
+        <button className={baseClass} {...props} disabled={isBusy || disabled}>
+          <>
+            {children}
+            {isBusy && <Spinner className="inline-flex ml-2 w-4 h-4"/>}
+          </>
+        </button>
+    );
   }
-  let baseClass = classArray.join(' ');
-
-  return (
-    <button className={baseClass} {...props} disabled={isBusy || disabled}>
-      <>
-        {children}
-        {isBusy && <Spinner className="inline-flex ml-2 w-4 h-4"/>}
-      </>
-    </button>
-  );
 }
+
+Button.propTypes = {
+  className: PropTypes.any,
+  color: PropTypes.any,
+  variant: PropTypes.any,
+  children: PropTypes.any,
+  isBusy: PropTypes.any,
+  disabled: PropTypes.any
+}
+
 
 Button.defaultProps = {
   variant: "default", // can be default, outline
