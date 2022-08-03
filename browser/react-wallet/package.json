@@ -6,7 +6,7 @@
     "@craco/craco": "6.4.5",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/dom": "8.16.0",
-    "@testing-library/react": "13.3.0",
+    "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.4.0",
     "@trinsic/trinsic": "1.7.1-rc2",
     "@uiw/react-textarea-code-editor": "1.6.0",
