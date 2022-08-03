@@ -3,7 +3,7 @@ export type AppState = { authentication: { loggedIn: boolean; }; ecosystems: { c
 
 export type ActionState = {
     wallet: any; (): any; new(): any; authentication: {
-        user: { name: string, email: string }; challenge: Uint8Array; (): any; new(): any; profile: any;
+        user: { name: string, email: string }; challenge: Uint8Array; profile: any;
     };
 }
 

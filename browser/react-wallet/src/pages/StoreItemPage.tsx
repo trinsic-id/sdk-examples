@@ -13,7 +13,7 @@ export type StoreItemStateType = {
 }
 export type StoreItemPropType = {
     insertItem(item: any): any
-    insertingItem: any''
+    insertingItem: any
 };
 
 
@@ -91,7 +91,8 @@ export class StoreItemPage extends React.Component<StoreItemPropType, StoreItemS
                                 isBusy={this.props.insertingItem}>Insert</Button>
                     </div>
                 </div>
-                <Toast show={this.state.showToast} onClose={this.onCloseToast.bind(this)} color="green">Item
+                <Toast show={this.state.showToast} onClose={this.onCloseToast.bind(this)} color="green"
+                       className={undefined}>Item
                     Successfully
                     Added!</Toast>
             </div>

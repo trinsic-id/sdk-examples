@@ -10,11 +10,14 @@ export type ItemsListStateType = {
   showDetailsModal: boolean,
   attributes: unknown[],
   values: unknown[],
-  item: {},
+  item: {
+    proof?: any;
+  },
   showProof: boolean,
 }
 export type ItemsListPropType = {
   fetchItems(): any
+  items: any[]
 };
 
 export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListStateType> {
@@ -33,7 +36,7 @@ export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListS
     this.props.fetchItems();
   }
 
-  showDetails(item: { [s: string]: unknown; } | ArrayLike<unknown>) {
+  showDetails(item: { [s: string]: unknown; }) {
     this.setState({
       item: item,
       showDetailsModal: true,
@@ -50,7 +53,7 @@ export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListS
     });
   }
 
-  renderAttribute(i: string | number) {
+  renderAttribute(i: number): any {
     if (typeof (this.state.values[i]) === 'object') {
       return JSON.stringify(this.state.values[i])
     }
@@ -92,7 +95,7 @@ export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListS
                 if (attribute !== "proof") {
                   return (
                     <tr key={i} className='text-left hover:bg-gray-100'>
-                      <td className="pl-4 whitespace-nowrap">{attribute}</td>
+                      <td className="pl-4 whitespace-nowrap">{attribute as any}</td>
                       <td className="pl-4">{this.renderAttribute(i)}</td>
                     </tr>
                   );
@@ -110,7 +113,7 @@ export class ItemsListPage extends React.Component<ItemsListPropType, ItemsListS
               value={JSON.stringify(this.state.item.proof)} 
             />
           }
-        </Modal>
+        </Modal>W
       </div>
     );
   }

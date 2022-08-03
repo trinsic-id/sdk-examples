@@ -108,7 +108,7 @@ export class IssueCredentialPage extends React.Component<IssueCredentialPropsTyp
   copyToClipboard() {
     // @ts-ignore
     const el = this.textArea;
-    el.select();
+    el?.select();
     // navigator.clipboard.readText().then(clipText => document.querySelector())
     document.execCommand("copy");
 
@@ -142,7 +142,7 @@ export class IssueCredentialPage extends React.Component<IssueCredentialPropsTyp
     return keys.map((key, index) =>
       <div key={index}>
         <label>{key}</label>
-        <Input name={key} value={this.state[key]} onChange={this.onFieldChange.bind(this)} />
+        <Input name={key} value={fields[key]} onChange={this.onFieldChange.bind(this)} className={undefined} />
       </div>
     );
   }
@@ -153,12 +153,11 @@ export class IssueCredentialPage extends React.Component<IssueCredentialPropsTyp
         <div className="bg-white p-5 rounded shadow w-full lg:w-1/2">
           <form>
             <label className="font-bold text-xl block my-2">Choose Template</label>
-            <Input 
-              type="select"
-              name="credentialTemplate"
-              value={this.state.credentialTemplate}
-              onChange={this.onSelect.bind(this)}
-            >
+            <Input
+                type="select"
+                name="credentialTemplate"
+                value={this.state.credentialTemplate}
+                onChange={this.onSelect.bind(this)} className={undefined}            >
               {this.props.templates.map((template, index) => 
                 <option key={index} value={template.name}>{template.name}</option>
               )}
@@ -184,12 +183,13 @@ export class IssueCredentialPage extends React.Component<IssueCredentialPropsTyp
             <Button className="w-1/2" onClick={this.openModal.bind(this)}>Send To Wallet</Button>
           </div>
         </div>
-        <Toast color="green" show={this.state.showCopiedToast} onClose={this.onCloseCopiedToast.bind(this)}>Copied!</Toast>
+        <Toast color="green" show={this.state.showCopiedToast} onClose={this.onCloseCopiedToast.bind(this)}
+               className={undefined}>Copied!</Toast>
         <Toast className="z-50" color="green" show={this.state.emailSent} onClose={this.props.closeNotification}>Credential Sent to Wallet! :)</Toast>
         <Modal open={this.state.openModal} onClose={this.closeModal.bind(this)} className="max-w-md">
           <div className="text-left w-full">
             <label >Enter the email of the recipient:</label>
-            <Input name="email" value={this.state.email} onChange={this.onChange.bind(this)}></Input>
+            <Input name="email" value={this.state.email} onChange={this.onChange.bind(this)} className={undefined}></Input>
           </div>
           <Button className="w-full my-5" onClick={this.sendToWallet.bind(this)}>Send Credential</Button>
         </Modal>
