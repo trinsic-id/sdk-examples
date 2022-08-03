@@ -19,25 +19,22 @@ import {TemplateField} from "@trinsic/trinsic/lib/src/proto/services/verifiable-
 import {WalletAction} from "../reducers/Wallet";
 import {CredentialAction} from "../reducers/Credential";
 import {EcosystemAction} from "../reducers/Ecosystems";
+import {ThunkAction} from "redux-thunk";
+import {ActionState, EcosystemType} from "../types";
 
 const serviceOptions = ServiceOptions.fromPartial({serverEndpoint:"dev-internal.trinsic.cloud"});
 const service = new TrinsicService(serviceOptions);
 
 export const ERROR = 'ERROR';
 
-export interface State { (): any; new(): any; authentication: {
-    user: {name: string, email: string};
-    challenge: Uint8Array;
-    (): any; new(): any; profile: any; }; }
-
-function getProfileFromState(getState: () => State) {
+function getProfileFromState(getState: () => ActionState) {
   const profileObject = getState().authentication.profile;
   return AccountProfile.fromPartial(profileObject);
 }
 
 export const LOGIN = 'LOGIN';
 
-export function login(email: string, name: string) {
+export function login(email: string, name: string): ThunkAction<void, ActionState, undefined, any> {
   return async (dispatch: Dispatch<AuthenticationAction>) => {
 
     const loginResponse: LoginResponse = await service.account().login(
@@ -57,8 +54,8 @@ export function login(email: string, name: string) {
 
 export const VERIFY_EMAIL = 'VERIFY_EMAIL';
 
-export function verifyEmail(securityCode: string) {
-  return async (dispatch: Dispatch<AuthenticationAction>, getState: () => State) => {
+export function verifyEmail(securityCode: string): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<AuthenticationAction>, getState: () => ActionState) => {
     const auth = getState().authentication;
     const profile = getProfileFromState(getState);
 
@@ -74,7 +71,7 @@ export function verifyEmail(securityCode: string) {
 
 export const LOGOUT = 'LOGOUT';
 
-export function logout() {
+export function logout(): { type: string } {
   localStorage.clear();
   return {
     type: LOGOUT
@@ -84,8 +81,8 @@ export function logout() {
 
 export const GET_CREDENTIAL_TEMPLATES = 'GET_CREDENTIAL_TEMPLATES';
 
-export function getCredentialTemplates() {
-  return async (dispatch : Dispatch<TemplateAction>, getState: () => State) => {
+export function getCredentialTemplates(): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch : Dispatch<TemplateAction>) => {
     let request = SearchCredentialTemplatesRequest.fromPartial({
       query: "select * from c order by c.name"
     });
@@ -101,8 +98,8 @@ export function getCredentialTemplates() {
 
 export const CREATE_CREDENTIAL_TEMPLATE = 'CREATE_CREDENTIAL_TEMPLATE';
 
-export function createCredentialTemplate(name: string, fields: {[key: string]: TemplateField;}) {
-  return async (dispatch : Dispatch<TemplateAction>, getState: () => State) => {
+export function createCredentialTemplate(name: string, fields: {[key: string]: TemplateField;}): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch : Dispatch<TemplateAction>, getState: () => ActionState) => {
     const request = CreateCredentialTemplateRequest.fromPartial({
       name: name,
       fields: fields
@@ -119,8 +116,8 @@ export function createCredentialTemplate(name: string, fields: {[key: string]: T
 
 export const GET_WALLET_ITEMS = 'GET_WALLET_ITEMS';
 
-export function getWalletItems() {
-  return async (dispatch: Dispatch<WalletAction>, getState: () => State) => {
+export function getWalletItems(): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<WalletAction>) => {
     let response = await service.wallet().search();
     // let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
     // items = items.map(item => JSON.parse(Object.values(item.data).join('')))
@@ -136,8 +133,8 @@ export function getWalletItems() {
 export const INSERTING_WALLET_ITEM = 'INSERTING_WALLET_ITEM';
 export const INSERTED_WALLET_ITEM = 'INSERTED_WALLET_ITEM';
 
-export function insertWalletItem(item: any) {
-  return async (dispatch: Dispatch<WalletAction>, getState: () => State) => {
+export function insertWalletItem(item: any): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<WalletAction>) => {
     dispatch({
       type: INSERTING_WALLET_ITEM
     })
@@ -157,8 +154,8 @@ export function insertWalletItem(item: any) {
 
 export const SEND_CREDENTIAL = 'SEND_CREDENTIAL';
 
-export function sendCredential(credential: any, email: string) {
-  return async (dispatch: Dispatch<CredentialAction>, getState: () => State) => {
+export function sendCredential(credential: any, email: string): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<CredentialAction>) => {
     let request = SendRequest.fromPartial({
       documentJson: JSON.stringify(credential),
       email: email
@@ -174,8 +171,8 @@ export function sendCredential(credential: any, email: string) {
 
 export const ISSUE_CREDENTIAL = 'ISSUE_CREDENTIAL';
 
-export function issueCredential(templateId: string, values: any) {
-  return async (dispatch: Dispatch<CredentialAction>, getState: () => State) => {
+export function issueCredential(templateId: string, values: any): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<CredentialAction>) => {
     let request = IssueFromTemplateRequest.fromPartial({
       templateId: templateId,
       valuesJson: JSON.stringify(values)
@@ -200,8 +197,8 @@ export function closeNotification() {
 
 export const CREATE_ECOSYSTEM = 'CREATE_ECOSYSTEM';
 
-export function createEcosystem(ecosystem: { ecosystemName?: string; description?: string; uri?: string; name?: string; email?: string; sms?: string; }) {
-  return async (dispatch: Dispatch<EcosystemAction>, getState: () => State) => {
+export function createEcosystem(ecosystem: EcosystemType): ThunkAction<void, ActionState, undefined, any> {
+  return async (dispatch: Dispatch<EcosystemAction>) => {
     let request = CreateEcosystemRequest.fromPartial({
       name: ecosystem.ecosystemName,
       description: ecosystem.description,
@@ -224,8 +221,8 @@ export function createEcosystem(ecosystem: { ecosystemName?: string; description
 
 export const GET_ECOSYSTEM_INFO = 'GET_ECOSYSTEM_INFO';
 
-export function getEcosystemInfo() {
-  return async (dispatch: Dispatch<EcosystemAction>, getState: () => State) => {
+export function getEcosystemInfo(): ThunkAction<void, ActionState, undefined, any>  {
+  return async (dispatch: Dispatch<EcosystemAction>) => {
     let request = Ecosystem.fromPartial({});
     let response = await service.provider().ecosystemInfo(request);
 

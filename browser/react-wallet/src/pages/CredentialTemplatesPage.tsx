@@ -2,9 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { getCredentialTemplates } from "../actions";
 import { Modal } from "../components/Modal";
+import {CredentialTemplatesStateType} from "../types";
+import {Dispatch} from "redux";
 
-class CredentialTemplatesPage extends React.Component {
-  constructor(props) {
+interface CredentialTemplatesProps {
+  fetchTemplates(): any
+  templates: any
+}
+
+class CredentialTemplatesPage extends React.Component<CredentialTemplatesProps, CredentialTemplatesStateType> {
+  constructor(props: CredentialTemplatesProps | Readonly<CredentialTemplatesProps>) {
     super(props);
     
     this.state = {
@@ -17,7 +24,7 @@ class CredentialTemplatesPage extends React.Component {
     this.props.fetchTemplates()
   }
 
-  selectTemplate = (template) => {
+  selectTemplate(template: any) {
     this.setState({
       open: true,
       template: template
@@ -68,16 +75,16 @@ class CredentialTemplatesPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state: { templates: { items: any; }; }) {
   let items = state.templates.items;
   return {
     templates: Array.isArray(items) ? items : []
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    fetchTemplates: () => dispatch(getCredentialTemplates())
+    fetchTemplates: () => getCredentialTemplates()
   }
 }
 

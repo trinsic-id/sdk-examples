@@ -7,8 +7,8 @@ import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import WalletPage from './pages/WalletPage';
-
-interface AppProps { loggedIn: boolean; logout: Function; ecosystem?: { name: string | undefined; }; }
+import {AppProps, AppState} from "./types";
+import {Dispatch} from "redux";
 
 function App(props: AppProps) {
   return (
@@ -31,13 +31,13 @@ function App(props: AppProps) {
   );
 }
 
-function mapStateToProps(state: { authentication: { loggedIn: boolean; }; ecosystems: { currentEcosytem: any; }; }): { ecosystem: any; loggedIn: boolean } {
+function mapStateToProps(state: AppState): { ecosystem: any; loggedIn: boolean } {
   return {
     loggedIn: state.authentication.loggedIn,
-    ecosystem: state.ecosystems.currentEcosytem
+    ecosystem: state.ecosystems.currentEcosystem
   }
 }
-function mapDispatchToProps(dispatch: (arg0: { type: string; }) => any): { logout: () => any } {
+function mapDispatchToProps(dispatch: Dispatch): { logout: () => any } {
   return {
     logout: () => dispatch(logout())
   };
