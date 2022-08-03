@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { logout } from './actions';
 import TrinsicLogo from './components/Icons/TrinsicLogo';
-import Navbar from './components/Navbar';
+import {Navbar, NavbarLogo, NavbarList, NavbarItem} from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
@@ -14,13 +14,13 @@ function App(props: AppProps) {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar className="fixed w-full bg-white shadow-md">
-        <Navbar.Logo href="/#" className={""}>
+        <NavbarLogo href="/#">
           <TrinsicLogo className="h-12" />
-        </Navbar.Logo>
-        <Navbar.List className="justify-between">
-            {props.loggedIn && <Navbar.Item className={""} onClick={props.logout}>Sign Out</Navbar.Item> }
-            {props.loggedIn && <Navbar.Item className={""}>Ecosystem: {props.ecosystem?.name}</Navbar.Item> }
-        </Navbar.List>
+        </NavbarLogo>
+        <NavbarList className="justify-between">
+            {props.loggedIn && <NavbarItem onClick={() => props.logout()}>Sign Out</NavbarItem> }
+            {props.loggedIn && <NavbarItem>Ecosystem: {props.ecosystem?.name}</NavbarItem> }
+        </NavbarList>
       </Navbar>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
