@@ -5,7 +5,7 @@
   "dependencies": {
     "@craco/craco": "6.4.5",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/dom": "8.16.1",
+    "@testing-library/dom": "8.17.1",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.4.2",
     "@trinsic/trinsic": "1.7.1-rc2",
