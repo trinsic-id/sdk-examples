@@ -8,7 +8,7 @@
     "@testing-library/dom": "8.17.1",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.4.3",
-    "@trinsic/trinsic": "1.7.1-rc2",
+    "@trinsic/trinsic": "1.7.2-rc1",
     "@uiw/react-textarea-code-editor": "1.6.0",
     "generate-schema": "2.6.0",
     "react": "17.0.2",
