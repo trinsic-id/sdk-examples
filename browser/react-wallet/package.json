@@ -5,9 +5,9 @@
   "dependencies": {
     "@craco/craco": "6.4.5",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/dom": "8.16.1",
+    "@testing-library/dom": "8.17.1",
     "@testing-library/react": "12.1.5",
-    "@testing-library/user-event": "14.4.2",
+    "@testing-library/user-event": "14.4.3",
     "@trinsic/trinsic": "1.7.1-rc2",
     "@uiw/react-textarea-code-editor": "1.6.0",
     "generate-schema": "2.6.0",
@@ -47,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@redux-devtools/extension": "3.2.2",
+    "@redux-devtools/extension": "3.2.3",
     "autoprefixer": "9.8.8",
     "postcss": "7.0.39",
     "postcss-loader": "4.3.0",
