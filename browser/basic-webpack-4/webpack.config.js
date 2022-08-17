@@ -6,7 +6,10 @@ module.exports = {
   resolve: {
     extensions: ['*', '.mjs', '.js', '.json']
   },
-  entry: "./index.js",
+  devServer: {
+    client: { overlay: { warnings: false, errors: true } },
+  },
+  entry: "./src/index.js",
   plugins: [
     new SourceMapDevToolPlugin({
       filename: null,

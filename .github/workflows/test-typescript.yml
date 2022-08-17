@@ -35,14 +35,17 @@ jobs:
         run: |
           npm install
           npm run start
-        shell: pwsh
         working-directory: ./node/basic
-      - name: Build Basic Webpack Demo
+      - name: Build Basic Create React App 4
         run: |
           npm install
-          npm run build
-        shell: pwsh
-        working-directory: ./browser/basic-webpack
+          CI=false npm run build
+        working-directory: ./browser/basic-create-react-app-4
+      - name: Build Basic Webpack 4 Demo
+        run: |
+          npm install
+          CI=false npm run build
+        working-directory: ./browser/basic-webpack-4
       - name: Build Browser Demo
         run: |
           npm install
