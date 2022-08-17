@@ -41,6 +41,11 @@ jobs:
           npm install
           CI=false npm run build
         working-directory: ./browser/basic-create-react-app-4
+      - name: Build Basic Create React App 5
+        run: |
+          npm install
+          CI=false npm run build
+        working-directory: ./browser/basic-create-react-app-5
       - name: Build Basic Webpack 5 Demo
         run: |
           npm install
