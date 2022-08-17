@@ -1,11 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { AccountService, SignInRequest } from "@trinsic/trinsic-web";
+import { AccountService } from "@trinsic/trinsic/lib/browser";
 
 const service = new AccountService();
 
 function App() {
-  service.signIn(new SignInRequest()).then((response) => {
+  service.signIn({}).then((response) => {
     console.log(`auth_token = ${response}`);
   });
 
@@ -16,7 +16,12 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Learn React
         </a>
         <p className="smaller">(open developer console to see output)</p>
