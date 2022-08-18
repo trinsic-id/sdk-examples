@@ -36,6 +36,11 @@ jobs:
           npm install
           npm run start
         working-directory: ./node/basic
+      - name: Build Basic Webpack 4 Demo
+        run: |
+          npm install
+          CI=false npm run build
+        working-directory: ./browser/basic-webpack-4
       - name: Build Basic Create React App 4
         run: |
           npm install

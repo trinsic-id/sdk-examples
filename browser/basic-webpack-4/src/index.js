@@ -1,4 +1,4 @@
-import { AccountService} from "@trinsic/trinsic/browser";
+import { AccountService} from "@trinsic/trinsic/lib/browser";
 
 async function signIn() {
     
