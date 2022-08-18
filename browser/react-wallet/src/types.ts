@@ -1,5 +1,7 @@
+import { EcosystemState } from "./reducers/Ecosystems";
+
 export type AppProps = { loggedIn: boolean; logout: Function; ecosystem?: { name: string | undefined; }; }
-export type AppState = { authentication: { loggedIn: boolean; }; ecosystems: { currentEcosystem: any; }; }
+export type AppState = { authentication: { loggedIn: boolean; }; ecosystems: EcosystemState; }
 
 export type ActionState = {
     wallet: any; (): any; new(): any; authentication: {
