@@ -37,6 +37,8 @@ export function login(email: string, name: string): ThunkAction<void, ActionStat
         const loginResponse: LoginResponse = await service.account().login(
             LoginRequest.fromPartial({
                 email,
+                //Change this to your ecosystem id
+                ecosystemId: "default"
             })
         );
 
