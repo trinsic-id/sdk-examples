@@ -11,12 +11,12 @@
   "author": "Tomislav Markovski",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "1.7.2-rc1",
-    "webpack-dev-server": "4.10.0"
+    "@trinsic/trinsic": "1.7.2-rc1"
   },
   "devDependencies": {
     "@types/google-protobuf": "3.15.6",
     "webpack": "5.74.0",
-    "webpack-cli": "4.10.0"
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.10.0"
   }
 }
