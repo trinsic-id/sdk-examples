@@ -1,14 +1,13 @@
-import { AccountService} from "@trinsic/trinsic/lib/browser";
+import { AccountService } from "@trinsic/trinsic/lib/browser";
 
 async function signIn() {
-    
-    const service = new AccountService();
-    const configuration = await service.signIn();
-    console.log(`auth_token = ${configuration}`);
-    const info = await service.getInfo();
-    console.log("Account info", info)
-    
-    document.getElementById("response").innerText = `auth_token = ${configuration}`
+
+    const accountService = new AccountService();
+    const authenticationToken = await accountService.loginAnonymous();
+    const accountInfo = await accountService.getInfo();
+
+    document.getElementById("accountInfo").innerText = JSON.stringify(accountInfo, null, 4);
+    document.getElementById("authToken").innerText = authenticationToken;
 }
 
 signIn();
