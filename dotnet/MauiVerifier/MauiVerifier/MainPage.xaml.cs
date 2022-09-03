@@ -30,11 +30,11 @@ public partial class MainPage : ContentPage
                 HttpClientFactory = _ => new HttpClient(),
             };
             OidcClient client = new(options);
-
+            
             var result = await client.LoginAsync(new LoginRequest {
                 FrontChannelExtraParameters = new Parameters {
-                    { "trinsic:ecosystem", "default" },
-                    { "trinsic:schema", "https://schema.trinsic.cloud/default/attendance-badge" }
+                    { "trinsic:ecosystem", EcosystemEntry.Text },
+                    { "trinsic:schema", SchemaEntry.Text }
                 }
             });
 
