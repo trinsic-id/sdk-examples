@@ -1,0 +1,19 @@
+{
+  "name": "webpack-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack build",
+    "start": "webpack serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@trinsic/trinsic": "1.7.3"
+  },
+  "devDependencies": {
+    "webpack": "5.74.0",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.10.0"
+  }
+}

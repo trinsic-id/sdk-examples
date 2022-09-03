@@ -1,2 +1,2 @@
-trinsic-okapi~=1.4.0
-trinsic-sdk~=1.4.1
+trinsic-okapi==1.6.0
+trinsic-sdk==1.7.0

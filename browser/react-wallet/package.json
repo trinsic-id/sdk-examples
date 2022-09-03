@@ -3,23 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.5",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@trinsic/trinsic": "^1.6.1-rc2",
-    "@uiw/react-textarea-code-editor": "^1.4.15",
-    "generate-schema": "^2.6.0",
-    "http2": "^3.3.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.1.1",
+    "@trinsic/trinsic": "1.7.3",
+    "@uiw/react-textarea-code-editor": "1.6.0",
+    "generate-schema": "2.6.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "8.0.2",
+    "react-router-dom": "6.3.0",
     "react-scripts": "4.0.3",
-    "redux": "^4.1.2",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.1",
-    "web-vitals": "^1.1.2"
+    "redux": "4.2.0",
+    "redux-persist": "6.0.0",
+    "redux-thunk": "2.4.1",
+    "web-vitals": "2.1.4"
   },
   "scripts": {
     "start": "craco start",
@@ -46,9 +41,18 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.8",
-    "postcss": "^7.0.39",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
-    "wasm-loader": "^1.3.0"
+    "@redux-devtools/extension": "3.2.3",
+    "autoprefixer": "9.8.8",
+    "postcss": "7.0.39",
+    "postcss-loader": "4.3.0",
+    "redux-devtools-extension": "2.13.9",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@2.2.17",
+    "typescript": "4.7.4",
+    "@craco/craco": "6.4.5",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/dom": "8.17.1",
+    "@testing-library/react": "12.1.5",
+    "@testing-library/user-event": "14.4.3",
+    "webpack": "4.44.2"
   }
 }
