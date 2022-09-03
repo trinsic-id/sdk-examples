@@ -27,7 +27,7 @@ public partial class MainPage : ContentPage
                 RedirectUri = "mauiverifier://callback",
                 Browser = new PlatformBrowser(),
                 LoadProfile = false,
-                HttpClientFactory = _ => new HttpClient(new NSUrlSessionHandler()),
+                HttpClientFactory = _ => new HttpClient(),
             };
             OidcClient client = new(options);
 

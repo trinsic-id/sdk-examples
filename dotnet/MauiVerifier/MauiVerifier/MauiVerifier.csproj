@@ -49,8 +49,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="IdentityModel.OidcClient" Version="5.0.0" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
+      <PackageReference Include="IdentityModel.OidcClient" Version="5.0.2" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
     </ItemGroup>
 
     <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
