@@ -20,6 +20,11 @@ struct ContentView: View {
                     return
                 }
                 
+                guard let appDelegate = AppDelegate.instance else {
+                    print("Error accessing AppDelegate")
+                    return
+                }
+                
                 OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { configuration, error in
                     
                     print(configuration.debugDescription)
@@ -45,12 +50,24 @@ struct ContentView: View {
                                                             "trinsic:schema": "https://schema.trinsic.cloud/default/attendance-badge"
                                                           ])
                     
+                    
                     let controller = UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.rootViewController!
                     
-                    let currentAuthorizationFlow = OIDAuthorizationService.present(request, presenting: controller) { (response, error) in
+                    appDelegate.currentAuthorizationFlow = OIDAuthorizationService.present(request, presenting: controller) { (response, error) in
 
                         if let response = response {
                             let authState = OIDAuthState(authorizationResponse: response)
+                            
+                            let tokenRequest = authState.lastAuthorizationResponse.tokenExchangeRequest()!
+                            
+                            OIDAuthorizationService.perform(tokenRequest) { response, error in
+                                if let tokenResponse = response {
+                                    print("Received token response with accessToken: \(tokenResponse.accessToken ?? "DEFAULT_TOKEN")")
+                                } else {
+                                    print("Token exchange error: \(error?.localizedDescription ?? "DEFAULT_ERROR")")
+                                }
+                                authState.update(with: response, error: error)
+                            }
                             
                             print(authState.debugDescription)
                             //self.setAuthState(authState)

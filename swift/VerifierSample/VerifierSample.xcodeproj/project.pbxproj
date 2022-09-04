@@ -15,6 +15,8 @@
 		9295AA7128C47F2F00AC40B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9295AA5E28C47F2F00AC40B1 /* Assets.xcassets */; };
 		9295AA7C28C47F7400AC40B1 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9295AA7B28C47F7400AC40B1 /* AppAuth */; };
 		9295AA7E28C47F7400AC40B1 /* AppAuthCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9295AA7D28C47F7400AC40B1 /* AppAuthCore */; };
+		9295AA8028C48FDA00AC40B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */; };
+		9295AA8128C48FDA00AC40B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		9295AA6328C47F2F00AC40B1 /* VerifierSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VerifierSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9295AA6928C47F2F00AC40B1 /* VerifierSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VerifierSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9295AA6B28C47F2F00AC40B1 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9295AA8528C491A800AC40B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 		9295AA5628C47F2F00AC40B1 = {
 			isa = PBXGroup;
 			children = (
+				9295AA8528C491A800AC40B1 /* Info.plist */,
 				9295AA5B28C47F2F00AC40B1 /* Shared */,
 				9295AA6A28C47F2F00AC40B1 /* macOS */,
 				9295AA6428C47F2F00AC40B1 /* Products */,
@@ -61,6 +66,7 @@
 				9295AA5C28C47F2F00AC40B1 /* VerifierSampleApp.swift */,
 				9295AA5D28C47F2F00AC40B1 /* ContentView.swift */,
 				9295AA5E28C47F2F00AC40B1 /* Assets.xcassets */,
+				9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -187,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9295AA8028C48FDA00AC40B1 /* AppDelegate.swift in Sources */,
 				9295AA6E28C47F2F00AC40B1 /* ContentView.swift in Sources */,
 				9295AA6C28C47F2F00AC40B1 /* VerifierSampleApp.swift in Sources */,
 			);
@@ -196,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9295AA8128C48FDA00AC40B1 /* AppDelegate.swift in Sources */,
 				9295AA6F28C47F2F00AC40B1 /* ContentView.swift in Sources */,
 				9295AA6D28C47F2F00AC40B1 /* VerifierSampleApp.swift in Sources */,
 			);
@@ -322,6 +330,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -351,6 +360,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -383,6 +393,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -409,6 +420,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
