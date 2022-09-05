@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>mauiverifier</string>
+				<string>swiftverifier</string>
 			</array>
 		</dict>
 	</array>

@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     print(configuration.debugDescription)
                     
-                    guard let redirectURI = URL(string: "mauiverifier://callback") else {
+                    guard let redirectURI = URL(string: "swiftverifier://callback") else {
                         print("Error creating URL")
                         return
                     }
