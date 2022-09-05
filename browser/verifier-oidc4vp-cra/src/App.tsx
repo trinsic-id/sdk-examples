@@ -1,10 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { AuthService } from './AuthService';
 import AppContent from './AppContent';
-
-const authService = new AuthService();
 
 function App() {
   return (

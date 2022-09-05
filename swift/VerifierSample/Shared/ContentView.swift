@@ -15,7 +15,7 @@ struct ContentView: View {
             .padding()
             Button("Share Credential", action: {
                 
-                guard let issuer = URL(string: "https://connect-dev.trinsic.cloud") else {
+                guard let issuer = URL(string: "https://connect.trinsic.cloud") else {
                     print("Error creating URL")
                     return
                 }
@@ -47,7 +47,7 @@ struct ContentView: View {
                                                           responseType: OIDResponseTypeCode,
                                                           additionalParameters: [
                                                             "trinsic:ecosystem": "default",
-                                                            "trinsic:schema": "https://dev-schema.trinsic.cloud/default/attendance-badge"
+                                                            "trinsic:schema": "https://schema.trinsic.cloud/default/attendance-badge"
                                                           ])
                     
                     
