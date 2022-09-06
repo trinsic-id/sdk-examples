@@ -1,44 +1,27 @@
-import * as React from 'react';
+import { useEffect, useState } from "react";
+import { AuthService } from "./AuthService";
+import { Token } from "./Token";
 
-import { AuthService } from './AuthService';
-
-
-export default class AppContent extends React.Component<any, any> {
-  public authService: AuthService;
-
-  constructor(props: any) {
-    super(props);
-
-    this.authService = new AuthService();
-    this.state = { token: "" };
-  }
-
-  public componentDidMount() {
-    this.authService.getUser().then((user: any) => {
-      console.log(user);
-      this.setState({token: JSON.stringify(user.profile._vp_token, null, 2)});
-    });
-  }
-
-  public login = () => {
-    this.authService.login();
-  };
-
-  public logout = () => {
-    this.authService.logout();
-  };
-
-  public render() {
-    return (
-      <>
-        <button onClick={this.login}>
-          Share Credential
-        </button>
-
-        <pre>
-          {this.state.token}
-        </pre>
-      </>
-    );
-  }
+export function AppContent(props: { authService: AuthService }) {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await props.authService.getUser();
+      if (user === null) {
+        console.error("Could not find user");
+        return;
+      }
+      setToken(JSON.stringify(user.profile._vp_token, null, 2));
+    };
+    getUser();
+  }, [props.authService]);
+  return (
+    <>
+      <button onClick={() => props.authService.login()}>
+        Share Credential
+      </button>
+      <br />
+      {token !== "" && <Token token={token} />}
+    </>
+  );
 }
