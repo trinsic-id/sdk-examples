@@ -61,10 +61,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     implementation 'com.google.code.gson:gson:2.9.1'
-    implementation 'io.grpc:grpc-netty-shaded:1.48.1'
-    implementation 'io.grpc:grpc-okhttp:1.48.1'
-    implementation 'io.grpc:grpc-protobuf:1.48.1'
-    implementation 'io.grpc:grpc-stub:1.48.1'
+    implementation 'io.grpc:grpc-netty-shaded:1.49.0'
+    implementation 'io.grpc:grpc-okhttp:1.49.0'
+    implementation 'io.grpc:grpc-protobuf:1.49.0'
+    implementation 'io.grpc:grpc-stub:1.49.0'
     implementation 'net.java.dev.jna:jna:5.12.1'
 
     implementation urlFile('https://github.com/trinsic-id/okapi/releases/download/v1.6.0/trinsic-okapi-1.6.0.jar', 'trinsic-okapi-1.6.0')
