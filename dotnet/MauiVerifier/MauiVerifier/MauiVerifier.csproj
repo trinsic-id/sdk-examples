@@ -16,7 +16,7 @@
         <ApplicationId>com.companyname.MauiVerifier</ApplicationId>
 
         <!-- Versions -->
-        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationVersion>2</ApplicationVersion>
 
         <!-- Required for C# Hot Reload -->
         <UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
@@ -50,7 +50,7 @@
 
     <ItemGroup>
       <PackageReference Include="IdentityModel.OidcClient" Version="5.0.2" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
     </ItemGroup>
 
     <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
@@ -63,8 +63,8 @@
         <ArchiveOnBuild>true</ArchiveOnBuild>
         <!-- Only needed when you have a need for entitlements -->
         <!-- <CodesignEntitlement>Entitlements.plist</CodesignEntitlement> -->
-<!--        <CodesignKey>iPhone Distribution: Gerald Versluis (AY5KBJ6RN9)</CodesignKey>-->
-<!--        <CodesignProvision>iosmauisigning</CodesignProvision>-->
+<!--        <CodesignKey>Apple Distribution: Trinsic Technologies, Inc. (5HFVA9J8Q3)</CodesignKey>
+        <CodesignProvision>mauiverifierdemo</CodesignProvision>-->
     </PropertyGroup>
 
 </Project>

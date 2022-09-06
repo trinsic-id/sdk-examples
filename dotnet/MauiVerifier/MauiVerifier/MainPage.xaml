@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiVerifier.MainPage"
              xmlns:droid="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
@@ -7,35 +7,60 @@
              BackgroundColor="{DynamicResource SecondaryColor}">
 
     <ScrollView>
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+        <VerticalStackLayout
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
             <Label 
                 Text="Hi there!"
-                Grid.Row="0"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
+                Margin="10"
                 HorizontalOptions="Center" />
 
             <Label 
                 Text="Welcome to Trinsic Verifier Demo!"
-                Grid.Row="1"
                 SemanticProperties.HeadingLevel="Level1"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I"
                 FontSize="18"
+                Margin="10"
                 HorizontalOptions="Center" />
+
+            <Label
+                Text="Schema URI"
+                Margin="0,10,0,0"
+                HorizontalOptions="Center"
+                SemanticProperties.HeadingLevel="Level5" />
+
+            <Entry
+                x:Name="SchemaEntry"
+                Text="https://schema.trinsic.cloud/default/attendance-badge"
+                HorizontalOptions="{OnPlatform iOS='FillAndExpand', Android='FillAndExpand',Default='Center'}"
+                WidthRequest="{OnPlatform MacCatalyst=350}"
+                Placeholder="Required credential schema" />
+
+            <Label
+                Text="Ecosystem"
+                Margin="0,10,0,0"
+                HorizontalOptions="Center"
+                SemanticProperties.HeadingLevel="Level5" />
+
+            <Entry
+                x:Name="EcosystemEntry"
+                Text="default"
+                WidthRequest="{OnPlatform MacCatalyst=350}"
+                HorizontalOptions="{OnPlatform iOS='FillAndExpand', Android='FillAndExpand',Default='Center'}"
+                Placeholder="Required ecosystem" />
                 
             <Button 
                 Text="Share Credential"
+                Margin="0,20,0,0"
                 FontAttributes="Bold"
-                Grid.Row="2"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnShareCredential"
                 HorizontalOptions="Center" />
             
             <Label 
                 Text=""
-                Grid.Row="3"
                 FontSize="18"
                 FontAttributes="Bold"
                 x:Name="ResultLabel"
@@ -43,10 +68,9 @@
             
             <ActivityIndicator
                 x:Name="BusyIndicator"
-                Grid.Row="4"
                 IsRunning="false"
                 IsVisible="false" />
 
-        </Grid>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

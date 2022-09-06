@@ -11,13 +11,11 @@ namespace MauiVerifier
     public class AppDelegate : MauiUIApplicationDelegate,  IASWebAuthenticationPresentationContextProviding
     {
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
-        
-        public UIWindow GetPresentationAnchor(ASWebAuthenticationSession session) {
-            return UIApplication.SharedApplication.ConnectedScenes
+
+        public UIWindow GetPresentationAnchor(ASWebAuthenticationSession session) => UIApplication.SharedApplication.ConnectedScenes
                 .ToArray()
                 .OfType<UIWindowScene>()
                 .SelectMany(scene => scene.Windows)
                 .First(window => window.IsKeyWindow);
-        }
     }
 }
