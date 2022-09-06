@@ -1,29 +1,27 @@
-import * as React from "react";
 import { useEffect, useState } from "react";
-
 import { AuthService } from "./AuthService";
-const authService = new AuthService();
+import { Token } from "./Token";
 
-export function AppContent() {
+export function AppContent(props: { authService: AuthService }) {
   const [token, setToken] = useState("");
   useEffect(() => {
-    console.log("Triggering app content getUser");
     const getUser = async () => {
-      const user = await authService.getUser();
+      const user = await props.authService.getUser();
       if (user === null) {
         console.error("Could not find user");
         return;
       }
-      console.log(user);
       setToken(JSON.stringify(user.profile._vp_token, null, 2));
     };
     getUser();
-  }, []);
+  }, [props.authService]);
   return (
     <>
-      <button onClick={() => authService.login()}>Share Credential</button>
-
-      <pre>{token}</pre>
+      <button onClick={() => props.authService.login()}>
+        Share Credential
+      </button>
+      <br />
+      {token !== "" && <Token token={token} />}
     </>
   );
 }
