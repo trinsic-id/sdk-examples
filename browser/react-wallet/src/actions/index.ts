@@ -8,12 +8,11 @@ import {
   IssueFromTemplateRequest,
   LoginRequest,
   LoginResponse,
-  SearchCredentialTemplatesRequest,
-  SearchRequest,
   SendRequest,
   ServiceOptions,
   TrinsicService,
   TemplateField,
+  SearchCredentialTemplatesRequest,
 } from "@trinsic/trinsic/lib/browser";
 import { TemplateAction } from "../reducers/Templates";
 import { WalletAction } from "../reducers/Wallet";
@@ -152,10 +151,8 @@ export function getWalletItems(): ThunkAction<
     getState: () => ActionState
   ) => {
     setAuthTokenFromState(getState);
-    let response = await service.wallet().search(SearchRequest.fromPartial({}));
-    // let items = response.getItemsList().map(item => item.getJsonStruct().toJavaScript());
-    // items = items.map(item => JSON.parse(Object.values(item.data).join('')))
-    let items = response.items.map((item) => JSON.parse(JSON.parse(item).data));
+    let response = await service.wallet().searchWallet();
+    let items = response.items.map((item) => JSON.parse(item));
 
     dispatch({
       type: GET_WALLET_ITEMS,
