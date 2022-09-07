@@ -52,7 +52,6 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/dom": "8.17.1",
     "@testing-library/react": "12.1.5",
-    "@testing-library/user-event": "14.4.3",
-    "webpack": "4.46.0"
+    "@testing-library/user-event": "14.4.3"
   }
 }
