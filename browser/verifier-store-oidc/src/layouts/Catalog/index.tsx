@@ -49,7 +49,7 @@ const Catalog = () => {
       authService.signinRedirect().then(async () => {
         const user = await authService.getUser();
         if (user) setUserToken(user.profile._vp_token);
-        navigate("/catalog");
+        navigate("/");
       });
     }
   }, [location, authState]);

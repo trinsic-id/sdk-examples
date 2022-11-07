@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Catalog from "./layouts/Catalog";
 import Cart from "./layouts/Cart";
 import { Home } from "./layouts/Home";
+import { Redirect } from "./layouts/Redirect";
 
 function App() {
   return (
@@ -15,10 +16,10 @@ function App() {
       <div className="w-full h-screen flex flex-col">
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Catalog />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/callback" element={<Catalog />} />
+          <Route path="/redirect" element={<Redirect />} />
           <Route path="/silent_renew" element={<Catalog />} />
         </Routes>
       </div>

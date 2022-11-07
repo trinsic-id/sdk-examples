@@ -7,7 +7,7 @@ export class AuthService {
   private settings = {
     authority: "https://dev-connect.trinsic.cloud",
     client_id: "verifier-oidc4vp-client",
-    redirect_uri: `${clientRoot}callback`,
+    redirect_uri: `${clientRoot}redirect`,
     silent_redirect_uri: `${clientRoot}silent-renew`,
     post_logout_redirect_uri: `${clientRoot}`,
     response_type: "code",
