@@ -80,7 +80,7 @@ export const VerifyCredentialModal = ({
                   </div>
                   <div className="w-full pt-5">
                     <button
-                      className="flex flex-row items-center space-x-4 bg-blue-500 w-full rounded-lg p-3"
+                      className="flex flex-row items-center space-x-4 bg-green-500 w-full rounded-lg p-3"
                       onClick={() => {
                         authService.login();
                       }}
