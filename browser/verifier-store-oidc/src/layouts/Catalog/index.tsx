@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import useToggle from "react-use/lib/useToggle";
 import { useRecoilState } from "recoil";
 import { Item } from "../../atoms/atoms";
-import { AuthState, authStateAtom } from "../../atoms/user";
+import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
 import { useAddItem } from "../../hooks/custom/useAddItem";
 import { AuthService } from "../../services/AuthService";
@@ -35,13 +34,23 @@ const Catalog = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [authState, setAuthState] = useRecoilState(authStateAtom);
+  const [userToken, setUserToken] = useRecoilState(userTokenState);
+
+  useEffect(() => {
+    if (userToken) console.log("UserToken", userToken.credentialSubject);
+  }, [userToken]);
+
   useEffect(() => {
     if (
       location.pathname === "/callback" &&
       authState === AuthState.ANONYMOUS
     ) {
       setAuthState(AuthState.VERIFIED);
-      return navigate("/");
+      authService.signinRedirect().then(async () => {
+        const user = await authService.getUser();
+        if (user) setUserToken(user.profile._vp_token);
+        navigate("/");
+      });
     }
   }, [location, authState]);
   return (

@@ -1,3 +1,4 @@
+import { IdTokenClaims } from "oidc-client-ts";
 import { atom } from "recoil";
 
 export enum AuthState {
@@ -8,6 +9,11 @@ export enum AuthState {
 export const authStateAtom = atom<AuthState>({
   key: "auth-state",
   default: AuthState.ANONYMOUS,
+});
+
+export const userTokenState = atom<any | undefined>({
+  key: "user-token-state",
+  default: undefined,
 });
 
 export const ItemPerFarm = 10;
