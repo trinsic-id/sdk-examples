@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Star } from "react-feather";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
@@ -19,56 +20,66 @@ export const Redirect = () => {
   const [authState, setAuthState] = useRecoilState(authStateAtom);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
 
+  //   useEffect(() => {
+  //     toggleVerifyingLoading(true);
+  //   }, []);
   useEffect(() => {
-    setAuthState(AuthState.VERIFIED);
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
       if (user) setUserToken(user.profile._vp_token);
       toggleVerifyingLoading(true);
+      setAuthState(AuthState.VERIFIED);
     });
   }, [location, authState]);
 
   return (
-    <div className="w-full h-full flex items-center place-content-center">
-      <div className="w-3/12 h-1/3 rounded-lg bg-gray-300 p-4 flex flex-col">
-        <div className="text-2xl text-black border-b border-black pb-2 mb-4">
-          Logging you in
-        </div>
-        <div className="flex flex-1 flex-col items-start space-y-3 pt-4">
-          <LoadingItem
-            isLoading={isVerifyingLoading}
-            text={"Verifying Credential"}
-            onNext={() => {
-              toggleVerifyingLoading(false);
-              toggleProfileLoading(true);
-            }}
-          />
-          <LoadingItem
-            isLoading={isProfileLoading}
-            text={"Fetching profile"}
-            onNext={() => {
-              toggleProfileLoading(false);
-              toggleDiscountsLoading(true);
-            }}
-          />
-          <LoadingItem
-            isLoading={isDiscountsLoading}
-            text={"Fetching discounts and limits"}
-            onNext={() => {
-              toggleDiscountsLoading(false);
-              toggleRedirectLoading(true);
-            }}
-          />
-          <LoadingItem
-            isLoading={isRedirectLoading}
-            text={"Redirecting to store"}
-            onNext={() => {
-              toggleRedirectLoading(false);
-              navigate("/");
-            }}
-          />
-        </div>
-      </div>
+    <div className="w-full h-full flex flex-col items-center place-content-center space-y-5">
+      <LoadingItem
+        isLoading={isVerifyingLoading}
+        text={"Verifying Credential"}
+        onNext={() => {
+          toggleVerifyingLoading(false);
+          toggleProfileLoading(true);
+        }}
+        successElement={
+          <div className="w-full flex flex-row items-center">
+            <div className="font-light text-xl">
+              Credential issued by the Agrio Farming Community
+            </div>
+            <img src="/agrio.jpeg" className="h-12" />
+          </div>
+        }
+      />
+      <LoadingItem
+        isLoading={isProfileLoading}
+        text={"Fetching profile"}
+        onNext={() => {
+          toggleProfileLoading(false);
+          toggleDiscountsLoading(true);
+        }}
+        successElement={
+          <div className="w-full flex flex-row items-center justify-between">
+            <div className="font-light text-xl">Artichoke Gold farmer</div>
+            <Star size={28} className={"stroke-yellow-400 fill-yellow-400"} />
+          </div>
+        }
+      />
+      <LoadingItem
+        isLoading={isDiscountsLoading}
+        text={"Fetching discounts and limits"}
+        onNext={() => {
+          toggleDiscountsLoading(false);
+          toggleRedirectLoading(true);
+        }}
+      />
+      <LoadingItem
+        isLoading={isRedirectLoading}
+        text={"Redirecting to store"}
+        onNext={() => {
+          toggleRedirectLoading(false);
+          navigate("/");
+        }}
+      />
     </div>
   );
 };

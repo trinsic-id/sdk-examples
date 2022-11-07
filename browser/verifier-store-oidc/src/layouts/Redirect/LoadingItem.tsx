@@ -1,15 +1,44 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
-import { CheckCircle, Circle } from "react-feather";
+import { CheckCircle, CheckSquare, Circle, Square } from "react-feather";
 import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
+
+const Animations = {
+  fadeIn: {
+    opacity: 1,
+    transitionDuration: ".6s",
+    transitionDelay: "0.6s",
+  },
+  fadeOut: {
+    opacity: 0,
+    transitionDuration: ".6s",
+  },
+  visible: {
+    height: "auto",
+    opacity: 1,
+    // overflow: "auto",
+  },
+  hidden: {
+    height: 0,
+    overflow: "hidden",
+    opacity: 0,
+  },
+};
 
 interface LoadingItemProps {
   isLoading: boolean;
   onNext: () => void;
   text: string;
+  successElement?: any;
 }
 
-export const LoadingItem = ({ isLoading, onNext, text }: LoadingItemProps) => {
+export const LoadingItem = ({
+  isLoading,
+  onNext,
+  text,
+  successElement,
+}: LoadingItemProps) => {
   const [isComplete, toggleComplete] = useToggle(false);
 
   useEffect(() => {
@@ -21,8 +50,8 @@ export const LoadingItem = ({ isLoading, onNext, text }: LoadingItemProps) => {
   }, [isLoading]);
 
   return (
-    <div className="flex flex-row items-center space-x-4">
-      <div className="w-12">
+    <div className="flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4">
+      <div className="w-8 h-full">
         {isLoading && (
           <Spinner
             className={``}
@@ -32,13 +61,30 @@ export const LoadingItem = ({ isLoading, onNext, text }: LoadingItemProps) => {
           />
         )}
         {!isLoading && isComplete && (
-          <CheckCircle size={28} className="stroke-green-400" />
+          <CheckSquare size={28} className="stroke-green-400" />
         )}
         {!isLoading && !isComplete && (
-          <Circle size={28} className="stroke-gray-400" />
+          <Square size={28} className="stroke-gray-400" />
         )}
       </div>
-      <div className="text-black text-2xl font-light">{text}</div>
+      <div className="flex flex-1 flex-col ">
+        <div className="text-loading-text text-md font-bold">{text}</div>
+        <AnimatePresence>
+          {successElement && isComplete && (
+            <motion.div
+              initial={Animations.fadeOut}
+              animate={Animations.fadeIn}
+              exit={{
+                ...Animations.fadeIn,
+                transitionDelay: "0s",
+              }}
+              className="text-loading-text text-md font-bold"
+            >
+              {successElement}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
