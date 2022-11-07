@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Item } from "../../atoms/atoms";
 import {
   useAddItem,
   useDecreaseItem,
   useRemoveItem,
-} from "../hooks/useAddItem";
-import { cart, Item } from "../atoms/atoms";
+} from "../../hooks/custom/useAddItem";
 
 interface CartButtonsProps {
   item: Item;

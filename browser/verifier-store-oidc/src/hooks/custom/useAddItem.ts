@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cart, Item } from "../atoms/atoms";
+import { cartState, cartTotalState, Item } from "../../atoms/atoms";
+
 import {
   AuthState,
   authStateAtom,
   isVerifyCredentialModalVisibleAtom,
-} from "../atoms/user";
+} from "../../atoms/user";
 
 export const cloneIndex = (items: Item[], id: string) => ({
   clone: items.map((item) => ({ ...item })),
@@ -18,11 +19,10 @@ export const useAddItem = () => {
   );
   const isCredentialVerified = useRecoilValue(authStateAtom);
 
-  const [items, setItems] = useRecoilState(cart);
+  const [items, setItems] = useRecoilState(cartState);
 
   return useCallback(
     (product: any) => {
-      console.log("HERE");
       if (isCredentialVerified === AuthState.ANONYMOUS)
         return setVerifyModalVisible(true);
       const { clone, index } = cloneIndex(items, product.id);
@@ -38,14 +38,14 @@ export const useAddItem = () => {
 };
 
 export const useRemoveItem = () => {
-  const [items, setItems] = useRecoilState(cart);
+  const [items, setItems] = useRecoilState(cartState);
   return (product: Item) => {
     setItems(items.filter((item) => item.id !== product.id));
   };
 };
 
 export const useDecreaseItem = () => {
-  const [items, setItems] = useRecoilState(cart);
+  const [items, setItems] = useRecoilState(cartState);
   const removeItem = useRemoveItem();
   return (product: Item) => {
     const { clone, index } = cloneIndex(items, product.id);

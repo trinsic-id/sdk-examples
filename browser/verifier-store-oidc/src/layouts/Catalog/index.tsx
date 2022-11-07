@@ -3,15 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import useToggle from "react-use/lib/useToggle";
 import { useRecoilState } from "recoil";
-import { Item } from "../atoms/atoms";
-import {
-  AuthState,
-  authStateAtom,
-  isVerifyCredentialModalVisibleAtom,
-} from "../atoms/user";
-import { useAddItem } from "../hooks/useAddItem";
-import { AuthService } from "../services/AuthService";
-import { VerifyCredentialModal } from "./VerifyCredential";
+import { Item } from "../../atoms/atoms";
+import { AuthState, authStateAtom } from "../../atoms/user";
+import { VerifyCredentialModal } from "../../components/VerifyCredential";
+import { useAddItem } from "../../hooks/custom/useAddItem";
+import { AuthService } from "../../services/AuthService";
 
 const authService = new AuthService();
 const ids = [

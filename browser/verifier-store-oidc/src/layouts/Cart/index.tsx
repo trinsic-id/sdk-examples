@@ -1,11 +1,11 @@
 import React from "react";
-import CartButtons from "./CartButtons";
 import { useRecoilValue } from "recoil";
-import { cart, cartState } from "../atoms/atoms";
+import { cartState, cartTotalState } from "../../atoms/atoms";
+import CartButtons from "./CartButtons";
 
 export const Cart = () => {
-  const cartItems = useRecoilValue(cart);
-  const { totalCost } = useRecoilValue(cartState);
+  const cartItems = useRecoilValue(cartState);
+  const { totalCost } = useRecoilValue(cartTotalState);
   return (
     <table className="">
       <thead className="border-b ">

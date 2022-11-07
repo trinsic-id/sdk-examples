@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { CreditCard, X } from "react-feather";
 import { useRecoilState } from "recoil";
-import { isVerifyCredentialModalVisibleAtom } from "../atoms/user";
-import { useLockBg } from "../hooks/useLockBackground";
-import { AuthService } from "../services/AuthService";
+import { isVerifyCredentialModalVisibleAtom } from "../../atoms/user";
+import { useLockBg } from "../../hooks/custom/useLockBackground";
+import { AuthService } from "../../services/AuthService";
+
 const defaultValues = {
   vehicle: null,
   year: null,

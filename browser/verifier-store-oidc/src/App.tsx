@@ -3,9 +3,10 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Catalog from "./components/Catalog";
-import Cart from "./components/Cart";
+
 import Header from "./components/Header";
+import Catalog from "./layouts/Catalog";
+import Cart from "./layouts/Cart";
 
 function App() {
   return (
