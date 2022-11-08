@@ -54,7 +54,7 @@ const Catalog = () => {
     }
   }, [location, authState]);
   return (
-    <div className="flex flex-row flex-wrap gap-4 items-start">
+    <div className="flex flex-row flex-wrap gap-4 items-start hidden">
       {products.map((p) => (
         <div key={p.id} className="flex flex-col items-center gap-3 border p-4">
           <div className="text-black w-full">

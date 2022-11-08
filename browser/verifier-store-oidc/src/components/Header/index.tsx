@@ -18,12 +18,12 @@ const Header = () => {
   }, [location.pathname]);
 
   return isVisible ? (
-    <div className="flex flex-row items-center justify-between w-full border-b border-gray-300 pb-2 mb-2">
+    <div className="flex flex-row items-center justify-between w-full border-b border-gray-300 pb-2 mb-2 py-4 px-6">
       <Link to="/">
-        <div className="text-2xl font-medium text-black">Norlorn</div>
+        <img src="/ecostore.png" className="w-28" />
       </Link>
 
-      <div className="flex flex-row space-x-4 items-center">
+      <div className="flex flex-row space-x-6 items-center">
         <CartButton />
         <AccountButton />
       </div>
