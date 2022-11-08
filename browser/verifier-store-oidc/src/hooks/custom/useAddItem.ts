@@ -19,15 +19,15 @@ export const useAddItem = () => {
   const [items, setItems] = useRecoilState(cartState);
 
   return useCallback(
-    (product: Product) => {
+    (product: Product, qty: number = 1) => {
       // if (isCredentialVerified === AuthState.ANONYMOUS)
       //   return setVerifyModalVisible(true);
       const { clone, index } = cloneIndex(items, product.id);
       if (index !== -1) {
-        clone[index].qty += 1;
+        clone[index].qty += qty;
         setItems(clone);
       } else {
-        setItems([...clone, { ...product, qty: 1 }]);
+        setItems([...clone, { ...product, qty: qty }]);
       }
     },
     [setVerifyModalVisible, isCredentialVerified, items, setItems]
