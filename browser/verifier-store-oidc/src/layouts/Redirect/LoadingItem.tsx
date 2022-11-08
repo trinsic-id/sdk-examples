@@ -62,7 +62,7 @@ export const LoadingItem = ({
           <Spinner
             className={``}
             name="double-bounce"
-            color="black"
+            color="#828282"
             style={{ height: "30px", width: "30px" }}
           />
         )}
