@@ -6,13 +6,15 @@ import { useToggle } from "react-use";
 
 const Animations = {
   fadeIn: {
+    height: "auto",
     opacity: 1,
-    transitionDuration: ".6s",
-    transitionDelay: "0.6s",
+    transitionDuration: "1.5s",
+    // transitionDelay: "0.6s",
   },
   fadeOut: {
+    height: 0,
     opacity: 0,
-    transitionDuration: ".6s",
+    transitionDuration: "1.5s",
   },
   visible: {
     height: "auto",
@@ -75,10 +77,10 @@ export const LoadingItem = ({
               initial={Animations.fadeOut}
               animate={Animations.fadeIn}
               exit={{
-                ...Animations.fadeIn,
+                ...Animations.fadeOut,
                 transitionDelay: "0s",
               }}
-              className="text-loading-text text-md font-bold"
+              className="text-loading-text text-md font-bold overflow-clip"
             >
               {successElement}
             </motion.div>
