@@ -5,26 +5,27 @@ import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
 
 const Animations = {
-  fadeIn: {
-    height: "auto",
-    opacity: 1,
-    transitionDuration: "1.5s",
-    // transitionDelay: "0.6s",
+  icons: {
+    fadeIn: {
+      opacity: 1,
+      transitionDuration: "0.6s",
+    },
+    fadeOut: {
+      opacity: 0,
+      transitionDuration: "0.6s",
+    },
   },
-  fadeOut: {
-    height: 0,
-    opacity: 0,
-    transitionDuration: "1.5s",
-  },
-  visible: {
-    height: "auto",
-    opacity: 1,
-    // overflow: "auto",
-  },
-  hidden: {
-    height: 0,
-    overflow: "hidden",
-    opacity: 0,
+  subText: {
+    fadeIn: {
+      height: "auto",
+      opacity: 1,
+      transitionDuration: "1.5s",
+    },
+    fadeOut: {
+      height: 0,
+      opacity: 0,
+      transitionDuration: "1.5s",
+    },
   },
 };
 
@@ -52,25 +53,53 @@ export const LoadingItem = ({
   }, [isLoading]);
 
   return (
-    <div
+    <motion.div
       className={`flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4 ${
         !isLoading && !isComplete && "opacity-40"
       }`}
     >
       <div className="w-8 h-full">
         {isLoading && (
-          <Spinner
-            className={``}
-            name="double-bounce"
-            color="#828282"
-            style={{ height: "30px", width: "30px" }}
-          />
+          <AnimatePresence>
+            <motion.div
+              variants={Animations.icons}
+              initial={"fadeOut"}
+              animate={"fadeIn"}
+              exit={"fadeOut"}
+            >
+              <Spinner
+                fadeIn="full"
+                className={``}
+                name="double-bounce"
+                color="#828282"
+                style={{ height: "30px", width: "30px" }}
+              />
+            </motion.div>
+          </AnimatePresence>
         )}
         {!isLoading && isComplete && (
-          <CheckSquare size={28} className="stroke-green-400" />
+          <AnimatePresence>
+            <motion.div
+              variants={Animations.icons}
+              initial={"fadeOut"}
+              animate={"fadeIn"}
+              exit={"fadeOut"}
+            >
+              <CheckSquare size={28} className="stroke-green-400" />
+            </motion.div>
+          </AnimatePresence>
         )}
         {!isLoading && !isComplete && (
-          <Square size={28} className="stroke-gray-400" />
+          <AnimatePresence>
+            <motion.div
+              variants={Animations.icons}
+              initial={"fadeOut"}
+              animate={"fadeIn"}
+              exit={"fadeOut"}
+            >
+              <Square size={28} className="stroke-gray-400" />
+            </motion.div>
+          </AnimatePresence>
         )}
       </div>
       <div className="flex flex-1 flex-col">
@@ -78,19 +107,17 @@ export const LoadingItem = ({
         <AnimatePresence>
           {successElement && isComplete && (
             <motion.div
-              initial={Animations.fadeOut}
-              animate={Animations.fadeIn}
-              exit={{
-                ...Animations.fadeOut,
-                transitionDelay: "0s",
-              }}
-              className="text-loading-text text-md font-bold overflow-clip"
+              variants={Animations.subText}
+              initial={"fadeOut"}
+              animate={"fadeIn"}
+              exit={"fadeOut"}
+              className="text-loading-text text-md font-bold overflow-clip pt-3"
             >
               {successElement}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };

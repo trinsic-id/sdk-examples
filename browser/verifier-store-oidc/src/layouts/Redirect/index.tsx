@@ -43,7 +43,7 @@ export const Redirect = () => {
         }}
         successElement={
           <div className="w-full flex flex-row items-center">
-            <div className="font-light text-lg w-full">
+            <div className="font-light leading-tight text-lg w-full">
               {`Credential issued by the`}
               <br />
               {`Agrio Farming Community`}
@@ -61,7 +61,9 @@ export const Redirect = () => {
         }}
         successElement={
           <div className="w-full flex flex-row items-center justify-between">
-            <div className="font-light text-lg">Artichoke Gold farmer</div>
+            <div className="font-light text-lg leading-tight">
+              Artichoke Gold farmer
+            </div>
             <Star size={28} className={"stroke-yellow-400 fill-yellow-400"} />
           </div>
         }
