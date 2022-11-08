@@ -55,8 +55,11 @@ export const Card = ({ product, isGoldMember }: CardProps) => {
       className="flex flex-col items-center gap-3 border p-4 rounded-lg w-full md:max-w-md bg-white"
     >
       <div className="flex flex-row w-full items-center justify-between h-12">
-        {product.header === ProductHeader.Sale && <Sale />}
-        {product.header === ProductHeader.NewSeason && <NewSeason />}
+        {product.header === ProductHeader.Sale && !isGoldMember && <Sale />}
+        {product.header === ProductHeader.NewSeason && !isGoldMember && (
+          <NewSeason />
+        )}
+        {goldAdjustment && <GoldMember />}
         <Bookmark className="stroke-gray-500 hidden md:block" size={18} />
         <Bookmark className="stroke-gray-500 md:hidden" size={24} />
       </div>
@@ -67,22 +70,39 @@ export const Card = ({ product, isGoldMember }: CardProps) => {
         <div className="text-md font-light text-gray-500">
           {product.subTitle}
         </div>
-        <div className="flex flex-row items-center space-x-4">
-          <div className="text-lg font-medium text-black ">
-            {product.price.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </div>
-          {product.header === ProductHeader.Sale && product.prevPrice && (
-            <div className="text-md font-light text-gray-500 line-through">
-              {product.prevPrice.toLocaleString("en-US", {
+        {goldAdjustment !== undefined ? (
+          <div className="flex flex-row items-center space-x-4">
+            <div className="text-lg font-medium text-yellow-600 ">
+              {goldAdjustment.goldPrice.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })}
             </div>
-          )}
-        </div>
+            <div className="text-md font-light text-gray-500 line-through">
+              {goldAdjustment.prevPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center space-x-4">
+            <div className="text-lg font-medium text-black ">
+              {product.price.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+            {product.header === ProductHeader.Sale && product.prevPrice && (
+              <div className="text-md font-light text-gray-500 line-through">
+                {product.prevPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <CardButtons product={product} />

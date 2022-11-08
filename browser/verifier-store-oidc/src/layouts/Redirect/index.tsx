@@ -81,7 +81,7 @@ export const Redirect = () => {
         text={"Redirecting to store"}
         onNext={() => {
           toggleRedirectLoading(false);
-          //   navigate("/");
+          navigate("/");
         }}
       />
     </div>

@@ -35,10 +35,10 @@ const Animations = {
 };
 
 const Catalog = () => {
-  const userToken = useRecoilValue(userTokenState);
+  const authState = useRecoilValue(authStateAtom);
   const isGoldMember = useMemo(
-    () => userToken === AuthState.VERIFIED,
-    [userToken]
+    () => authState === AuthState.VERIFIED,
+    [authState]
   );
 
   return (
