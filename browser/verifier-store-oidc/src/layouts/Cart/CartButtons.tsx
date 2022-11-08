@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Item } from "../../atoms/atoms";
 import { useAddItem } from "../../hooks/custom/useAddItem";
 import { useRemoveItem } from "../../hooks/custom/useRemoveItem";
 import { useDecreaseItem } from "../../hooks/custom/useDecreaseItem";
+import { Product } from "../../data/products";
 
 interface CartButtonsProps {
-  item: Item;
+  item: Product;
 }
 
 export const CartButtons = ({ item }: CartButtonsProps) => {

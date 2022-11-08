@@ -48,7 +48,7 @@ export const Redirect = () => {
               <br />
               {`Agrio Farming Community`}
             </div>
-            <img src="/agrio.jpeg" className="h-12 rounded-lg" />
+            <img src="/images/agrio.jpeg" className="h-12 rounded-lg" />
           </div>
         }
       />

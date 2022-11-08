@@ -2,32 +2,14 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
-import { Item } from "../../atoms/atoms";
 import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
+import { products } from "../../data/products";
 import { useAddItem } from "../../hooks/custom/useAddItem";
 import { AuthService } from "../../services/AuthService";
+import { Card } from "./Card";
 
 const authService = new AuthService();
-const ids = [
-  "apple",
-  "orange",
-  "pear",
-  "tomato",
-  "watermelon",
-  "guava",
-  "mango",
-  "avacado",
-  "lime",
-  "lemon",
-  "kiwi",
-];
-
-const products: Item[] = ids.map((id, index) => ({
-  id,
-  price: index + 1,
-  qty: 0,
-}));
 
 const Catalog = () => {
   const addItem = useAddItem();
@@ -54,19 +36,9 @@ const Catalog = () => {
     }
   }, [location, authState]);
   return (
-    <div className="flex flex-row flex-wrap gap-4 items-start hidden">
-      {products.map((p) => (
-        <div key={p.id} className="flex flex-col items-center gap-3 border p-4">
-          <div className="text-black w-full">
-            {p.id} / ${p.price}
-          </div>
-          <button
-            className="bg-green-500 rounded-lg px-4 py-1 text-sm text-white font-bold"
-            onClick={() => addItem(p)}
-          >
-            Add
-          </button>
-        </div>
+    <div className="flex flex-row flex-wrap gap-4 items-start">
+      {products.map((product) => (
+        <Card product={product} />
       ))}
       <VerifyCredentialModal authService={authService} />
     </div>

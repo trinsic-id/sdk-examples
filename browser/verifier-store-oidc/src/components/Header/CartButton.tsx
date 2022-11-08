@@ -10,11 +10,11 @@ export const CartButton = () => {
       <div className="relative">
         <ShoppingBag size={18} className="stroke-black" />
         <span
-          className={`absolute -top-2 -right-2 h-4 w-4 rounded-full bg-green-500 flex justify-center items-center items ${
-            totalQty + 1 === 0 && "opacity-0"
+          className={`absolute -top-2 -right-2 rounded-full bg-green-500 flex justify-center items-center items ${
+            totalQty === 0 && "opacity-0"
           }`}
         >
-          <span className="text-white font-light text-sm">{totalQty}</span>
+          <span className="text-white font-light text-xs px-1">{totalQty}</span>
         </span>
       </div>
       <div className="text-md text-black font-semibold">Cart</div>

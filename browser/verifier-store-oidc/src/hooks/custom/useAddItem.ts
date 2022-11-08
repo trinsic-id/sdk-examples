@@ -7,6 +7,7 @@ import {
   authStateAtom,
   isVerifyCredentialModalVisibleAtom,
 } from "../../atoms/user";
+import { Product } from "../../data/products";
 import { cloneIndex } from "../../utils/cloneIndex";
 
 export const useAddItem = () => {
@@ -18,9 +19,9 @@ export const useAddItem = () => {
   const [items, setItems] = useRecoilState(cartState);
 
   return useCallback(
-    (product: any) => {
-      if (isCredentialVerified === AuthState.ANONYMOUS)
-        return setVerifyModalVisible(true);
+    (product: Product) => {
+      // if (isCredentialVerified === AuthState.ANONYMOUS)
+      //   return setVerifyModalVisible(true);
       const { clone, index } = cloneIndex(items, product.id);
       if (index !== -1) {
         clone[index].qty += 1;

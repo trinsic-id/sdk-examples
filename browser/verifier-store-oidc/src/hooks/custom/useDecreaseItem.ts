@@ -1,12 +1,13 @@
 import { useRecoilState } from "recoil";
-import { cartState, Item } from "../../atoms/atoms";
+import { cartState } from "../../atoms/atoms";
+import { Product } from "../../data/products";
 import { cloneIndex } from "../../utils/cloneIndex";
 import { useRemoveItem } from "./useRemoveItem";
 
 export const useDecreaseItem = () => {
   const [items, setItems] = useRecoilState(cartState);
   const removeItem = useRemoveItem();
-  return (product: Item) => {
+  return (product: Product) => {
     const { clone, index } = cloneIndex(items, product.id);
     if (clone[index].qty === 1) {
       removeItem(product);
