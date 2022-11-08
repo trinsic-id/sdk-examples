@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { Bookmark, ShoppingCart, Star } from "react-feather";
 import { Product, ProductHeader } from "../../data/products";
@@ -7,12 +8,35 @@ import { CardButtons } from "./CardButtons";
 import { NewSeason } from "./NewSeason";
 import { Sale } from "./Sale";
 
+const Animations = {
+  container: {
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      transition: {
+        when: "afterChildren",
+      },
+    },
+  },
+  item: {
+    visible: { opacity: 1, x: 0 },
+    hidden: { opacity: 0, x: -100 },
+  },
+};
+
 interface CardProps {
   product: Product;
 }
 export const Card = ({ product }: CardProps) => {
   return (
-    <div
+    <motion.div
+      variants={Animations.item}
       key={product.id}
       className="flex flex-col items-center gap-3 border p-4 rounded-lg w-full md:max-w-md bg-white"
     >
@@ -48,6 +72,6 @@ export const Card = ({ product }: CardProps) => {
       </div>
 
       <CardButtons product={product} />
-    </div>
+    </motion.div>
   );
 };
