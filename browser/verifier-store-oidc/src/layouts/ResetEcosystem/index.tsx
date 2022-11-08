@@ -24,7 +24,7 @@ export const ResetEcosystem = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center place-content-center space-y-5">
+    <div className="w-full h-full flex flex-col items-center place-content-center space-y-5 p-3">
       <LoadingItem
         isLoading={isEcosystemResetting}
         isError={isError}

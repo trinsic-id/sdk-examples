@@ -32,15 +32,15 @@ export const Redirect = () => {
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
       if (user) setUserToken(user.profile._vp_token);
-      //toggleVerifyingLoading(true);
+      toggleVerifyingLoading(true);
 
       setAuthState(AuthState.VERIFIED);
-      navigate("/");
+      //   navigate("/");
     });
   }, [location, authState, authSettings]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center place-content-center space-y-5">
+    <div className="w-full h-full flex flex-col items-center place-content-center space-y-5 p-3">
       <LoadingItem
         isLoading={isVerifyingLoading}
         text={"Verifying Credential"}
