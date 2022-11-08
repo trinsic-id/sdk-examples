@@ -54,7 +54,7 @@ export const LoadingItem = ({
 
   return (
     <motion.div
-      className={`flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4 ${
+      className={`flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4 transition duration-700 ${
         !isLoading && !isComplete && "opacity-40"
       }`}
     >
