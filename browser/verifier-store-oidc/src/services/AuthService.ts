@@ -2,7 +2,7 @@ import { Log, User, UserManager } from "oidc-client-ts";
 
 const clientRoot: string = "http://localhost:3000/";
 
-export const defaultEcosystem = "hersh-test2";
+export const defaultEcosystem = "hersh-test";
 export const defaultSchema =
   "https://dev-schema.trinsic.cloud/hersh-test/test-oidc";
 
