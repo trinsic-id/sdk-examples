@@ -1,8 +1,9 @@
 import { useMemo } from "react";
-import { Bookmark, Star } from "react-feather";
+import { Bookmark, ShoppingCart, Star } from "react-feather";
 import { Product, ProductHeader } from "../../data/products";
 
 import { useAddItem } from "../../hooks/custom/useAddItem";
+import { CardButtons } from "./CardButtons";
 import { NewSeason } from "./NewSeason";
 import { Sale } from "./Sale";
 
@@ -47,6 +48,7 @@ export const Card = ({ product }: CardProps) => {
           )}
         </div>
       </div>
+      <CardButtons product={product} />
     </div>
   );
 };
