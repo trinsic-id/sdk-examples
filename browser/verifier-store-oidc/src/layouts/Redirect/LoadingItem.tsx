@@ -52,7 +52,11 @@ export const LoadingItem = ({
   }, [isLoading]);
 
   return (
-    <div className="flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4">
+    <div
+      className={`flex flex-row items-center space-x-4 w-1/3 bg-loading-bg-light rounded-lg p-4 ${
+        !isLoading && !isComplete && "opacity-40"
+      }`}
+    >
       <div className="w-8 h-full">
         {isLoading && (
           <Spinner
@@ -69,7 +73,7 @@ export const LoadingItem = ({
           <Square size={28} className="stroke-gray-400" />
         )}
       </div>
-      <div className="flex flex-1 flex-col ">
+      <div className="flex flex-1 flex-col">
         <div className="text-loading-text text-md font-bold">{text}</div>
         <AnimatePresence>
           {successElement && isComplete && (

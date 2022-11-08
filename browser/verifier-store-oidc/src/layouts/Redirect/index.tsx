@@ -20,9 +20,9 @@ export const Redirect = () => {
   const [authState, setAuthState] = useRecoilState(authStateAtom);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
 
-  //   useEffect(() => {
-  //     toggleVerifyingLoading(true);
-  //   }, []);
+  useEffect(() => {
+    toggleVerifyingLoading(true);
+  }, []);
   useEffect(() => {
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
@@ -43,10 +43,12 @@ export const Redirect = () => {
         }}
         successElement={
           <div className="w-full flex flex-row items-center">
-            <div className="font-light text-xl">
-              Credential issued by the Agrio Farming Community
+            <div className="font-light text-lg w-full">
+              {`Credential issued by the`}
+              <br />
+              {`Agrio Farming Community`}
             </div>
-            <img src="/agrio.jpeg" className="h-12" />
+            <img src="/agrio.jpeg" className="h-12 rounded-lg" />
           </div>
         }
       />
@@ -77,7 +79,7 @@ export const Redirect = () => {
         text={"Redirecting to store"}
         onNext={() => {
           toggleRedirectLoading(false);
-          navigate("/");
+          //   navigate("/");
         }}
       />
     </div>
