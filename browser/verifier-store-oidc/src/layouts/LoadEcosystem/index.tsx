@@ -35,10 +35,30 @@ export const LoadEcosystem = () => {
       <LoadingItem
         isLoading={isEcosystemLoading}
         isError={isError}
-        text={"Loading Ecosystem"}
+        text={"Loading Settings"}
         onNext={() => {
           navigate("/");
         }}
+        successElement={
+          <div className="w-full flex flex-col items-start space-y-1">
+            <div className="flex flex-row w-full items-center justify-between">
+              <div className="font-light leading-tight text-lg">Ecosystem</div>
+              <div className="leading-tight text-lg">
+                {authSettings?.ecosystem}
+              </div>
+            </div>
+            <div className="flex flex-row w-full items-center justify-between">
+              <div className="font-light leading-tight text-lg">Schema</div>
+              <div className="leading-tight text-lg">
+                {authSettings?.schema &&
+                  authSettings.schema.replace(
+                    "https://dev-schema.trinsic.cloud/",
+                    ""
+                  )}
+              </div>
+            </div>
+          </div>
+        }
       />
     </div>
   );

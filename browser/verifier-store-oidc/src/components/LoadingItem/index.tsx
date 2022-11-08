@@ -64,7 +64,7 @@ export const LoadingItem = ({
     if (isComplete)
       setTimeout(() => {
         onNext();
-      }, 1000);
+      }, 2000);
   }, [isComplete]);
 
   return (
@@ -74,7 +74,7 @@ export const LoadingItem = ({
       }`}
     >
       <div className="w-8 h-full">
-        {isLoading && !isError && (
+        {isLoading && !isError && !isComplete && (
           <AnimatePresence>
             <motion.div
               variants={Animations.icons}
@@ -92,7 +92,7 @@ export const LoadingItem = ({
             </motion.div>
           </AnimatePresence>
         )}
-        {!isLoading && isComplete && !isError && (
+        {isComplete && !isError && (
           <AnimatePresence>
             <motion.div
               variants={Animations.icons}
