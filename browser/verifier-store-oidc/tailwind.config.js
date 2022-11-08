@@ -13,6 +13,7 @@ module.exports = {
         "text-inactive": "#978D8D",
         "text-active": "#111010",
         "light-bg": "#F3F3F3",
+        "catalog-bg": "#e8e8e8",
       },
       backgroundImage: {
         "home-bg": "url('./img/background.png')",

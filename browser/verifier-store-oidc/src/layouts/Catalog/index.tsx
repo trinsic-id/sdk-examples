@@ -36,7 +36,7 @@ const Catalog = () => {
     }
   }, [location, authState]);
   return (
-    <div className="flex flex-row flex-wrap gap-4 items-start">
+    <div className="flex flex-col h-full space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4">
       {products.map((product) => (
         <Card product={product} />
       ))}
