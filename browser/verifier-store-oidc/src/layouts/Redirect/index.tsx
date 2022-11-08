@@ -27,8 +27,10 @@ export const Redirect = () => {
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
       if (user) setUserToken(user.profile._vp_token);
-      toggleVerifyingLoading(true);
+      //toggleVerifyingLoading(true);
+
       setAuthState(AuthState.VERIFIED);
+      navigate("/");
     });
   }, [location, authState]);
 
