@@ -10,8 +10,6 @@ import { useAddItem } from "../../hooks/custom/useAddItem";
 import { AuthService } from "../../services/AuthService";
 import { Card } from "./Card";
 
-const authService = new AuthService();
-
 const Animations = {
   container: {
     visible: {
@@ -52,7 +50,7 @@ const Catalog = () => {
       {products.map((product) => (
         <Card product={product} isGoldMember={isGoldMember} />
       ))}
-      <VerifyCredentialModal authService={authService} />
+      <VerifyCredentialModal />
     </motion.div>
   );
 };

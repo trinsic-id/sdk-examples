@@ -2,10 +2,12 @@ import { Combobox, RadioGroup } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { CreditCard, X } from "react-feather";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { authSettingsState } from "../../atoms/authService";
 import { isVerifyCredentialModalVisibleAtom } from "../../atoms/user";
 import { useLockBg } from "../../hooks/custom/useLockBackground";
-import { AuthService } from "../../services/AuthService";
+import { AuthService, defaultAuthSettings } from "../../services/AuthService";
+import { generateSettings } from "../../utils/generateSettings";
 
 const defaultValues = {
   vehicle: null,
@@ -37,14 +39,15 @@ const Animations = {
   },
 };
 
-export const VerifyCredentialModal = ({
-  authService,
-}: AddVehicleModalProps) => {
+export const VerifyCredentialModal = () => {
   const [isVisible, setModalVisible] = useRecoilState(
     isVerifyCredentialModalVisibleAtom
   );
   useLockBg(isVisible);
-
+  const authSettings = useRecoilValue(authSettingsState);
+  // useEffect(() => {
+  //   window.alert(JSON.stringify(authSettings));
+  // }, [authSettings]);
   return (
     <div className="max-w-x2s md:max-w-xs overflow-hidden">
       <AnimatePresence>
@@ -82,6 +85,14 @@ export const VerifyCredentialModal = ({
                     <button
                       className="flex flex-row items-center space-x-4 bg-green-500 w-full rounded-lg p-3"
                       onClick={() => {
+                        let settings: typeof defaultAuthSettings;
+                        if (authSettings)
+                          settings = generateSettings(
+                            authSettings.ecosystem,
+                            authSettings.schema
+                          );
+                        else settings = generateSettings();
+                        const authService = new AuthService(settings);
                         authService.login();
                       }}
                     >

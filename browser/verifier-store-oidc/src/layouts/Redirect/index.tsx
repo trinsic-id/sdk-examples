@@ -3,12 +3,12 @@ import { Star } from "react-feather";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { authSettingsState } from "../../atoms/authService";
 import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
-import { AuthService } from "../../services/AuthService";
-import { LoadingItem } from "./LoadingItem";
-
-const authService = new AuthService();
+import { LoadingItem } from "../../components/LoadingItem";
+import { AuthService, defaultAuthSettings } from "../../services/AuthService";
+import { generateSettings } from "../../utils/generateSettings";
 
 export const Redirect = () => {
   const [isVerifyingLoading, toggleVerifyingLoading] = useToggle(false);
@@ -19,11 +19,16 @@ export const Redirect = () => {
   const navigate = useNavigate();
   const [authState, setAuthState] = useRecoilState(authStateAtom);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
-
+  const authSettings = useRecoilValue(authSettingsState);
   useEffect(() => {
     toggleVerifyingLoading(true);
   }, []);
   useEffect(() => {
+    let settings: typeof defaultAuthSettings;
+    if (authSettings)
+      settings = generateSettings(authSettings.ecosystem, authSettings.schema);
+    else settings = generateSettings();
+    const authService = new AuthService(settings);
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
       if (user) setUserToken(user.profile._vp_token);
@@ -32,7 +37,7 @@ export const Redirect = () => {
       setAuthState(AuthState.VERIFIED);
       navigate("/");
     });
-  }, [location, authState]);
+  }, [location, authState, authSettings]);
 
   return (
     <div className="w-full h-full flex flex-col items-center place-content-center space-y-5">

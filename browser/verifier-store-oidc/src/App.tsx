@@ -9,6 +9,7 @@ import Catalog from "./layouts/Catalog";
 import Cart from "./layouts/Cart";
 import { Home } from "./layouts/Home";
 import { Redirect } from "./layouts/Redirect";
+import { LoadEcosystem } from "./layouts/LoadEcosystem";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/redirect" element={<Redirect />} />
+          <Route path="/load-ecosystem" element={<LoadEcosystem />} />
           <Route path="/silent_renew" element={<Catalog />} />
         </Routes>
       </div>

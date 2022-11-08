@@ -2,22 +2,29 @@ import { Log, User, UserManager } from "oidc-client-ts";
 
 const clientRoot: string = "http://localhost:3000/";
 
+export const defaultEcosystem = "hersh-test2";
+export const defaultSchema =
+  "https://dev-schema.trinsic.cloud/hersh-test/test-oidc";
+
+export const defaultAuthSettings = {
+  authority: "https://dev-connect.trinsic.cloud",
+  client_id: "okie-dokie",
+  redirect_uri: `${clientRoot}redirect`,
+  silent_redirect_uri: `${clientRoot}silent-renew`,
+  post_logout_redirect_uri: `${clientRoot}`,
+  response_type: "code",
+  scope: "openid",
+  extraQueryParams: {
+    "trinsic:ecosystem": defaultEcosystem,
+    "trinsic:schema": defaultSchema,
+  },
+};
+
 export class AuthService {
   public userManager: UserManager;
-  private settings = {
-    authority: "https://dev-connect.trinsic.cloud",
-    client_id: "verifier-oidc4vp-client",
-    redirect_uri: `${clientRoot}redirect`,
-    silent_redirect_uri: `${clientRoot}silent-renew`,
-    post_logout_redirect_uri: `${clientRoot}`,
-    response_type: "code",
-    scope: "openid",
-    extraQueryParams: {
-      "trinsic:ecosystem": "hersh-test",
-      "trinsic:schema": "https://dev-schema.trinsic.cloud/hersh-test/test-oidc",
-    },
-  };
-  constructor() {
+  public settings = defaultAuthSettings;
+  constructor(settings?: typeof defaultAuthSettings) {
+    if (settings) this.settings = settings;
     this.userManager = new UserManager(this.settings);
     Log.setLogger(console);
   }

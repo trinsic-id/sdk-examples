@@ -14,6 +14,7 @@ const Header = () => {
   const isVisible = useMemo(() => {
     if (!location) return false;
     if (location.pathname === "/redirect") return false;
+    if (location.pathname === "/load-ecosystem") return false;
     return true;
   }, [location.pathname]);
 
