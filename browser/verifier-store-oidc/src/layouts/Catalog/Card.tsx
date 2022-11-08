@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { Bookmark, ShoppingCart, Star } from "react-feather";
+import { useRecoilValue } from "recoil";
+import { userTokenState } from "../../atoms/user";
 import { Product, ProductHeader } from "../../data/products";
 
 import { useAddItem } from "../../hooks/custom/useAddItem";
+import { applyGoldDiscount } from "../../utils/goldDiscount";
 import { CardButtons } from "./CardButtons";
+import { GoldMember } from "./GoldMember";
 import { NewSeason } from "./NewSeason";
 import { Sale } from "./Sale";
 
@@ -32,8 +36,18 @@ const Animations = {
 
 interface CardProps {
   product: Product;
+  isGoldMember: boolean;
 }
-export const Card = ({ product }: CardProps) => {
+export const Card = ({ product, isGoldMember }: CardProps) => {
+  const goldAdjustment = useMemo(() => {
+    if (!isGoldMember) return undefined;
+
+    return {
+      goldPrice: applyGoldDiscount(product.price),
+      prevPrice: product.price,
+    };
+  }, [product, isGoldMember]);
+
   return (
     <motion.div
       variants={Animations.item}

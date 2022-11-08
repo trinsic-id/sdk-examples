@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
 import { products } from "../../data/products";
@@ -35,29 +35,12 @@ const Animations = {
 };
 
 const Catalog = () => {
-  const addItem = useAddItem();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [authState, setAuthState] = useRecoilState(authStateAtom);
-  const [userToken, setUserToken] = useRecoilState(userTokenState);
+  const userToken = useRecoilValue(userTokenState);
+  const isGoldMember = useMemo(
+    () => userToken === AuthState.VERIFIED,
+    [userToken]
+  );
 
-  useEffect(() => {
-    if (userToken) console.log("UserToken", userToken.credentialSubject);
-  }, [userToken]);
-
-  useEffect(() => {
-    if (
-      location.pathname === "/callback" &&
-      authState === AuthState.ANONYMOUS
-    ) {
-      setAuthState(AuthState.VERIFIED);
-      authService.signinRedirect().then(async () => {
-        const user = await authService.getUser();
-        if (user) setUserToken(user.profile._vp_token);
-        navigate("/");
-      });
-    }
-  }, [location, authState]);
   return (
     <motion.div
       className="flex flex-col h-full space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4"
@@ -67,7 +50,7 @@ const Catalog = () => {
       animate="visible"
     >
       {products.map((product) => (
-        <Card product={product} />
+        <Card product={product} isGoldMember={isGoldMember} />
       ))}
       <VerifyCredentialModal authService={authService} />
     </motion.div>
