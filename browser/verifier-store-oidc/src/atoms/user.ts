@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { CredentialDerivedProof } from "../models/credential";
 
 export enum AuthState {
   ANONYMOUS = "ANONYMOUS",
@@ -10,8 +11,8 @@ export const authStateState = atom<AuthState>({
   default: AuthState.ANONYMOUS,
 });
 
-export const userTokenState = atom<any | undefined>({
-  key: "user-token-state",
+export const userCredentialState = atom<CredentialDerivedProof | undefined>({
+  key: "user-credential-state",
   default: undefined,
 });
 

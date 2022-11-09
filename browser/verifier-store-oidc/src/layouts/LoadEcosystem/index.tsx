@@ -5,7 +5,11 @@ import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
 import { useRecoilState } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
-import { AuthState, authStateState, userTokenState } from "../../atoms/user";
+import {
+  AuthState,
+  authStateState,
+  userCredentialState,
+} from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
 import { AuthService } from "../../services/AuthService";
 

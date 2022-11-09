@@ -6,8 +6,13 @@ import { useToggle } from "react-use";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
 import { MemberLevel, memberLevelState } from "../../atoms/member";
-import { AuthState, authStateState, userTokenState } from "../../atoms/user";
+import {
+  AuthState,
+  authStateState,
+  userCredentialState,
+} from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
+import { CredentialDerivedProof } from "../../models/credential";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";
 
@@ -19,7 +24,7 @@ export const Redirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [authState, setAuthState] = useRecoilState(authStateState);
-  const [userToken, setUserToken] = useRecoilState(userTokenState);
+  const [userToken, setUserToken] = useRecoilState(userCredentialState);
   const setMemberLevel = useSetRecoilState(memberLevelState);
   const authSettings = useRecoilValue(authSettingsState);
   useEffect(() => {
@@ -33,12 +38,14 @@ export const Redirect = () => {
     const authService = new AuthService(settings);
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
-      if (user) setUserToken(user.profile._vp_token);
+      if (user && user.profile._vp_token)
+        setUserToken(user.profile._vp_token as CredentialDerivedProof);
       toggleVerifyingLoading(true);
 
       setAuthState(AuthState.VERIFIED);
       setMemberLevel(MemberLevel.BRONZE);
-      navigate("/");
+      console.log(JSON.stringify(user?.profile._vp_token));
+      //navigate("/");
     });
   }, [location, authState, authSettings]);
 
@@ -91,7 +98,7 @@ export const Redirect = () => {
         text={"Redirecting to store"}
         onNext={() => {
           toggleRedirectLoading(false);
-          navigate("/");
+          //navigate("/");
         }}
       />
     </div>

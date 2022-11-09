@@ -1,3 +1,8 @@
+export enum ProduceType {
+  ARTICHOKE = "Artichoke",
+  CORN = "Corn",
+}
+
 export enum ProductHeader {
   NewSeason,
   Sale,
@@ -13,6 +18,7 @@ export type Product = {
   header: ProductHeader;
   subTitle: string;
   hide?: boolean;
+  produceType: ProduceType;
 };
 
 export const products: Product[] = [
@@ -24,6 +30,7 @@ export const products: Product[] = [
     image: "/images/artichokes/baby-anzio.jpg",
     header: ProductHeader.NewSeason,
     subTitle: "Premium Artichoke Strain",
+    produceType: ProduceType.ARTICHOKE,
   },
   {
     id: "big-heart-artichoke",
@@ -34,6 +41,7 @@ export const products: Product[] = [
     image: "/images/artichokes/big-heart.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Artichoke Strain",
+    produceType: ProduceType.ARTICHOKE,
   },
   {
     id: "ambrosia",
@@ -44,6 +52,7 @@ export const products: Product[] = [
     image: "/images/corn/ambrosia.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
+    produceType: ProduceType.CORN,
     hide: true,
   },
   {
@@ -55,6 +64,7 @@ export const products: Product[] = [
     image: "/images/corn/blue-hopi.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
+    produceType: ProduceType.CORN,
     hide: true,
   },
   {
@@ -66,6 +76,7 @@ export const products: Product[] = [
     image: "/images/corn/blue-hopi.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
+    produceType: ProduceType.CORN,
     hide: true,
   },
   {
@@ -77,6 +88,7 @@ export const products: Product[] = [
     image: "/images/corn/blue-hopi.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
+    produceType: ProduceType.CORN,
     hide: true,
   },
   {
@@ -88,5 +100,6 @@ export const products: Product[] = [
     image: "/images/artichokes/big-heart.jpg",
     header: ProductHeader.Sale,
     subTitle: "Premium Artichoke Strain",
+    produceType: ProduceType.ARTICHOKE,
   },
 ];

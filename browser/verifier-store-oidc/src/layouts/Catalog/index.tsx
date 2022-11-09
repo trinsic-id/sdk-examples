@@ -4,7 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import { MemberLevel, memberLevelState } from "../../atoms/member";
-import { AuthState, authStateState, userTokenState } from "../../atoms/user";
+import {
+  AuthState,
+  authStateState,
+  userCredentialState,
+} from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
 import { products } from "../../data/products";
 import { useAddItem } from "../../hooks/custom/useAddItem";

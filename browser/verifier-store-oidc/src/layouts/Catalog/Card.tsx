@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Bookmark, ShoppingCart, Star } from "react-feather";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { filterProductsState, memberLevelState } from "../../atoms/member";
-import { userTokenState } from "../../atoms/user";
+import { userCredentialState } from "../../atoms/user";
 import { Product, ProductHeader } from "../../data/products";
 
 import { useAddItem } from "../../hooks/custom/useAddItem";
