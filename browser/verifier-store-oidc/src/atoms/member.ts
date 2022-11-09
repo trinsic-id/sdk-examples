@@ -21,7 +21,12 @@ export const memberProduceState = selector<ProduceType | undefined>({
   key: "member-produce-state",
   get: ({ get }) => {
     const userCredential = get(userCredentialState);
-    return userCredential?.credentialSubject.produceType;
+    return userCredential?.credentialSubject.produceType &&
+      Object.values(ProduceType).includes(
+        userCredential?.credentialSubject.produceType
+      )
+      ? userCredential.credentialSubject.produceType
+      : undefined;
   },
 });
 
