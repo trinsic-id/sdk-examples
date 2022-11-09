@@ -148,7 +148,7 @@ export const Card = ({
           )}
           {isBronzeMember && memberAdjustment && (
             <div className="flex flex-row items-center space-x-4">
-              <div className="text-lg font-medium text-orange-600 ">
+              <div className="text-lg font-medium text-amber-600 ">
                 {memberAdjustment.goldPrice.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
