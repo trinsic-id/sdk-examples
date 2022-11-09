@@ -10,7 +10,7 @@ export const CartButton = () => {
       <div className="relative">
         <ShoppingBag size={18} className="stroke-black" />
         <span
-          className={`absolute -top-2 -right-2 rounded-full bg-green-500 flex justify-center items-center items ${
+          className={`absolute -top-2 -right-2 rounded-full bg-blue-500 flex justify-center items-center items ${
             totalQty === 0 && "opacity-0"
           }`}
         >
