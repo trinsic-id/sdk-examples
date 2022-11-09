@@ -9,7 +9,7 @@ export const GoldMember = () => {
       />
       <Star className="stroke-yellow-600 fill-yellow-600 md:hidden" size={18} />
       <div className="text-yellow-600 md:text-sm font-medium">
-        Gold member discount
+        Gold member discount 20%
       </div>
     </div>
   );

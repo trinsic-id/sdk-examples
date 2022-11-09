@@ -9,7 +9,7 @@ export const BronzeMember = () => {
       />
       <Star className="stroke-orange-600 fill-orange-600 md:hidden" size={18} />
       <div className="text-orange-600 md:text-sm font-medium">
-        Bronze member discount
+        Bronze member discount 5%
       </div>
     </div>
   );
