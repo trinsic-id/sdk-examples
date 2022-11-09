@@ -11,9 +11,6 @@ import {
   userCredentialState,
 } from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
-import { AuthService } from "../../services/AuthService";
-
-const authService = new AuthService();
 
 export const LoadEcosystem = () => {
   const [isEcosystemLoading, toggleEcosystemLoading] = useToggle(false);

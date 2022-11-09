@@ -22,9 +22,9 @@ export const defaultAuthSettings = {
 
 export class AuthService {
   public userManager: UserManager;
-  public settings = defaultAuthSettings;
-  constructor(settings?: typeof defaultAuthSettings) {
-    if (settings) this.settings = settings;
+  public settings: typeof defaultAuthSettings | undefined;
+  constructor(settings: typeof defaultAuthSettings) {
+    this.settings = settings;
     this.userManager = new UserManager(this.settings);
     Log.setLogger(console);
   }

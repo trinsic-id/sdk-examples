@@ -22,7 +22,7 @@ const defaultValues = {
   year: null,
 };
 
-interface AddVehicleModalProps {
+interface VerifyCredentialModalProps {
   authService: AuthService;
 }
 
@@ -111,12 +111,15 @@ export const VerifyCredentialModal = () => {
                       className="w-full h-full bg-blue-500 rounded-lg text-white px-4 py-3 flex flex-row items-center space-x-6"
                       onClick={() => {
                         let settings: typeof defaultAuthSettings;
-                        if (authSettings)
+                        if (authSettings) {
                           settings = generateSettings(
                             authSettings.ecosystem,
                             authSettings.schema
                           );
-                        else settings = generateSettings();
+                        } else {
+                          settings = generateSettings();
+                        }
+
                         const authService = new AuthService(settings);
                         authService.login();
                       }}
