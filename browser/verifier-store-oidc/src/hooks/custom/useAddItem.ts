@@ -1,12 +1,9 @@
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "../../atoms/cart";
+import { isVerifyCredentialModalVisibleState } from "../../atoms/modals";
 
-import {
-  AuthState,
-  authStateState,
-  isVerifyCredentialModalVisibleState,
-} from "../../atoms/user";
+import { AuthState, authStateState } from "../../atoms/user";
 import { Product } from "../../data/products";
 import { cloneIndex } from "../../utils/cloneIndex";
 

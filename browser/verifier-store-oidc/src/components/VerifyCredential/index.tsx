@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CreditCard, X } from "react-feather";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
-import { isVerifyCredentialModalVisibleState } from "../../atoms/user";
+import { isVerifyCredentialModalVisibleState } from "../../atoms/modals";
 import { useLockBg } from "../../hooks/custom/useLockBackground";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";

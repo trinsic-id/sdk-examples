@@ -15,15 +15,3 @@ export const userCredentialState = atom<CredentialDerivedProof | undefined>({
   key: "user-credential-state",
   default: undefined,
 });
-
-export const ItemPerFarm = 10;
-
-export const itemsLeftState = atom<number>({
-  key: "items-left",
-  default: ItemPerFarm,
-});
-
-export const isVerifyCredentialModalVisibleState = atom<boolean>({
-  key: "verify-credential-modal-visible",
-  default: false,
-});
