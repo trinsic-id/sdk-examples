@@ -45,9 +45,6 @@ export const VerifyCredentialModal = () => {
   );
   useLockBg(isVisible);
   const authSettings = useRecoilValue(authSettingsState);
-  // useEffect(() => {
-  //   window.alert(JSON.stringify(authSettings));
-  // }, [authSettings]);
   return (
     <div className="max-w-x2s md:max-w-xs overflow-hidden">
       <AnimatePresence>

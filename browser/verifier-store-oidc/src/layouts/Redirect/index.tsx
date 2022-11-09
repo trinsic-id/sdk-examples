@@ -12,9 +12,11 @@ import {
   userCredentialState,
 } from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
+import { ProduceType } from "../../data/products";
 import { CredentialDerivedProof } from "../../models/credential";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";
+import { MemberLevelComp } from "./MemberLevel";
 
 export const Redirect = () => {
   const [isVerifyingLoading, toggleVerifyingLoading] = useToggle(false);
@@ -24,8 +26,8 @@ export const Redirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [authState, setAuthState] = useRecoilState(authStateState);
-  const [userToken, setUserToken] = useRecoilState(userCredentialState);
-  const setMemberLevel = useSetRecoilState(memberLevelState);
+  const [userCredential, setUserCredential] =
+    useRecoilState(userCredentialState);
   const authSettings = useRecoilValue(authSettingsState);
   useEffect(() => {
     toggleVerifyingLoading(true);
@@ -38,14 +40,16 @@ export const Redirect = () => {
     const authService = new AuthService(settings);
     authService.signinRedirect().then(async () => {
       const user = await authService.getUser();
-      if (user && user.profile._vp_token)
-        setUserToken(user.profile._vp_token as CredentialDerivedProof);
+      if (user && user.profile._vp_token) {
+        const credential = user.profile._vp_token as CredentialDerivedProof;
+        // credential.credentialSubject.certificationGrade = MemberLevel.BRONZE;
+        // credential.credentialSubject.produceType = ProduceType.ARTICHOKE;
+        setUserCredential(credential);
+      }
       toggleVerifyingLoading(true);
 
       setAuthState(AuthState.VERIFIED);
-      setMemberLevel(MemberLevel.BRONZE);
-      console.log(JSON.stringify(user?.profile._vp_token));
-      //navigate("/");
+      navigate("/");
     });
   }, [location, authState, authSettings]);
 
@@ -76,14 +80,7 @@ export const Redirect = () => {
           toggleProfileLoading(false);
           toggleDiscountsLoading(true);
         }}
-        successElement={
-          <div className="w-full flex flex-row items-center justify-between">
-            <div className="font-light text-lg leading-tight">
-              Artichoke Gold farmer
-            </div>
-            <Star size={28} className={"stroke-yellow-400 fill-yellow-400"} />
-          </div>
-        }
+        successElement={<MemberLevelComp />}
       />
       <LoadingItem
         isLoading={isDiscountsLoading}

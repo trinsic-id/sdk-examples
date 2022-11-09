@@ -1,3 +1,6 @@
+import { MemberLevel } from "../atoms/member";
+import { ProduceType } from "../data/products";
+
 export interface CredentialSchema {
   id: string;
   type: string;
@@ -12,11 +15,11 @@ export interface CredentialStatus {
 export interface CredentialSubject {
   id?: string;
   address?: string;
-  certificationGrade?: string;
+  certificationGrade?: MemberLevel;
   city?: string;
   idNumber?: string;
   name?: string;
-  produceType?: string;
+  produceType?: ProduceType;
   state?: string;
 }
 

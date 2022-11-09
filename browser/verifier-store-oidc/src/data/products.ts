@@ -17,7 +17,6 @@ export type Product = {
   image?: string;
   header: ProductHeader;
   subTitle: string;
-  hide?: boolean;
   produceType: ProduceType;
 };
 
@@ -53,7 +52,6 @@ export const products: Product[] = [
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
     produceType: ProduceType.CORN,
-    hide: true,
   },
   {
     id: "blue-hopi",
@@ -65,7 +63,6 @@ export const products: Product[] = [
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
     produceType: ProduceType.CORN,
-    hide: true,
   },
   {
     id: "blue-hopi2",
@@ -77,7 +74,6 @@ export const products: Product[] = [
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
     produceType: ProduceType.CORN,
-    hide: true,
   },
   {
     id: "blue-hopi3",
@@ -89,7 +85,6 @@ export const products: Product[] = [
     header: ProductHeader.Sale,
     subTitle: "Premium Corn Strain",
     produceType: ProduceType.CORN,
-    hide: true,
   },
   {
     id: "big-heart-artichoke2",

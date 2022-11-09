@@ -38,7 +38,7 @@ const Animations = {
 };
 
 const Catalog = () => {
-  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const memberLevel = useRecoilValue(memberLevelState);
 
   const memberLevelObj = useMemo(
     () => ({

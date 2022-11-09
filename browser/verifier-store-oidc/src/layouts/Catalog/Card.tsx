@@ -2,7 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
 import { Bookmark, ShoppingCart, Star } from "react-feather";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { filterProductsState, memberLevelState } from "../../atoms/member";
+import {
+  filterProductsState,
+  memberLevelState,
+  memberProduceState,
+} from "../../atoms/member";
 import { userCredentialState } from "../../atoms/user";
 import { Product, ProductHeader } from "../../data/products";
 
@@ -40,6 +44,15 @@ export const Card = ({
     () => isBronzeMember || isSilverMember || isGoldMember,
     [isBronzeMember, isSilverMember, isGoldMember]
   );
+
+  const memberProduceType = useRecoilValue(memberProduceState);
+  const hideProduct = useMemo(
+    () => product.produceType !== memberProduceType,
+    [product, memberProduceType]
+  );
+
+  console.log(memberProduceType);
+
   const memberAdjustment = useMemo(() => {
     if (!isMember) return undefined;
 
@@ -62,8 +75,8 @@ export const Card = ({
 
   const filterProducts = useRecoilValue(filterProductsState);
   const isHidden = useMemo(
-    () => isMember && filterProducts && product.hide,
-    [isMember, filterProducts, product]
+    () => isMember && filterProducts && hideProduct,
+    [isMember, filterProducts, product, hideProduct]
   );
 
   return isHidden ? null : (

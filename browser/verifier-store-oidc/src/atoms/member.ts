@@ -1,4 +1,6 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { ProduceType } from "../data/products";
+import { userCredentialState } from "./user";
 
 export enum MemberLevel {
   GOLD = "A",
@@ -7,9 +9,20 @@ export enum MemberLevel {
   NONE = "N",
 }
 
-export const memberLevelState = atom<MemberLevel>({
-  key: "member-status",
-  default: MemberLevel.NONE,
+export const memberLevelState = selector<MemberLevel | undefined>({
+  key: "member-level-state",
+  get: ({ get }) => {
+    const userCredential = get(userCredentialState);
+    return userCredential?.credentialSubject.certificationGrade;
+  },
+});
+
+export const memberProduceState = selector<ProduceType | undefined>({
+  key: "member-produce-state",
+  get: ({ get }) => {
+    const userCredential = get(userCredentialState);
+    return userCredential?.credentialSubject.produceType;
+  },
 });
 
 export const filterProductsState = atom<boolean>({
