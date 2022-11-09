@@ -47,11 +47,9 @@ export const Card = ({
 
   const memberProduceType = useRecoilValue(memberProduceState);
   const hideProduct = useMemo(
-    () => product.produceType !== memberProduceType,
+    () => memberProduceType && product.produceType !== memberProduceType,
     [product, memberProduceType]
   );
-
-  console.log(memberProduceType);
 
   const memberAdjustment = useMemo(() => {
     if (!isMember) return undefined;
