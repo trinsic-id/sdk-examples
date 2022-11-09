@@ -1,20 +1,20 @@
 import { useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cartState } from "../../atoms/atoms";
+import { cartState } from "../../atoms/cart";
 
 import {
   AuthState,
-  authStateAtom,
-  isVerifyCredentialModalVisibleAtom,
+  authStateState,
+  isVerifyCredentialModalVisibleState,
 } from "../../atoms/user";
 import { Product } from "../../data/products";
 import { cloneIndex } from "../../utils/cloneIndex";
 
 export const useAddItem = () => {
   const [isVerifyModalVisible, setVerifyModalVisible] = useRecoilState(
-    isVerifyCredentialModalVisibleAtom
+    isVerifyCredentialModalVisibleState
   );
-  const isCredentialVerified = useRecoilValue(authStateAtom);
+  const isCredentialVerified = useRecoilValue(authStateState);
 
   const [items, setItems] = useRecoilState(cartState);
 

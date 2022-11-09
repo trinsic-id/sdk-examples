@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { cartState } from "../../atoms/atoms";
+import { cartState } from "../../atoms/cart";
 import { Product } from "../../data/products";
 
 export const useRemoveItem = () => {

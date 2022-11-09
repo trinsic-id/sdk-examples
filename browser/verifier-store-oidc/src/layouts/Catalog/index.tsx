@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
+import { AuthState, authStateState, userTokenState } from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
 import { products } from "../../data/products";
 import { useAddItem } from "../../hooks/custom/useAddItem";
@@ -33,7 +33,7 @@ const Animations = {
 };
 
 const Catalog = () => {
-  const authState = useRecoilValue(authStateAtom);
+  const authState = useRecoilValue(authStateState);
   const isGoldMember = useMemo(
     () => authState === AuthState.VERIFIED,
     [authState]

@@ -5,7 +5,7 @@ import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
-import { AuthState, authStateAtom, userTokenState } from "../../atoms/user";
+import { AuthState, authStateState, userTokenState } from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";
@@ -17,7 +17,7 @@ export const Redirect = () => {
   const [isRedirectLoading, toggleRedirectLoading] = useToggle(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [authState, setAuthState] = useRecoilState(authStateAtom);
+  const [authState, setAuthState] = useRecoilState(authStateState);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
   const authSettings = useRecoilValue(authSettingsState);
   useEffect(() => {

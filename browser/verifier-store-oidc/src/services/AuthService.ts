@@ -4,7 +4,7 @@ const clientRoot: string = "http://localhost:3000/";
 
 export const defaultEcosystem = "hersh-test";
 export const defaultSchema =
-  "https://dev-schema.trinsic.cloud/hersh-test/test-oidc";
+  "https://dev-schema.trinsic.cloud/hersh-test/zbettertemplate";
 
 export const defaultAuthSettings = {
   authority: "https://dev-connect.trinsic.cloud",

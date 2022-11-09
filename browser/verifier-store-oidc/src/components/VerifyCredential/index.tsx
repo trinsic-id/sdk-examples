@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CreditCard, X } from "react-feather";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
-import { isVerifyCredentialModalVisibleAtom } from "../../atoms/user";
+import { isVerifyCredentialModalVisibleState } from "../../atoms/user";
 import { useLockBg } from "../../hooks/custom/useLockBackground";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";
@@ -41,7 +41,7 @@ const Animations = {
 
 export const VerifyCredentialModal = () => {
   const [isVisible, setModalVisible] = useRecoilState(
-    isVerifyCredentialModalVisibleAtom
+    isVerifyCredentialModalVisibleState
   );
   useLockBg(isVisible);
   const authSettings = useRecoilValue(authSettingsState);

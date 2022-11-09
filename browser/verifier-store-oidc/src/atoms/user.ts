@@ -1,4 +1,3 @@
-import { IdTokenClaims } from "oidc-client-ts";
 import { atom } from "recoil";
 
 export enum AuthState {
@@ -6,7 +5,7 @@ export enum AuthState {
   VERIFIED = "VERIFIED",
 }
 
-export const authStateAtom = atom<AuthState>({
+export const authStateState = atom<AuthState>({
   key: "auth-state",
   default: AuthState.ANONYMOUS,
 });
@@ -18,12 +17,12 @@ export const userTokenState = atom<any | undefined>({
 
 export const ItemPerFarm = 10;
 
-export const itemsLeftAtom = atom<number>({
+export const itemsLeftState = atom<number>({
   key: "items-left",
   default: ItemPerFarm,
 });
 
-export const isVerifyCredentialModalVisibleAtom = atom<boolean>({
+export const isVerifyCredentialModalVisibleState = atom<boolean>({
   key: "verify-credential-modal-visible",
   default: false,
 });

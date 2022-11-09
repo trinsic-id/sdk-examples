@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { cartState } from "../../atoms/atoms";
+import { cartState } from "../../atoms/cart";
 import { Product } from "../../data/products";
 import { cloneIndex } from "../../utils/cloneIndex";
 import { useRemoveItem } from "./useRemoveItem";
