@@ -11,3 +11,8 @@ export const memberLevelState = atom<MemberLevel>({
   key: "member-status",
   default: MemberLevel.NONE,
 });
+
+export const filterProductsState = atom<boolean>({
+  key: "filter-products",
+  default: true,
+});

@@ -12,11 +12,12 @@ export type Product = {
   image?: string;
   header: ProductHeader;
   subTitle: string;
+  hide?: boolean;
 };
 
 export const products: Product[] = [
   {
-    id: "baby-anzio",
+    id: "baby-anzio-artichoke",
     name: "Baby Anzio",
     price: 40,
     qty: 0,
@@ -25,7 +26,61 @@ export const products: Product[] = [
     subTitle: "Premium Artichoke Strain",
   },
   {
-    id: "big-heart",
+    id: "big-heart-artichoke",
+    name: "Big Heart",
+    prevPrice: 75,
+    price: 55,
+    qty: 0,
+    image: "/images/artichokes/big-heart.jpg",
+    header: ProductHeader.Sale,
+    subTitle: "Premium Artichoke Strain",
+  },
+  {
+    id: "ambrosia",
+    name: "Ambrosia",
+    prevPrice: 75,
+    price: 55,
+    qty: 0,
+    image: "/images/corn/ambrosia.jpg",
+    header: ProductHeader.Sale,
+    subTitle: "Premium Corn Strain",
+    hide: true,
+  },
+  {
+    id: "blue-hopi",
+    name: "Blue Hopi",
+    prevPrice: 75,
+    price: 55,
+    qty: 0,
+    image: "/images/corn/blue-hopi.jpg",
+    header: ProductHeader.Sale,
+    subTitle: "Premium Corn Strain",
+    hide: true,
+  },
+  {
+    id: "blue-hopi2",
+    name: "Blue Hopi",
+    prevPrice: 75,
+    price: 55,
+    qty: 0,
+    image: "/images/corn/blue-hopi.jpg",
+    header: ProductHeader.Sale,
+    subTitle: "Premium Corn Strain",
+    hide: true,
+  },
+  {
+    id: "blue-hopi3",
+    name: "Blue Hopi",
+    prevPrice: 75,
+    price: 55,
+    qty: 0,
+    image: "/images/corn/blue-hopi.jpg",
+    header: ProductHeader.Sale,
+    subTitle: "Premium Corn Strain",
+    hide: true,
+  },
+  {
+    id: "big-heart-artichoke2",
     name: "Big Heart",
     prevPrice: 75,
     price: 55,

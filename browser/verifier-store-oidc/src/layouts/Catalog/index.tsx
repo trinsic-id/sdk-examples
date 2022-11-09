@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -35,18 +35,6 @@ const Animations = {
 
 const Catalog = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
-  const isGoldLevel = useMemo(
-    () => memberLevel === MemberLevel.GOLD,
-    [memberLevel]
-  );
-  const isSilverLevel = useMemo(
-    () => memberLevel === MemberLevel.SILVER,
-    [memberLevel]
-  );
-  const isBronzeLevel = useMemo(
-    () => memberLevel === MemberLevel.BRONZE,
-    [memberLevel]
-  );
 
   const memberLevelObj = useMemo(
     () => ({
@@ -59,14 +47,14 @@ const Catalog = () => {
 
   return (
     <motion.div
-      className="flex flex-col h-full space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4"
+      className="flex flex-col h-full overflow-y-scroll space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4"
       key="container"
       variants={Animations.container}
       initial="hidden"
       animate="visible"
     >
       {products.map((product) => (
-        <Card product={product} {...memberLevelObj} />
+        <Card product={product} {...memberLevelObj} key={product.id} />
       ))}
       <VerifyCredentialModal />
     </motion.div>

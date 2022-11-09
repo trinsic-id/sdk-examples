@@ -74,13 +74,14 @@ export const LoadingItem = ({
       }`}
     >
       <div className="w-8 h-full">
-        {isLoading && !isError && !isComplete && (
-          <AnimatePresence>
+        <AnimatePresence>
+          {isLoading && !isError && !isComplete && (
             <motion.div
               variants={Animations.icons}
               initial={"fadeOut"}
               animate={"fadeIn"}
               exit={"fadeOut"}
+              key={"spinner"}
             >
               <Spinner
                 fadeIn="full"
@@ -90,44 +91,47 @@ export const LoadingItem = ({
                 style={{ height: "30px", width: "30px" }}
               />
             </motion.div>
-          </AnimatePresence>
-        )}
-        {isComplete && !isError && (
-          <AnimatePresence>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {isComplete && !isError && (
             <motion.div
               variants={Animations.icons}
               initial={"fadeOut"}
               animate={"fadeIn"}
               exit={"fadeOut"}
+              key={"complete"}
             >
               <CheckSquare size={28} className="stroke-green-400" />
             </motion.div>
-          </AnimatePresence>
-        )}
-        {!isLoading && !isComplete && !isError && (
-          <AnimatePresence>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {!isLoading && !isComplete && !isError && (
             <motion.div
               variants={Animations.icons}
               initial={"fadeOut"}
               animate={"fadeIn"}
               exit={"fadeOut"}
+              key={"pending-start"}
             >
               <Square size={28} className="stroke-gray-400" />
             </motion.div>
-          </AnimatePresence>
-        )}
-        {isError && (
-          <AnimatePresence>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {isError && (
             <motion.div
               variants={Animations.icons}
               initial={"fadeOut"}
               animate={"fadeIn"}
               exit={"fadeOut"}
+              key={"error"}
             >
               <XSquare size={28} className="stroke-red-600" />
             </motion.div>
-          </AnimatePresence>
-        )}
+          )}
+        </AnimatePresence>
       </div>
       <div className="flex flex-1 flex-col">
         <div
@@ -145,6 +149,7 @@ export const LoadingItem = ({
               animate={"fadeIn"}
               exit={"fadeOut"}
               className="text-loading-text text-md font-bold overflow-clip pt-3"
+              key="success-text"
             >
               {successElement}
             </motion.div>

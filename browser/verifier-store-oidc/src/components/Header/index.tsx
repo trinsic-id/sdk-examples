@@ -20,9 +20,7 @@ const Header = () => {
 
   return isVisible ? (
     <div className="flex flex-row items-center justify-between w-full border-b border-gray-300 pb-2 mb-2 py-4 px-6">
-      <Link to="/">
-        <img src="/images/ecostore.png" className="w-28" />
-      </Link>
+      <img src="/images/ecostore.png" className="w-28" />
 
       <div className="flex flex-row space-x-6 items-center">
         <CartButton />
