@@ -16,11 +16,12 @@ import { ProduceType } from "../../data/products";
 import { CredentialDerivedProof } from "../../models/credential";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
 import { generateSettings } from "../../utils/generateSettings";
-import { MemberLevelComp } from "./MemberLevel";
+import { MemberLevelSuccess } from "./MemberLevelSuccess";
 
 export const Redirect = () => {
   const [isVerifyingLoading, toggleVerifyingLoading] = useToggle(false);
   const [isProfileLoading, toggleProfileLoading] = useToggle(false);
+  const [isProfilError, toggleProfileError] = useToggle(false);
   const [isDiscountsLoading, toggleDiscountsLoading] = useToggle(false);
   const [isRedirectLoading, toggleRedirectLoading] = useToggle(false);
   const location = useLocation();
@@ -75,12 +76,17 @@ export const Redirect = () => {
       />
       <LoadingItem
         isLoading={isProfileLoading}
+        isError={isProfilError}
         text={"Fetching profile"}
         onNext={() => {
           toggleProfileLoading(false);
           toggleDiscountsLoading(true);
         }}
-        successElement={<MemberLevelComp />}
+        successElement={
+          userCredential?.credentialSubject.certificationGrade ? (
+            <MemberLevelSuccess />
+          ) : undefined
+        }
       />
       <LoadingItem
         isLoading={isDiscountsLoading}

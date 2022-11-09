@@ -90,7 +90,7 @@ export const VerifyCredentialModal = () => {
                     <div className="flex flex-row bg-gray-200 rounded-lg w-full p-4">
                       <div className="flex-1 flex flex-col space-y-2 items-start">
                         <div className="text-black text-lg">
-                          Recommended disclosures:
+                          Required disclosures:
                         </div>
                         <div className="flex flex-row items-center space-x-4">
                           <Square size={18} className="stroke-black" />

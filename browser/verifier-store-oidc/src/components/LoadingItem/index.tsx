@@ -41,7 +41,7 @@ interface LoadingItemProps {
   isError?: boolean;
   onNext: () => void;
   text: string;
-  successElement?: any;
+  successElement?: JSX.Element;
 }
 
 export const LoadingItem = ({
@@ -141,20 +141,20 @@ export const LoadingItem = ({
         >
           {text}
         </div>
-        <AnimatePresence>
-          {successElement && isComplete && (
+
+        {successElement && isComplete && (
+          <AnimatePresence>
             <motion.div
               variants={Animations.subText}
               initial={"fadeOut"}
               animate={"fadeIn"}
               exit={"fadeOut"}
               className="text-loading-text text-md font-bold overflow-clip pt-3"
-              key="success-text"
             >
               {successElement}
             </motion.div>
-          )}
-        </AnimatePresence>
+          </AnimatePresence>
+        )}
       </div>
     </motion.div>
   );
