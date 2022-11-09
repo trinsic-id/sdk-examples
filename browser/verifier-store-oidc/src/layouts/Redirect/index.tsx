@@ -37,8 +37,8 @@ export const Redirect = () => {
       toggleVerifyingLoading(true);
 
       setAuthState(AuthState.VERIFIED);
-      setMemberLevel(MemberLevel.GOLD);
-      navigate("/");
+      setMemberLevel(MemberLevel.SILVER);
+      // navigate("/");
     });
   }, [location, authState, authSettings]);
 
