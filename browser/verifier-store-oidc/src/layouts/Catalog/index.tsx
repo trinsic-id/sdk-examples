@@ -1,3 +1,4 @@
+import { Switch } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { Filter, Trello } from "react-feather";
@@ -67,47 +68,27 @@ const Catalog = () => {
           <Trello size={28} color={"#82AE68"} />
           <div className="text-2xl text-black">Products</div>
         </div>
-        <div
-          className="flex flex-row items-center space-x-2 cursor-pointer"
-          onClick={() => {
-            toggleFilter((val) => !val);
-          }}
-        >
-          <AnimatePresence exitBeforeEnter>
-            {isFiltered ? (
-              <motion.div
-                key="filter"
-                className={``}
-                variants={Animations.filterText}
-                initial={isFiltered ? "visible" : "hidden"}
-                animate={"visible"}
-                exit={"hidden"}
-                transition={{ type: "tween", duration: 0.25 }}
-              >
-                <div className="text-lg text-black">Filter</div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="show-all"
-                className={``}
-                variants={Animations.filterText}
-                initial={!isFiltered ? "visible" : "hidden"}
-                animate={"visible"}
-                exit={"hidden"}
-                transition={{ type: "tween", duration: 0.25 }}
-              >
-                <div className="text-lg text-black">Show all</div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <Filter
-            size={20}
-            color={"black"}
-            className={`${
-              isFiltered ? "opacity-100" : "opacity-30"
-            } duration-300`}
-          />
-        </div>
+        <Switch.Group>
+          <div className="flex flex-row items-center gap-2">
+            <Switch.Label className={`text-black text-lg`}>Filter</Switch.Label>
+
+            <Switch
+              checked={isFiltered}
+              onChange={() => {
+                toggleFilter((val) => !val);
+              }}
+              className={`focus:outline-none bg-transparent border-2 border-black relative inline-flex items-center h-4 rounded-full w-8 transition ease-in-out duration-500 ${
+                !isFiltered && "opacity-30"
+              }`}
+            >
+              <span
+                className={`w-2 h-2 transform transition ease-in-out duration-500 bg-black rounded-full ${
+                  isFiltered ? "translate-x-1" : "translate-x-4"
+                }`}
+              />
+            </Switch>
+          </div>
+        </Switch.Group>
       </div>
       <motion.div
         className="flex flex-col h-full overflow-y-scroll space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start"
