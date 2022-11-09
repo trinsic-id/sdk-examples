@@ -48,6 +48,15 @@ const Catalog = () => {
     [memberLevel]
   );
 
+  const memberLevelObj = useMemo(
+    () => ({
+      isGoldMember: memberLevel === MemberLevel.GOLD,
+      isSilverMember: memberLevel === MemberLevel.SILVER,
+      isBronzeMember: memberLevel === MemberLevel.BRONZE,
+    }),
+    [memberLevel]
+  );
+
   return (
     <motion.div
       className="flex flex-col h-full space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4"
@@ -57,12 +66,7 @@ const Catalog = () => {
       animate="visible"
     >
       {products.map((product) => (
-        <Card
-          product={product}
-          isGoldMember={isGoldLevel}
-          isBronzeMember={isBronzeLevel}
-          isSilverMember={isSilverLevel}
-        />
+        <Card product={product} {...memberLevelObj} />
       ))}
       <VerifyCredentialModal />
     </motion.div>

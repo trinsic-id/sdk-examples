@@ -41,7 +41,7 @@ const Animations = {
   },
 };
 
-interface CardProps {
+export interface CardProps {
   product: Product;
   isGoldMember: boolean;
   isSilverMember: boolean;
