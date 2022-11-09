@@ -3,8 +3,9 @@ import { Star } from "react-feather";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "react-spinkit";
 import { useToggle } from "react-use";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
+import { MemberLevel, memberLevelState } from "../../atoms/member";
 import { AuthState, authStateState, userTokenState } from "../../atoms/user";
 import { LoadingItem } from "../../components/LoadingItem";
 import { AuthService, defaultAuthSettings } from "../../services/AuthService";
@@ -19,6 +20,7 @@ export const Redirect = () => {
   const navigate = useNavigate();
   const [authState, setAuthState] = useRecoilState(authStateState);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
+  const setMemberLevel = useSetRecoilState(memberLevelState);
   const authSettings = useRecoilValue(authSettingsState);
   useEffect(() => {
     toggleVerifyingLoading(true);
@@ -35,6 +37,7 @@ export const Redirect = () => {
       toggleVerifyingLoading(true);
 
       setAuthState(AuthState.VERIFIED);
+      setMemberLevel(MemberLevel.GOLD);
       //   navigate("/");
     });
   }, [location, authState, authSettings]);

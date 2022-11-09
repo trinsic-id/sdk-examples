@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { Bookmark, ShoppingCart, Star } from "react-feather";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { memberLevelState } from "../../atoms/member";
 import { userTokenState } from "../../atoms/user";
 import { Product, ProductHeader } from "../../data/products";
 
 import { useAddItem } from "../../hooks/custom/useAddItem";
-import { applyGoldDiscount } from "../../utils/goldDiscount";
+import {
+  applyBronzeDiscount,
+  applyGoldDiscount,
+  applySilverDiscount,
+} from "../../utils/goldDiscount";
+import { BronzeMember } from "./BronzeMember";
 import { CardButtons } from "./CardButtons";
 import { GoldMember } from "./GoldMember";
 import { NewSeason } from "./NewSeason";
 import { Sale } from "./Sale";
+import { SilverMember } from "./SilverMember";
 
 const Animations = {
   container: {
@@ -37,16 +44,38 @@ const Animations = {
 interface CardProps {
   product: Product;
   isGoldMember: boolean;
+  isSilverMember: boolean;
+  isBronzeMember: boolean;
 }
-export const Card = ({ product, isGoldMember }: CardProps) => {
-  const goldAdjustment = useMemo(() => {
-    if (!isGoldMember) return undefined;
+export const Card = ({
+  product,
+  isGoldMember,
+  isSilverMember,
+  isBronzeMember,
+}: CardProps) => {
+  const isMember = useMemo(
+    () => isBronzeMember || isSilverMember || isGoldMember,
+    [isBronzeMember, isSilverMember, isGoldMember]
+  );
+  const memberAdjustment = useMemo(() => {
+    if (!isMember) return undefined;
 
-    return {
-      goldPrice: applyGoldDiscount(product.price),
-      prevPrice: product.price,
-    };
-  }, [product, isGoldMember]);
+    if (isGoldMember)
+      return {
+        goldPrice: applyGoldDiscount(product.price),
+        prevPrice: product.price,
+      };
+    if (isSilverMember)
+      return {
+        goldPrice: applySilverDiscount(product.price),
+        prevPrice: product.price,
+      };
+    if (isBronzeMember)
+      return {
+        goldPrice: applyBronzeDiscount(product.price),
+        prevPrice: product.price,
+      };
+  }, [product, isMember, isGoldMember, isSilverMember, isBronzeMember]);
 
   return (
     <motion.div
@@ -55,11 +84,13 @@ export const Card = ({ product, isGoldMember }: CardProps) => {
       className="flex flex-col items-center gap-3 border p-4 rounded-lg w-full md:max-w-md bg-white"
     >
       <div className="flex flex-row w-full items-center justify-between h-12">
-        {product.header === ProductHeader.Sale && !isGoldMember && <Sale />}
-        {product.header === ProductHeader.NewSeason && !isGoldMember && (
+        {product.header === ProductHeader.Sale && !isMember && <Sale />}
+        {product.header === ProductHeader.NewSeason && !isMember && (
           <NewSeason />
         )}
-        {goldAdjustment && <GoldMember />}
+        {memberAdjustment && isGoldMember && <GoldMember />}
+        {memberAdjustment && isSilverMember && <SilverMember />}
+        {memberAdjustment && isBronzeMember && <BronzeMember />}
         <Bookmark className="stroke-gray-500 hidden md:block" size={18} />
         <Bookmark className="stroke-gray-500 md:hidden" size={24} />
       </div>
@@ -70,22 +101,8 @@ export const Card = ({ product, isGoldMember }: CardProps) => {
         <div className="text-md font-light text-gray-500">
           {product.subTitle}
         </div>
-        {goldAdjustment !== undefined ? (
-          <div className="flex flex-row items-center space-x-4">
-            <div className="text-lg font-medium text-yellow-600 ">
-              {goldAdjustment.goldPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              })}
-            </div>
-            <div className="text-md font-light text-gray-500 line-through">
-              {goldAdjustment.prevPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              })}
-            </div>
-          </div>
-        ) : (
+
+        {!isMember && (
           <div className="flex flex-row items-center space-x-4">
             <div className="text-lg font-medium text-black ">
               {product.price.toLocaleString("en-US", {
@@ -101,6 +118,55 @@ export const Card = ({ product, isGoldMember }: CardProps) => {
                 })}
               </div>
             )}
+          </div>
+        )}
+
+        {isGoldMember && memberAdjustment && (
+          <div className="flex flex-row items-center space-x-4">
+            <div className="text-lg font-medium text-yellow-600 ">
+              {memberAdjustment.goldPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+            <div className="text-md font-light text-gray-500 line-through">
+              {memberAdjustment.prevPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+          </div>
+        )}
+        {isSilverMember && memberAdjustment && (
+          <div className="flex flex-row items-center space-x-4">
+            <div className="text-lg font-medium text-gray-600 ">
+              {memberAdjustment.goldPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+            <div className="text-md font-light text-gray-400 line-through">
+              {memberAdjustment.prevPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+          </div>
+        )}
+        {isBronzeMember && memberAdjustment && (
+          <div className="flex flex-row items-center space-x-4">
+            <div className="text-lg font-medium text-orange-600 ">
+              {memberAdjustment.goldPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+            <div className="text-md font-light text-gray-500 line-through">
+              {memberAdjustment.prevPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
           </div>
         )}
       </div>

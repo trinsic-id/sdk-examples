@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useRecoilState, useRecoilValue } from "recoil";
+import { MemberLevel, memberLevelState } from "../../atoms/member";
 import { AuthState, authStateState, userTokenState } from "../../atoms/user";
 import { VerifyCredentialModal } from "../../components/VerifyCredential";
 import { products } from "../../data/products";
@@ -33,10 +34,18 @@ const Animations = {
 };
 
 const Catalog = () => {
-  const authState = useRecoilValue(authStateState);
-  const isGoldMember = useMemo(
-    () => authState === AuthState.VERIFIED,
-    [authState]
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const isGoldLevel = useMemo(
+    () => memberLevel === MemberLevel.GOLD,
+    [memberLevel]
+  );
+  const isSilverLevel = useMemo(
+    () => memberLevel === MemberLevel.SILVER,
+    [memberLevel]
+  );
+  const isBronzeLevel = useMemo(
+    () => memberLevel === MemberLevel.BRONZE,
+    [memberLevel]
   );
 
   return (
@@ -48,7 +57,12 @@ const Catalog = () => {
       animate="visible"
     >
       {products.map((product) => (
-        <Card product={product} isGoldMember={isGoldMember} />
+        <Card
+          product={product}
+          isGoldMember={isGoldLevel}
+          isBronzeMember={isBronzeLevel}
+          isSilverMember={isSilverLevel}
+        />
       ))}
       <VerifyCredentialModal />
     </motion.div>
