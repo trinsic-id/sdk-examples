@@ -1,9 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
+import { Filter, Trello } from "react-feather";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useRecoilState, useRecoilValue } from "recoil";
-import { MemberLevel, memberLevelState } from "../../atoms/member";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  filterProductsState,
+  MemberLevel,
+  memberLevelState,
+} from "../../atoms/member";
 import {
   AuthState,
   authStateState,
@@ -35,6 +40,10 @@ const Animations = {
     visible: { opacity: 1, x: 0 },
     hidden: { opacity: 0, x: -100 },
   },
+  filterText: {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  },
 };
 
 const Catalog = () => {
@@ -49,19 +58,70 @@ const Catalog = () => {
     [memberLevel]
   );
 
+  const [isFiltered, toggleFilter] = useRecoilState(filterProductsState);
+
   return (
-    <motion.div
-      className="flex flex-col h-full overflow-y-scroll space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start bg-catalog-bg p-4"
-      key="container"
-      variants={Animations.container}
-      initial="hidden"
-      animate="visible"
-    >
-      {products.map((product) => (
-        <Card product={product} {...memberLevelObj} key={product.id} />
-      ))}
+    <div className="w-full h-screen overflow-y-scroll p-4 bg-catalog-bg flex flex-col items-start space-y-4">
+      <div className="flex flex-row w-full justify-between">
+        <div className="flex flex-row items-start space-x-2">
+          <Trello size={28} color={"#82AE68"} />
+          <div className="text-2xl text-black">Products</div>
+        </div>
+        <div
+          className="flex flex-row items-center space-x-2 cursor-pointer"
+          onClick={() => {
+            toggleFilter((val) => !val);
+          }}
+        >
+          <AnimatePresence exitBeforeEnter>
+            {isFiltered ? (
+              <motion.div
+                key="filter"
+                className={``}
+                variants={Animations.filterText}
+                initial={isFiltered ? "visible" : "hidden"}
+                animate={"visible"}
+                exit={"hidden"}
+                transition={{ type: "tween", duration: 0.25 }}
+              >
+                <div className="text-lg text-black">Filter</div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="show-all"
+                className={``}
+                variants={Animations.filterText}
+                initial={!isFiltered ? "visible" : "hidden"}
+                animate={"visible"}
+                exit={"hidden"}
+                transition={{ type: "tween", duration: 0.25 }}
+              >
+                <div className="text-lg text-black">Show all</div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <Filter
+            size={20}
+            color={"black"}
+            className={`${
+              isFiltered ? "opacity-100" : "opacity-30"
+            } duration-300`}
+          />
+        </div>
+      </div>
+      <motion.div
+        className="flex flex-col h-full overflow-y-scroll space-y-4 md:space-y-0 md:flex-row md:flex-wrap md:gap-4 items-start"
+        key="container"
+        variants={Animations.container}
+        initial="hidden"
+        animate="visible"
+      >
+        {products.map((product) => (
+          <Card product={product} {...memberLevelObj} key={product.id} />
+        ))}
+      </motion.div>
       <VerifyCredentialModal />
-    </motion.div>
+    </div>
   );
 };
 
