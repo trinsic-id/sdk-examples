@@ -65,7 +65,7 @@ const Catalog = () => {
     <div className="w-full h-screen overflow-y-scroll p-4 bg-catalog-bg flex flex-col items-start space-y-4">
       <div className="flex flex-row w-full justify-between">
         <div className="flex flex-row items-start space-x-2">
-          <Trello size={28} color={"#82AE68"} />
+          <Trello size={28} className="stroke-green-600" />
           <div className="text-2xl text-black">Products</div>
         </div>
         <Switch.Group>
