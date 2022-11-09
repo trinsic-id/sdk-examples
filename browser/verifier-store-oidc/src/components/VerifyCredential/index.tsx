@@ -1,7 +1,15 @@
 import { Combobox, RadioGroup } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { CreditCard, X } from "react-feather";
+import {
+  AlertCircle,
+  AlertOctagon,
+  AlertTriangle,
+  CheckSquare,
+  CreditCard,
+  Square,
+  X,
+} from "react-feather";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authSettingsState } from "../../atoms/authService";
 import { isVerifyCredentialModalVisibleState } from "../../atoms/modals";
@@ -59,14 +67,14 @@ export const VerifyCredentialModal = () => {
             <div className="absolute top-0 bottom-0 left-0 right-0 bg-opacity-50 bg-black z-30 cursor-pointer"></div>
             <div className="w-full z-40 p-4 flex items-center justify-center">
               <motion.div
-                className="bg-white w-full max-w-sm rounded-lg shadow-lg"
+                className="bg-white w-full max-w-md rounded-lg shadow-lg"
                 variants={Animations.inputContainer}
               >
                 <div className="p-4 md:p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-row items-center">
                       <h6 className="text-black font-semibold text-xl">
-                        Verify your farm
+                        Verification required
                       </h6>
                     </div>
                     <button
@@ -78,9 +86,29 @@ export const VerifyCredentialModal = () => {
                       <X className="stroke-black" size={20} />
                     </button>
                   </div>
-                  <div className="w-full pt-5">
+                  <div className="w-full flex flex-col items-start space-y-4 pt-2">
+                    <div className="flex flex-row bg-gray-200 rounded-lg w-full p-4">
+                      <div className="flex-1 flex flex-col space-y-2 items-start">
+                        <div className="text-black text-lg">
+                          Recommended disclosures:
+                        </div>
+                        <div className="flex flex-row items-center space-x-4">
+                          <Square size={18} className="stroke-black" />
+                          <div className="text-black text-base">
+                            Certification Grade
+                          </div>
+                        </div>
+                        <div className="flex flex-row items-center space-x-4">
+                          <Square size={18} className="stroke-black" />
+                          <div className="text-black text-base">
+                            Produce Type
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <button
-                      className="flex flex-row items-center space-x-4 bg-green-500 w-full rounded-lg p-3"
+                      className="w-full h-full bg-blue-500 rounded-lg text-white px-4 py-3 flex flex-row items-center space-x-6"
                       onClick={() => {
                         let settings: typeof defaultAuthSettings;
                         if (authSettings)
@@ -93,9 +121,12 @@ export const VerifyCredentialModal = () => {
                         authService.login();
                       }}
                     >
-                      <CreditCard size={32} className={"stroke-white"} />
-                      <div className="text-white font-medium text-lg">
-                        Connect your credential
+                      <img
+                        src="images/trinsic-logo-white.png"
+                        className="w-6"
+                      />
+                      <div className="text-white font-medium text-lg flex-1 pr-12">
+                        Verify your credential
                       </div>
                     </button>
                   </div>
