@@ -36,12 +36,12 @@ class DriversLicenseDemo {
     fun unprotectAccount(code: String) {
         allisonUnprotected = AccountService.unprotect(allison, code)
         Log.d("Login", "Login complete, account unprotected")
-        service.setProfile(allisonUnprotected)
+        service.setAuthToken(allisonUnprotected)
     }
 
     fun getLatestCredential(): HashMap<*, *> {
         val walletContents =
-            service.wallet().search(SearchRequest.getDefaultInstance()).get()
+            service.wallet().searchWallet().get()
         val driversLicenseCred = walletContents.itemsList.map { jsonString: String ->
             Gson().fromJson(jsonString, HashMap::class.java)
         }.sortedBy { jsonData: Map<*, *> ->
