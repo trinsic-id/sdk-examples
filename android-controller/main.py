@@ -7,7 +7,7 @@ import json
 from os.path import abspath, join, dirname
 
 from trinsic.account_service import AccountService
-from trinsic.credentials_service import CredentialsService
+from trinsic.credential_service import CredentialService
 from trinsic.proto.services.account.v1 import AccountDetails, SignInRequest
 from trinsic.proto.services.verifiablecredentials.v1 import IssueRequest, SendRequest, VerifyProofRequest
 from trinsic.trinsic_util import trinsic_config
@@ -40,13 +40,13 @@ async def issue_credential(email: str):
     # Create the police officer to verify
     account_service = AccountService()
     motor_vehicle_dept = await account_service.sign_in()
-    credential_service = CredentialsService(server_config=trinsic_config(motor_vehicle_dept))
+    credential_service = CredentialService(server_config=trinsic_config(motor_vehicle_dept))
 
     # Load from the demo data directory
     with open(drivers_license_frame_path(), 'r') as fid:
         drivers_license_unsigned = fid.read()
 
-    issue_response = await credential_service.issue_credential(request=IssueRequest(document_json=drivers_license_unsigned))
+    issue_response = await credential_service.issue(request=IssueRequest(document_json=drivers_license_unsigned))
 
     signed_doc = issue_response.signed_document_json
     print(f"Signed driver's license:\n{signed_doc}")
@@ -61,7 +61,7 @@ async def verify_credential(proof_document: dict) -> bool:
     # Create the police officer to verify
     account_service = AccountService()
     police_officer = await account_service.sign_in()
-    credential_service = CredentialsService(server_config=trinsic_config(police_officer))
+    credential_service = CredentialService(server_config=trinsic_config(police_officer))
     verify_response = await credential_service.verify_proof(request=VerifyProofRequest(proof_document_json=json.dumps(proof_document)))
     is_valid = verify_response.is_valid
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
