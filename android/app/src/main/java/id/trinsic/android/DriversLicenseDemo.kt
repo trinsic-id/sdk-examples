@@ -10,6 +10,8 @@ import trinsic.services.AccountService
 import trinsic.services.TrinsicService
 import trinsic.services.account.v1.AccountDetails
 import trinsic.services.account.v1.AccountOuterClass
+import trinsic.services.account.v1.LoginRequest
+import trinsic.services.account.v1.LoginResponse
 import trinsic.services.account.v1.SignInRequest
 import trinsic.services.universalwallet.v1.SearchRequest
 import trinsic.services.universalwallet.v1.UniversalWalletOuterClass
@@ -20,21 +22,19 @@ import trinsic.services.verifiablecredentials.v1.VerifiableCredentials
 class DriversLicenseDemo {
     val service = TrinsicService(null)
 
-    private lateinit var allison: String
+    private lateinit var allison: LoginResponse
     private lateinit var allisonUnprotected: String
     private lateinit var credentialProof: Map<String, Any>
 
     fun signin(email: String) {
-        allison = service.account().signIn(
-            SignInRequest.newBuilder()
-                .setDetails(AccountDetails.newBuilder().setEmail(email).build())
-                .build()
+        allison = service.account().login(
+            LoginRequest.newBuilder().setEmail(email).setEcosystemId("default").build()
         ).get()
         Log.d("Login", "Login started, check email for code")
     }
 
     fun unprotectAccount(code: String) {
-        allisonUnprotected = AccountService.unprotect(allison, code)
+        allisonUnprotected = service.account().loginConfirm(allison.challenge, code).get()
         Log.d("Login", "Login complete, account unprotected")
         service.setAuthToken(allisonUnprotected)
     }
