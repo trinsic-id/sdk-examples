@@ -21,6 +21,5 @@ jobs:
           brew tap trinsic-id/tap
           brew install trinsic-cli
       - name: Run CLI demo
-        run: ./runthrough.sh
-        working-directory: ./cli/VaccinationSample/
+        run: trinsic wallet create --name airtech
       
