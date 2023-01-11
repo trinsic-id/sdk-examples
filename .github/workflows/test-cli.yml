@@ -21,6 +21,6 @@ jobs:
           brew tap trinsic-id/tap
           brew install trinsic-cli
       - name: Run CLI demo
-        run: runthrough.sh
+        run: ./runthrough.sh
         working-directory: ./cli/VaccinationSample/
       
