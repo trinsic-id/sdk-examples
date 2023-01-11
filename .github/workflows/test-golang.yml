@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - "go/**"
+      - ".github/workflows/*go*"
 
 jobs:
   test_golang:

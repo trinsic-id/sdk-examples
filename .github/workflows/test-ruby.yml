@@ -1,0 +1,29 @@
+name: Test Ruby
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/test-ruby.yml"
+      - "ruby/**"
+
+jobs:
+  prod-test-ruby:
+    name: Ruby - samples - prod test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]  # skipping windows-latest, because of a `rake` install conflict.
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: Ruby Demo
+        run: |
+          gem install trinsic-services
+          ruby vaccine_demo.rb
+        shell: pwsh
+        working-directory: ruby
