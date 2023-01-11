@@ -20,13 +20,23 @@ jobs:
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-      - name: Build, Test, Pack
-        run: |
-          dotnet restore
-          dotnet build
+      - name: Blazor build
+        run: dotnet build
         shell: pwsh
-        working-directory: dotnet
-      - name: Build, Test, Pack
+        working-directory: dotnet/Blazor
+      - name: Maui build
+        run: dotnet build
+        shell: pwsh
+        working-directory: dotnet/Maui
+      - name: MauiVerifier build
+        run: dotnet build
+        shell: pwsh
+        working-directory: dotnet/MauiVerifier
+      - name: Mobile build
+        run: dotnet build
+        shell: pwsh
+        working-directory: dotnet/Mobile
+      - name: Vaccination Test
         run: |
           dotnet run
         shell: pwsh
