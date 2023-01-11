@@ -25,7 +25,9 @@ jobs:
         shell: pwsh
         working-directory: dotnet/Blazor
       - name: Maui build
-        run: dotnet build
+        run: |
+          dotnet build HauiMaui.sln
+          dotnet build HauiMaui.App.sln
         shell: pwsh
         working-directory: dotnet/Maui
       - name: MauiVerifier build
