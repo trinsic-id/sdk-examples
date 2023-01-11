@@ -93,6 +93,7 @@ var verifyProofResponse = await trinsicService.Credential.VerifyProofAsync(new V
 {
     ProofDocumentJson = credentialProof.ProofDocumentJson
 });
-Console.WriteLine($"Verification result: {verifyProofResponse.IsValid}");
-verifyProofResponse.IsValid.Should().BeTrue();
+var validationResult = verifyProofResponse.ValidationResults["SignatureVerification"].IsValid;
+Console.WriteLine($"Verification result: {validationResult}");
+validationResult.Should().BeTrue();
 // }
