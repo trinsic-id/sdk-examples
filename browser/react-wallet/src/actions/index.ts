@@ -13,7 +13,7 @@ import {
   TrinsicService,
   TemplateField,
   SearchCredentialTemplatesRequest,
-} from "@trinsic/trinsic/browser";
+} from "@trinsic/trinsic/lib/browser";
 import { TemplateAction } from "../reducers/Templates";
 import { WalletAction } from "../reducers/Wallet";
 import { CredentialAction } from "../reducers/Credential";

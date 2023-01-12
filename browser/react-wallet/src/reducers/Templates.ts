@@ -1,5 +1,5 @@
 import { CREATE_CREDENTIAL_TEMPLATE, GET_CREDENTIAL_TEMPLATES } from '../actions';
-import {CreateCredentialTemplateResponse} from "@trinsic/trinsic/browser";
+import {CreateCredentialTemplateResponse} from "@trinsic/trinsic/lib/browser";
 // initialState
 export const templates = {
   items: [],
