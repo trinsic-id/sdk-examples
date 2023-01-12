@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Button} from "../components/Button";
 import {createCredentialTemplate} from "../actions";
 import {DynamicInput, Input} from "../components/Inputs";
-import {CreateCredentialTemplateRequest, FieldType, TemplateField} from "@trinsic/trinsic/lib/browser";
+import {CreateCredentialTemplateRequest, FieldType, TemplateField} from "@trinsic/trinsic/browser";
 import {ActionState, PreventDefaultType} from "../types";
 import {ThunkDispatch} from "redux-thunk";
 
@@ -62,7 +62,7 @@ class CreateCredentialTemplatePage extends React.Component<CreateCredentialTempl
     submit(e: PreventDefaultType) {
         e.preventDefault();
         const {name, fields} = this.state;
-        this.props.createTemplate(name, fields);
+        this.props.createTemplate(name!, fields!);
     }
 
     render() {

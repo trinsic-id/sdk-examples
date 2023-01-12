@@ -1,5 +1,5 @@
 import {LOGIN, LOGOUT, VERIFY_EMAIL} from '../actions';
-import {LoginResponse} from "@trinsic/trinsic/lib/browser";
+import {LoginResponse} from "@trinsic/trinsic/browser";
 // initialState
 export const authentication = {
     loggedIn: false,

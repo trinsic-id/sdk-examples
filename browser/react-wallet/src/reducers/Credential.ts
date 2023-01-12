@@ -1,5 +1,5 @@
 import { ISSUE_CREDENTIAL, SEND_CREDENTIAL, CLOSE_NOTIFICATION } from '../actions';
-import {SendResponse} from "@trinsic/trinsic/lib/browser";
+import {SendResponse} from "@trinsic/trinsic/browser";
 // initialState
 export const credentials = {
   signedCredential: "",
