@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import { AccountService } from "@trinsic/trinsic/browser";
+import {TrinsicService} from "@trinsic/trinsic/browser";
 
-const accountService = new AccountService();
+const trinsicService = new TrinsicService();
 
 function App() {
   const [info, setInfo] = useState({ accountInfo: "", authToken: "" });
   useEffect(() => {
     const fetchAuthToken = async () => {
-      const authToken = await accountService.loginAnonymous();
-      const accountInfo = await accountService.getInfo();
+      const authToken = await trinsicService.account().loginAnonymous();
+      const accountInfo = await trinsicService.account().getInfo();
       setInfo({
         accountInfo: JSON.stringify(accountInfo, null, 4),
         authToken: authToken,

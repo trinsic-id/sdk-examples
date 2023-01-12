@@ -62,7 +62,7 @@ class CreateCredentialTemplatePage extends React.Component<CreateCredentialTempl
     submit(e: PreventDefaultType) {
         e.preventDefault();
         const {name, fields} = this.state;
-        this.props.createTemplate(name, fields);
+        this.props.createTemplate(name!, fields!);
     }
 
     render() {

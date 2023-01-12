@@ -1,0 +1,28 @@
+name: Golang
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "go/**"
+      - ".github/workflows/*go*"
+
+jobs:
+  test_golang:
+    name: Build/test golang
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install okapi
+        run: |
+          brew install trinsic-id/tap/okapi
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+      - name: Test Golang
+        run: |
+          go test vaccine_test.go
+        working-directory: go/
+        shell: pwsh

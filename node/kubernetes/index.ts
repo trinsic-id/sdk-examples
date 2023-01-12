@@ -3,26 +3,26 @@ import express from "express"
 import * as bodyParser from "body-parser"
 express.Router()
 
-import {AccountDetails, AccountProfile, AccountService, SignInRequest, WalletService} from "@trinsic/trinsic"
-import {fromUint8Array, toUint8Array} from "js-base64";
+import {
+    LoginResponse, TrinsicService
+} from "@trinsic/trinsic"
 
 const app = express()
 const port = process.env.PORT || 3000
 
-
-const accountService = new AccountService()
-const walletService = new WalletService()
+const trinsicService = new TrinsicService()
 
 let systemState = {
+    loginResponse: LoginResponse.fromPartial({}),
     userAccountString: "",
     userLoggedIn: false,
     walletEntries: ['']
 }
 
 async function searchWallet() {
-    walletService.options.setAuthToken(systemState.userAccountString)
-    const searchResponse = await walletService.search()
-    systemState.walletEntries = searchResponse.getItemsList()
+    trinsicService.options.authToken = systemState.userAccountString
+    const searchResponse = await trinsicService.wallet().search({query: "SELECT * FROM _"})
+    systemState.walletEntries = searchResponse.items!
     // TODO - Order by newest?
 }
 
@@ -46,7 +46,10 @@ async function start() {
     })
 
     app.post('/login',async (req, res) => {
-        systemState.userAccountString = await accountService.signIn(new SignInRequest().setDetails(new AccountDetails().setEmail(req.body.emailAddress)))
+        systemState.loginResponse = await trinsicService.account().login({email: req.body.emailAddress,
+        ecosystemId: "default",
+        invitationCode: undefined
+        });
         res.render('login', systemState)
     })
 
@@ -56,7 +59,7 @@ async function start() {
         // systemState.userAccountString = fromUint8Array(profile.serializeBinary(), true);
 
         // for @trinsic/trinsic 1.4.2 - does not throw!
-        systemState.userAccountString = await AccountService.unprotect(systemState.userAccountString, req.body.unblindCode);
+        systemState.userAccountString = await trinsicService.account().loginConfirm(systemState.loginResponse.challenge, req.body.unblindCode);
         systemState.userLoggedIn = true
 
         res.redirect('/');

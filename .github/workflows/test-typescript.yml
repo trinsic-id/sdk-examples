@@ -8,13 +8,6 @@ on:
       - "node/**"
       - "browser/**"
       - ".github/workflows/*typescript*"
-  push:
-    branches:
-      - main
-    paths:
-      - "node/**"
-      - "browser/**"
-      - ".github/workflows/*typescript*"
 
 jobs:
   test_typescript:

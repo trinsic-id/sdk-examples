@@ -1,0 +1,26 @@
+name: CLI Examples
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "cli/**"
+      - ".github/workflows/*cli*"
+
+jobs:
+  test_cli:
+    name: Run CLI samples
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install CLI
+        run: |
+          brew tap trinsic-id/tap
+          brew install trinsic-cli
+      - name: Run CLI demo
+        run: ./cli/Run-Demo.ps1
+        shell: pwsh
+      

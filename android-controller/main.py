@@ -6,12 +6,11 @@ import asyncio
 import json
 from os.path import abspath, join, dirname
 
-from trinsic.account_service import AccountService
-from trinsic.credential_service import CredentialService
-from trinsic.proto.services.account.v1 import AccountDetails, SignInRequest
+from trinsic.proto.services.account.v1 import LoginRequest
+from trinsic.proto.services.universalwallet.v1 import SearchRequest
 from trinsic.proto.services.verifiablecredentials.v1 import IssueRequest, SendRequest, VerifyProofRequest
+from trinsic.trinsic_service import TrinsicService
 from trinsic.trinsic_util import trinsic_config
-from trinsic.wallet_service import WalletService
 from trinsicokapi import oberon
 from trinsicokapi.proto.okapi.security.v1 import CreateOberonKeyRequest, CreateOberonTokenRequest, \
     CreateOberonProofRequest
@@ -38,51 +37,51 @@ def verify_okapi_oberon() -> None:
 
 async def issue_credential(email: str):
     # Create the police officer to verify
-    account_service = AccountService()
-    motor_vehicle_dept = await account_service.sign_in()
-    credential_service = CredentialService(server_config=trinsic_config(motor_vehicle_dept))
+    trinsic_service = TrinsicService()
+    motor_vehicle_dept = await trinsic_service.account.login_anonymous()
+    trinsic_service.set_auth_token(motor_vehicle_dept)
 
     # Load from the demo data directory
     with open(drivers_license_frame_path(), 'r') as fid:
         drivers_license_unsigned = fid.read()
 
-    issue_response = await credential_service.issue(request=IssueRequest(document_json=drivers_license_unsigned))
+    issue_response = await trinsic_service.credential.issue(request=IssueRequest(document_json=drivers_license_unsigned))
 
     signed_doc = issue_response.signed_document_json
     print(f"Signed driver's license:\n{signed_doc}")
     print(f"Sending credential to:{email}")
-    await credential_service.send(request=SendRequest(document_json=signed_doc, email=email))
+    await trinsic_service.credential.send(request=SendRequest(document_json=signed_doc, email=email))
 
-    credential_service.close()
-    account_service.close()
+    trinsic_service.close()
 
 
 async def verify_credential(proof_document: dict) -> bool:
     # Create the police officer to verify
-    account_service = AccountService()
-    police_officer = await account_service.sign_in()
-    credential_service = CredentialService(server_config=trinsic_config(police_officer))
-    verify_response = await credential_service.verify_proof(request=VerifyProofRequest(proof_document_json=json.dumps(proof_document)))
+    trinsic_service = TrinsicService()
+    police_officer = await trinsic_service.account.login_anonymous()
+    trinsic_service.set_auth_token(police_officer)
+    verify_response = await trinsic_service.credential.verify_proof(request=VerifyProofRequest(proof_document_json=json.dumps(proof_document)))
     is_valid = verify_response.is_valid
     print(f"Proof {'IS' if is_valid else 'IS NOT'} valid")
-    credential_service.close()
-    account_service.close()
+    trinsic_service.close()
     return is_valid
 
 
 async def signin(email: str) -> str:
-    account_service = AccountService()
-    new_account = await account_service.sign_in(request=SignInRequest(details=AccountDetails(email=email)))
+    trinsic_service = TrinsicService()
+    login_response = await trinsic_service.account.login(request=LoginRequest(email=email, ecosystem_id="default"))
     verify_code = input("Code sent to email, enter it here:")
-    new_account_unprotect = account_service.unprotect(profile=new_account, security_code=verify_code.encode('utf-8'))
-    return new_account_unprotect
+    new_account = await trinsic_service.account.login_confirm(challenge=login_response.challenge, auth_code=verify_code)
+    return new_account
 
 
 async def check_wallet_contents(profile: str) -> dict:
     # Check wallet contents
-    wallet_service = WalletService(server_config=trinsic_config(auth_token=profile))
-    search_results = await wallet_service.search()
+    trinsic_service = TrinsicService(server_config=trinsic_config(auth_token=profile))
+    search_results = await trinsic_service.wallet.search(request=SearchRequest(query="SELECT * FROM _"))
     print(f"Wallet content items={search_results.items}")
+
+    trinsic_service.close()
 
     return json.loads(search_results.items[-1])
 

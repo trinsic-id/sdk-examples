@@ -104,7 +104,7 @@ export function getCredentialTemplates(): ThunkAction<
       query: "select * from c order by c.name",
     });
     let response = await service.template().search(request);
-    let items = JSON.parse(response.itemsJson);
+    let items = JSON.parse(response.itemsJson!);
 
     dispatch({
       type: GET_CREDENTIAL_TEMPLATES,
@@ -152,7 +152,7 @@ export function getWalletItems(): ThunkAction<
   ) => {
     setAuthTokenFromState(getState);
     let response = await service.wallet().searchWallet();
-    let items = response.items.map((item) => JSON.parse(item));
+    let items = response.items!.map((item) => JSON.parse(item));
 
     dispatch({
       type: GET_WALLET_ITEMS,
