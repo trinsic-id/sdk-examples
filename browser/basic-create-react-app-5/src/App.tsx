@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import {TrinsicService} from "@trinsic/trinsic/lib/browser";
+import {TrinsicService} from "@trinsic/trinsic/browser";
 
 const trinsicService = new TrinsicService();
 
