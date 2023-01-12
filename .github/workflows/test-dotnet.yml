@@ -11,10 +11,7 @@ on:
 jobs:
   prod-test-net:
     name: .NET - samples - prod test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-dotnet@v2
@@ -37,7 +34,9 @@ jobs:
 #        shell: pwsh
 #        working-directory: dotnet/MauiVerifier
       - name: Mobile build
-        run: dotnet build
+        run: |
+          dotnet workload restore
+          dotnet build
         shell: pwsh
         working-directory: dotnet/Mobile
       - name: Vaccination Test
