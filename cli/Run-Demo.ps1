@@ -6,7 +6,7 @@ function Stop-OnError {
 }
 
 $ServerEndpoint = "prod.trinsic.cloud"
-$Environment = 'Production',
+$Environment = "Production"
 $CommandPath = $(Get-Command trinsic | ForEach-Object { $_.Source })
 
 @{
