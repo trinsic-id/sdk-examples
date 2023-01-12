@@ -6,14 +6,11 @@ import asyncio
 import json
 from os.path import abspath, join, dirname
 
-from trinsic.account_service import AccountService
-from trinsic.credential_service import CredentialService
-from trinsic.proto.services.account.v1 import AccountDetails, SignInRequest, LoginRequest
+from trinsic.proto.services.account.v1 import LoginRequest
 from trinsic.proto.services.universalwallet.v1 import SearchRequest
 from trinsic.proto.services.verifiablecredentials.v1 import IssueRequest, SendRequest, VerifyProofRequest
 from trinsic.trinsic_service import TrinsicService
 from trinsic.trinsic_util import trinsic_config
-from trinsic.wallet_service import WalletService
 from trinsicokapi import oberon
 from trinsicokapi.proto.okapi.security.v1 import CreateOberonKeyRequest, CreateOberonTokenRequest, \
     CreateOberonProofRequest
@@ -72,7 +69,7 @@ async def verify_credential(proof_document: dict) -> bool:
 
 async def signin(email: str) -> str:
     trinsic_service = TrinsicService()
-    login_response = await trinsic_service.account.login(request=LoginRequest(email=email))
+    login_response = await trinsic_service.account.login(request=LoginRequest(email=email, ecosystem_id="default"))
     verify_code = input("Code sent to email, enter it here:")
     new_account = await trinsic_service.account.login_confirm(challenge=login_response.challenge, auth_code=verify_code)
     return new_account
