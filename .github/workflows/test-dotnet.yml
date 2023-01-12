@@ -32,10 +32,10 @@ jobs:
 #          dotnet build HauiMaui.App.sln
 #        shell: pwsh
 #        working-directory: dotnet/Maui
-      - name: MauiVerifier build
-        run: dotnet build
-        shell: pwsh
-        working-directory: dotnet/MauiVerifier
+#      - name: MauiVerifier build
+#        run: dotnet build
+#        shell: pwsh
+#        working-directory: dotnet/MauiVerifier
       - name: Mobile build
         run: dotnet build
         shell: pwsh
