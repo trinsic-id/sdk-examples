@@ -26,7 +26,7 @@ class ViewController: UIViewController {
             profile = try! AccountProfile(serializedData: data)
         } else {
             // sign in to create new profile
-            profile = try! accountService.signIn()
+            profile = try! accountService.loginAnonymous()
             
             // save profile in keychain
             _ = KeyChain.save(key: profileKeyName, data: try! profile!.serializedData())

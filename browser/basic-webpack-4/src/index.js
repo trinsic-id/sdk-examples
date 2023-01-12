@@ -1,10 +1,10 @@
-import { AccountService } from "@trinsic/trinsic/lib/browser";
+import {TrinsicService} from "@trinsic/trinsic/browser";
 
 async function signIn() {
 
-    const accountService = new AccountService();
-    const authenticationToken = await accountService.loginAnonymous();
-    const accountInfo = await accountService.getInfo();
+    const trinsicService = new TrinsicService();
+    const authenticationToken = await trinsicService.account().loginAnonymous();
+    const accountInfo = await trinsicService.account().getInfo();
 
     document.getElementById("accountInfo").innerText = JSON.stringify(accountInfo, null, 4);
     document.getElementById("authToken").innerText = authenticationToken;
