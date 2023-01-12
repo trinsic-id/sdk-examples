@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "^1.8.0",
+    "@trinsic/trinsic": "1.8.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "uuid": "^9.0.0"

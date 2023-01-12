@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@trinsic/trinsic": "1.7.3",
+    "@trinsic/trinsic": "1.8.1",
     "@uiw/react-textarea-code-editor": "1.6.0",
     "generate-schema": "2.6.0",
     "react": "17.0.2",
