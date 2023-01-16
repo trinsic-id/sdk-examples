@@ -7,6 +7,8 @@ on:
     paths:
       - ".github/workflows/test-ruby.yml"
       - "ruby/**"
+  schedule:
+    - cron: '0 9 * * WED' # https://crontab.guru/#0_9_*_*_WED
 
 jobs:
   prod-test-ruby:
