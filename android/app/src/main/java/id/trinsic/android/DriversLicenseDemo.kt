@@ -2,29 +2,24 @@ package id.trinsic.android
 
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
+import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import trinsic.services.AccountService
 import trinsic.services.TrinsicService
-import trinsic.services.account.v1.AccountDetails
-import trinsic.services.account.v1.AccountOuterClass
 import trinsic.services.account.v1.LoginRequest
 import trinsic.services.account.v1.LoginResponse
-import trinsic.services.account.v1.SignInRequest
 import trinsic.services.universalwallet.v1.SearchRequest
-import trinsic.services.universalwallet.v1.UniversalWalletOuterClass
 import trinsic.services.verifiablecredentials.v1.CreateProofRequest
 import trinsic.services.verifiablecredentials.v1.SendRequest
-import trinsic.services.verifiablecredentials.v1.VerifiableCredentials
+import java.lang.reflect.Type
 
 class DriversLicenseDemo {
     val service = TrinsicService(null)
 
     private lateinit var allison: LoginResponse
     private lateinit var allisonUnprotected: String
-    private lateinit var credentialProof: Map<String, Any>
+    private lateinit var credentialProofJson: String
 
     fun signin(email: String) {
         allison = service.account().login(
@@ -39,44 +34,34 @@ class DriversLicenseDemo {
         service.setAuthToken(allisonUnprotected)
     }
 
-    fun getLatestCredential(): HashMap<*, *> {
-        val walletContents =
-            service.wallet().searchWallet().get()
-        val driversLicenseCred = walletContents.itemsList.map { jsonString: String ->
-            Gson().fromJson(jsonString, HashMap::class.java)
-        }.sortedBy { jsonData: Map<*, *> ->
-            ((jsonData["data"] as Map<*, *>)["proof"] as Map<*, *>)["created"] as String
-        }.last { jsonData: Map<*, *> ->
-            val data = jsonData["data"] as Map<*, *>
-            val typeList = data["type"] as List<*>
-            typeList.any { x ->
-                x == "Iso18013DriversLicenseCredential"
-            }
-        }
-
-        return driversLicenseCred
+    fun parseJson(jsonString: String): Map<String, Any> {
+        val empMapType: Type = object : TypeToken<Map<String, Any>>() {}.type
+        return Gson().fromJson(jsonString, empMapType)
     }
 
-    fun createProof(credentialFrameString: String, itemId: String): Map<String, Any> {
+    fun getLatestCredential(): String {
+        // Note - I test this query on the python side where the iteration time is easier
+        val query =
+            "SELECT * FROM c WHERE ARRAY_CONTAINS(c.data.type, 'Iso18013DriversLicenseCredential') ORDER BY c.data.proof.created DESC"
+        val walletContents =
+            service.wallet().searchWallet(SearchRequest.newBuilder().setQuery(query).build()).get()
+        return walletContents.itemsList.first() ?: ""
+    }
+
+    fun createProof(credentialFrameString: String, itemId: String): String {
         // SHARE CREDENTIAL
         val createProofResponse = service.credential().createProof(
             CreateProofRequest.newBuilder()
                 .setDocumentJson(credentialFrameString).setItemId(itemId).build()
         ).get()
-        val proof =
-            Gson().fromJson(createProofResponse.proofDocumentJson, java.util.HashMap::class.java)
-        println("Proof: $proof")
-        this.credentialProof = proof.mapKeys { x -> x.key.toString() }
-        return this.credentialProof
+        this.credentialProofJson = createProofResponse.proofDocumentJson
+        return this.credentialProofJson
     }
 
     fun sendCredential(sendToEmail: String) {
-        val hashMap = java.util.HashMap<Any, Any>()
-        this.credentialProof.forEach { (t, u) -> hashMap[t] = u }
-        val docJson = Gson().toJson(hashMap)
         service.credential().send(
             SendRequest.newBuilder().setEmail(sendToEmail)
-                .setDocumentJson(docJson).build()
+                .setDocumentJson(this.credentialProofJson).build()
         )
     }
 

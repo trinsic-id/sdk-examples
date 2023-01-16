@@ -11,8 +11,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import org.json.JSONObject
-import java.util.HashMap
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     fun createProofButton_click(view: View) {
         val credential = demo.getLatestCredential()
-        credentialId = credential["id"] as String
-        val proof = demo.createProof(this.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
-        val proofJson = JSONObject(proof).toString()
+        val credentialMap = demo.parseJson(credential)
+        credentialId = credentialMap["id"] as String
+        val proofJson = demo.createProof(this.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
 
         val proofTextView = this.findViewById<TextView>(R.id.credentialProofText)
         proofTextView.text = proofJson

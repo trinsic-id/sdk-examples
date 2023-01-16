@@ -1,13 +1,16 @@
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/vdl/v1",
+    "https://raw.githubusercontent.com/w3c-ccg/vdl-vocab/main/context/v1.jsonld",
     "https://w3id.org/security/bbs/v1"
   ],
   "type": [
     "VerifiableCredential",
     "Iso18013DriversLicenseCredential"
   ],
+  "issuer": "did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5",
+  "issuanceDate": "2018-01-15T10:00:00.0000000-07:00",
+  "expirationDate": "2022-08-27T12:00:00.0000000-06:00",
   "credentialSubject": {
     "id": "did:key:z6MkhdEKMp6Buh8tPB1BV5etVkqx32q5nbVmzWPLpWSHyshm",
     "license": {
