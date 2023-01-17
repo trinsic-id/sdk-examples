@@ -25,6 +25,7 @@ jobs:
       - name: Maui build
         run: |
           dotnet workload restore
+          dotnet workload install maui-android
           dotnet build HauiMaui.sln
           dotnet build HauiMaui.App.sln
         shell: pwsh
