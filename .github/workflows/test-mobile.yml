@@ -12,18 +12,46 @@ on:
     - cron: '0 9 * * WED' # https://crontab.guru/#0_9_*_*_WED
 
 jobs:
-  test_cli:
-    name: Run CLI samples
+  test_dotnet_mobile:
+    name: Build Dotnet Mobile Samples
     runs-on: macos-latest
     strategy:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Install CLI
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+      - name: Maui build
         run: |
-          brew tap trinsic-id/tap
-          brew install trinsic-cli
-      - name: Run CLI demo
-        run: ./cli/Run-Demo.ps1
+          dotnet workload restore
+          dotnet build HauiMaui.sln
+          dotnet build HauiMaui.App.sln
         shell: pwsh
-      
+        working-directory: dotnet/Maui
+      - name: MauiVerifier build
+        run: |
+          dotnet workload restore
+          dotnet build
+        shell: pwsh
+        working-directory: dotnet/MauiVerifier
+      - name: Mobile build
+        run: |
+          dotnet workload restore
+          dotnet build
+        shell: pwsh
+        working-directory: dotnet/Mobile
+
+  test_android_native:
+    name: Build Android Native Samples
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Android build
+        run: |
+          gradle build
+          gradle test
+        shell: pwsh
+        working-directory: android
