@@ -24,22 +24,22 @@ jobs:
           dotnet-version: '6.0.x'
       - name: Maui build
         run: |
-          dotnet workload restore
-          dotnet workload install maui-android
+          dotnet workload restore HauiMaui.sln
+          dotnet workload restore HauiMaui.App.sln
           dotnet build HauiMaui.sln
           dotnet build HauiMaui.App.sln
         shell: pwsh
         working-directory: dotnet/Maui
       - name: MauiVerifier build
         run: |
-          dotnet workload restore
-          dotnet build
+          dotnet workload restore MauiVerifier.sln
+          dotnet build MauiVerifier.sln
         shell: pwsh
         working-directory: dotnet/MauiVerifier
       - name: Mobile build
         run: |
-          dotnet workload restore
-          dotnet build
+          dotnet workload restore Mobile.sln
+          dotnet build Mobile.sln
         shell: pwsh
         working-directory: dotnet/Mobile
 
