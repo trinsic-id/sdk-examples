@@ -22,28 +22,15 @@ jobs:
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
-      - name: Maui build
+      - name: All samples build
         run: |
           dotnet workload restore
           dotnet workload install maui-android
           dotnet workload install ios
           dotnet workload install maccatalyst
-          dotnet build HauiMaui.sln
-          dotnet build HauiMaui.App.sln
+          dotnet build Samples.sln
         shell: pwsh
-        working-directory: dotnet/Maui
-      - name: MauiVerifier build
-        run: |
-          dotnet workload restore
-          dotnet build
-        shell: pwsh
-        working-directory: dotnet/MauiVerifier
-      - name: Mobile build
-        run: |
-          dotnet workload restore
-          dotnet build
-        shell: pwsh
-        working-directory: dotnet/Mobile
+        working-directory: dotnet
 
   test_android_native:
     name: Build Android Native Samples

@@ -21,9 +21,9 @@ var ecosystemId = ecosystem.Id;
 // SETUP ACTORS
 // Create 3 different profiles for each participant in the scenario
 // setupActors() {
-var allison = await trinsicService.Account.SignInAsync(new SignInRequest { EcosystemId = ecosystemId });
-var clinic = await trinsicService.Account.SignInAsync(new SignInRequest { EcosystemId = ecosystemId });
-var airline = await trinsicService.Account.SignInAsync(new SignInRequest { EcosystemId = ecosystemId });
+var allison = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
+var clinic = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
+var airline = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
 // }
 
 trinsicService.Options.AuthToken = clinic;

@@ -25,23 +25,17 @@ namespace Blazor.Shared
 
         protected bool protection = false;
         protected string? authToken;
+        protected LoginResponse _loginResponse;
 
         private async Task SignIn()
         {
-            authToken = await AccountService!.SignInAsync(new()
+            _loginResponse = await AccountService!.LoginAsync(new()
             {
-                Details = new()
-                {
-                    Name = Model.FullName ?? string.Empty,
-                    Email = Model.Email ?? string.Empty
-                }
+                EcosystemId = "default",
+                Email = Model.Email ?? string.Empty
             });
-            
-            
 
-            var profile = AccountProfile.Parser.ParseFrom(Base64Url.DecodeBytes(authToken));
-
-            if  (profile.Protection.Enabled)
+            if  (_loginResponse.Profile is null)
             {
                 protection = true;
             }
@@ -54,7 +48,7 @@ namespace Blazor.Shared
 
         private async Task OnUnprotect()
         {
-            authToken = AccountService.Unprotect(authToken!, UnprotectModel.SecurityCode!);
+            authToken = AccountService!.LoginConfirm(_loginResponse.Challenge, UnprotectModel.SecurityCode);
             await TokenProvider!.SaveAsync(authToken);
 
             (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();

@@ -1,4 +1,5 @@
 using Trinsic;
+using Trinsic.Services.UniversalWallet.V1;
 
 namespace AndroidApp
 {
@@ -18,12 +19,12 @@ namespace AndroidApp
         private static async void SignIn()
         {
             var accountService = new AccountService();
-            var authToken = await accountService.SignInAsync(new());
+            var authToken = await accountService.LoginAnonymousAsync();
 
             Console.WriteLine($"AuthToken: {authToken}");
 
             var walletService = new WalletService();
-            var items = await walletService.SearchAsync();
+            var items = await walletService.SearchAsync(new ());
 
             Console.WriteLine($"Items: {items}");
         }
