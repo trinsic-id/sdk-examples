@@ -1,6 +1,6 @@
 ﻿using System;
+using Microsoft.Maui.Accessibility;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
 using Trinsic;
 
 namespace HauiMaui;
@@ -13,8 +13,9 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
-    private async void OnSignInClicked(object sender, EventArgs e) {
-        var authToken = await _accountService.SignInAsync(new());
+    private async void OnSignInClicked(object sender, EventArgs e)
+    {
+        var authToken = await _accountService.LoginAnonymousAsync();
         AuthTokenLabel.Text = $"Success! [auth_token = {authToken.Substring(0, 16)}...]";
 
         SemanticScreenReader.Announce(AuthTokenLabel.Text);

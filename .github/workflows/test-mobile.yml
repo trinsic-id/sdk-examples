@@ -1,0 +1,48 @@
+name: Mobile Examples
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "ios/**"
+      - "dotnet/**"
+      - ".github/workflows/*mobile*"
+  schedule:
+    - cron: '0 9 * * WED' # https://crontab.guru/#0_9_*_*_WED
+
+jobs:
+  test_dotnet_mobile:
+    name: Build Dotnet Mobile Samples
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v2
+        with:
+          global-json-file: dotnet/global.json
+      - name: All samples build
+        run: |
+          dotnet workload restore
+          dotnet workload install android
+          dotnet workload install ios
+          dotnet workload install maccatalyst
+          dotnet workload install maui-android
+          dotnet build Samples.sln
+        shell: pwsh
+        working-directory: dotnet
+
+  test_android_native:
+    name: Build Android Native Samples
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Android build
+        run: |
+          gradle build
+          gradle test
+        shell: pwsh
+        working-directory: android
