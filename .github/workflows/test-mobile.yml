@@ -28,6 +28,7 @@ jobs:
           dotnet workload install android
           dotnet workload install ios
           dotnet workload install maccatalyst
+          dotnet workload install maui-android
           dotnet build Samples.sln
         shell: pwsh
         working-directory: dotnet
