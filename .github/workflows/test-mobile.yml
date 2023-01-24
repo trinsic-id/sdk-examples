@@ -25,6 +25,9 @@ jobs:
       - name: All samples build
         run: |
           dotnet workload restore
+          dotnet workload install android
+          dotnet workload install ios
+          dotnet workload install maccatalyst
           dotnet build Samples.sln
         shell: pwsh
         working-directory: dotnet
