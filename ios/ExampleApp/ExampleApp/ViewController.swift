@@ -16,27 +16,26 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // create new account service instance
-        let accountService = Services.Account()
-            .build()
+        let trinsicService = TrinsicService()
         
-        var profile: AccountProfile? = nil
+        var profile: String? = nil
         
         // check if we have already have stored profile data in key chain
         if let data = KeyChain.load(key: profileKeyName) {
-            profile = try! AccountProfile(serializedData: data)
+            profile = String(data: data, encoding: .utf8)
         } else {
             // sign in to create new profile
-            profile = try! accountService.loginAnonymous()
+            profile = try! trinsicService.account().loginAnonymous()
             
             // save profile in keychain
-            _ = KeyChain.save(key: profileKeyName, data: try! profile!.serializedData())
+            _ = KeyChain.save(key: profileKeyName, data: profile!.data(using: .utf8)!)
         }
+        
+        trinsicService.options.authToken = profile!
         
         // create new wallet service instance
         // and set authentication profile
-        let walletService = Services.Wallet()
-            .with(profile: profile!)
-            .build()
+        let walletService = trinsicService.wallet();
         
         // list all items
         let items = try! walletService.search()
