@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  ExampleApp
 //
-//  Created by Tomislav Markovski on 12/1/21.
-//
 
 import UIKit
 import Trinsic
@@ -15,35 +13,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // create new account service instance
-        let accountService = Services.Account()
-            .build()
+        let trinsicService = TrinsicService();
         
-        var profile: AccountProfile? = nil
+        var authToken: String = "";
         
         // check if we have already have stored profile data in key chain
         if let data = KeyChain.load(key: profileKeyName) {
-            profile = try! AccountProfile(serializedData: data)
+            authToken = String(decoding: data, as: UTF8.self)
         } else {
             // sign in to create new profile
-            profile = try! accountService.loginAnonymous()
-            
+            authToken = try! trinsicService.account().loginAnonymous()
             // save profile in keychain
-            _ = KeyChain.save(key: profileKeyName, data: try! profile!.serializedData())
+            _ = KeyChain.save(key: profileKeyName, data: authToken.data(using: .utf8)!)
         }
         
-        // create new wallet service instance
-        // and set authentication profile
-        let walletService = Services.Wallet()
-            .with(profile: profile!)
-            .build()
+        trinsicService.options.authToken = authToken;
         
         // list all items
-        let items = try! walletService.search()
+        let items = try! trinsicService.wallet().search()
         
         print(items.debugDescription)
     }
-
-
 }
-
