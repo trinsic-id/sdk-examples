@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91EBDA2A2982CF5C0060C3E9 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 91EBDA292982CF5C0060C3E9 /* AppAuth */; };
 		9295AA6C28C47F2F00AC40B1 /* VerifierSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA5C28C47F2F00AC40B1 /* VerifierSampleApp.swift */; };
 		9295AA6D28C47F2F00AC40B1 /* VerifierSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA5C28C47F2F00AC40B1 /* VerifierSampleApp.swift */; };
 		9295AA6E28C47F2F00AC40B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA5D28C47F2F00AC40B1 /* ContentView.swift */; };
 		9295AA6F28C47F2F00AC40B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA5D28C47F2F00AC40B1 /* ContentView.swift */; };
 		9295AA7028C47F2F00AC40B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9295AA5E28C47F2F00AC40B1 /* Assets.xcassets */; };
 		9295AA7128C47F2F00AC40B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9295AA5E28C47F2F00AC40B1 /* Assets.xcassets */; };
-		9295AA7C28C47F7400AC40B1 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9295AA7B28C47F7400AC40B1 /* AppAuth */; };
-		9295AA7E28C47F7400AC40B1 /* AppAuthCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9295AA7D28C47F7400AC40B1 /* AppAuthCore */; };
 		9295AA8028C48FDA00AC40B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */; };
 		9295AA8128C48FDA00AC40B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9295AA7F28C48FDA00AC40B1 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -35,8 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9295AA7C28C47F7400AC40B1 /* AppAuth in Frameworks */,
-				9295AA7E28C47F7400AC40B1 /* AppAuthCore in Frameworks */,
+				91EBDA2A2982CF5C0060C3E9 /* AppAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,8 +103,7 @@
 			);
 			name = "VerifierSample (iOS)";
 			packageProductDependencies = (
-				9295AA7B28C47F7400AC40B1 /* AppAuth */,
-				9295AA7D28C47F7400AC40B1 /* AppAuthCore */,
+				91EBDA292982CF5C0060C3E9 /* AppAuth */,
 			);
 			productName = "VerifierSample (iOS)";
 			productReference = 9295AA6328C47F2F00AC40B1 /* VerifierSample.app */;
@@ -157,7 +154,7 @@
 			);
 			mainGroup = 9295AA5628C47F2F00AC40B1;
 			packageReferences = (
-				9295AA7A28C47F7400AC40B1 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
+				91EBDA282982CF5C0060C3E9 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
 			);
 			productRefGroup = 9295AA6428C47F2F00AC40B1 /* Products */;
 			projectDirPath = "";
@@ -469,26 +466,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9295AA7A28C47F7400AC40B1 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
+		91EBDA282982CF5C0060C3E9 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openid/AppAuth-iOS.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.5.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9295AA7B28C47F7400AC40B1 /* AppAuth */ = {
+		91EBDA292982CF5C0060C3E9 /* AppAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9295AA7A28C47F7400AC40B1 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			package = 91EBDA282982CF5C0060C3E9 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
 			productName = AppAuth;
-		};
-		9295AA7D28C47F7400AC40B1 /* AppAuthCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9295AA7A28C47F7400AC40B1 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
-			productName = AppAuthCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
