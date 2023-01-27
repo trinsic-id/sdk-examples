@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             authToken = String(decoding: data, as: UTF8.self)
         } else {
             // sign in to create new profile
-            authToken = try! trinsicService.account().loginAnonymous()
+            authToken = try! trinsicService.account().loginAnonymous(ecosystemId: "default")
             // save profile in keychain
             _ = KeyChain.save(key: profileKeyName, data: authToken.data(using: .utf8)!)
         }
@@ -30,7 +30,8 @@ class ViewController: UIViewController {
         trinsicService.options.authToken = authToken;
         
         // list all items
-        let items = try! trinsicService.wallet().search()
+        var searchRequest = Services_Universalwallet_V1_SearchRequest()
+        let items = try! trinsicService.wallet().searchWallet(request: searchRequest)
         
         print(items.debugDescription)
     }
