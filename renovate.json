@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "timezone": "America/Indianapolis",
   "schedule": [
-    "every Friday"
+    "on Friday"
   ],
   "extends": [
     "group:allNonMajor"
@@ -14,7 +14,7 @@
     },
     {
       "matchPackagePatterns": ["trinsic"],
-      "schedule": ["every day"]
+      "schedule": ["every weekday"]
     }
   ],
   "prHourlyLimit": 20,
