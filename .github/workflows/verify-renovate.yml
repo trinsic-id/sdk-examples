@@ -25,3 +25,5 @@ jobs:
         with:
           configurationFile: renovate.json
           token: ${{ secrets.API_GITHUB_TOKEN }}
+        env:
+          RENOVATE_REPOSITORIES: trinsic-id/sdk-examples
