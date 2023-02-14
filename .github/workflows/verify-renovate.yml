@@ -9,9 +9,9 @@ on:
       - ".github/workflows/verify-renovate.yml"
 
 jobs:
-  test_cli:
-    name: Run CLI samples
-    runs-on: macos-latest
+  verify-renovate:
+    name: Verify Renovate Config
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
