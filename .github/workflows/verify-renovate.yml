@@ -1,0 +1,22 @@
+name: CLI Examples
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "renovate.json"
+
+jobs:
+  test_cli:
+    name: Run CLI samples
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: renovate-config-validator
+        uses: rinchsan/renovate-config-validator@v0.0.12
+        with:
+          pattern: 'renovate.json'
+      
