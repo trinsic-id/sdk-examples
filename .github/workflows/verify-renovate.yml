@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - "renovate.json"
+      - ".github/workflows/verify-renovate.yml"
 
 jobs:
   test_cli:
