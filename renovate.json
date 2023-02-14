@@ -1,15 +1,22 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "timezone": "America/Indianapolis",
   "schedule": [
-    "* 12 1 3,9 *"
+    "on Friday"
   ],
   "extends": [
     "group:allNonMajor"
   ],
   "packageRules": [
     {
+      "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"]
+    },
+    {
+      "matchPackagePatterns": ["trinsic"],
+      "schedule": ["every weekday"]
     }
   ],
-  "prHourlyLimit": 20
+  "prHourlyLimit": 20,
+  "prConcurrentLimit": 0
 }
