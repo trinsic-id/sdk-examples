@@ -9,11 +9,11 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "1.8.1"
+    "@trinsic/trinsic": "1.9.0"
   },
   "devDependencies": {
-    "webpack": "5.74.0",
+    "webpack": "5.75.0",
     "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.10.1"
+    "webpack-dev-server": "4.11.1"
   }
 }
