@@ -18,5 +18,6 @@
     }
   ],
   "prHourlyLimit": 20,
-  "prConcurrentLimit": 0
+  "prConcurrentLimit": 0,
+  "dependencyDashboard": true
 }
