@@ -29,34 +29,17 @@ class MainActivity : AppCompatActivity() {
         emailEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
     }
 
-    fun signinButton_click(view: View) {
+    fun loginButton_click(view: View) {
         val emailEditText = this.findViewById<EditText>(R.id.email)
-        demo.signin(emailEditText.text.toString())
+        this.findViewById<Button>(R.id.login).text = "Done"
+        demo.login(emailEditText.text.toString())
     }
 
-    fun unprotectButton_click(view: View) {
-        val oberonEditText = this.findViewById<EditText>(R.id.oberonCode)
-        demo.unprotectAccount(oberonEditText.text.toString())
-        this.findViewById<Button>(R.id.unprotect).text = "Done"
-    }
-
-    fun createProofButton_click(view: View) {
-        val credential = demo.getLatestCredential()
-        val credentialMap = demo.parseJson(credential)
-        credentialId = credentialMap["id"] as String
-        val proofJson = demo.createProof(this.assets.open("drivers-license-frame.json").bufferedReader().readText(), credentialId!!)
-
-        val proofTextView = this.findViewById<TextView>(R.id.credentialProofText)
-        proofTextView.text = proofJson
-
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("proof JSON", proofJson)
-        clipboard.setPrimaryClip(clip)
-    }
-
-    fun sendCredentialButton_click(view: View) {
-        val targetEmailEditText = this.findViewById<TextView>(R.id.targetEmail)
-        demo.sendCredential(targetEmailEditText.text.toString())
-        this.findViewById<Button>(R.id.sendCredential).text = "Done"
+    fun loginConfirmButton_click(view: View) {
+        val confirmationCode = this.findViewById<EditText>(R.id.confirmationCode)
+        demo.loginConfirm(confirmationCode.text.toString())
+        this.findViewById<Button>(R.id.confirm).text = "Done"
+        val proofTextView = this.findViewById<TextView>(R.id.authToken)
+        proofTextView.text = demo.authToken;
     }
 }
