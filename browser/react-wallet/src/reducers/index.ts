@@ -3,15 +3,13 @@ import templateReducer, {TemplateAction, templates} from './Templates';
 import authenticationReducer, {authentication, AuthenticationAction} from './Authentication';
 import walletReducer, {wallet, WalletAction} from './Wallet';
 import credentialReducer, {CredentialAction, credentials} from './Credential';
-import ecosystemReducer, {EcosystemAction, ecosystems} from './Ecosystems';
 import {LOGOUT} from '../actions';
 
 export const initialState = {
     templates,
     authentication,
     wallet,
-    credentials,
-    ecosystems
+    credentials
 }
 
 
@@ -19,11 +17,10 @@ const appReducer = combineReducers({
     templates: templateReducer,
     authentication: authenticationReducer,
     wallet: walletReducer,
-    credentials: credentialReducer,
-    ecosystems: ecosystemReducer
+    credentials: credentialReducer
 })
 
-export type ActionType = TemplateAction | AuthenticationAction | WalletAction | CredentialAction | EcosystemAction;
+export type ActionType = TemplateAction | AuthenticationAction | WalletAction | CredentialAction;
 
 function rootReducer(state: any, action: ActionType) {
     if (action.type === LOGOUT) {

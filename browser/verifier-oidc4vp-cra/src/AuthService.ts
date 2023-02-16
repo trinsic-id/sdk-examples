@@ -5,7 +5,7 @@ const clientRoot: string = "http://localhost:3000/";
 export class AuthService {
   public userManager: UserManager;
   private settings = {
-    authority: "https://connect-dev.trinsic.cloud",
+    authority: "https://dev-connect.trinsic.cloud",
     client_id: "verifier-oidc4vp-client",
     redirect_uri: `${clientRoot}callback.html`,
     silent_redirect_uri: `${clientRoot}silent-renew.html`,

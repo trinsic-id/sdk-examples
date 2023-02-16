@@ -31,10 +31,9 @@ function App(props: AppProps) {
   );
 }
 
-function mapStateToProps(state: AppState): { ecosystem: any; loggedIn: boolean } {
+function mapStateToProps(state: AppState): { loggedIn: boolean } {
   return {
-    loggedIn: state.authentication.loggedIn,
-    ecosystem: state.ecosystems.currentEcosystem
+    loggedIn: state.authentication.loggedIn
   }
 }
 function mapDispatchToProps(dispatch: Dispatch): { logout: () => any } {

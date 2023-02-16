@@ -3,7 +3,7 @@ import {TrinsicService} from "@trinsic/trinsic/browser";
 async function signIn() {
 
     const trinsicService = new TrinsicService();
-    const authenticationToken = await trinsicService.account().loginAnonymous();
+    const authenticationToken = await trinsicService.account().loginAnonymous("default");
     const accountInfo = await trinsicService.account().getInfo();
 
     document.getElementById("accountInfo").innerText = JSON.stringify(accountInfo, null, 4);

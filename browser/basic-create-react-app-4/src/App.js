@@ -10,7 +10,7 @@ function App() {
   const [info, setInfo] = useState({ accountInfo: "", authToken: "" });
   useEffect(() => {
     const fetchAuthToken = async () => {
-      const authToken = await trinsicService.account().loginAnonymous();
+      const authToken = await trinsicService.account().loginAnonymous("default");
       const accountInfo = await trinsicService.account().getInfo();
       setInfo({ accountInfo: JSON.stringify(accountInfo, null, 4), authToken: authToken });
     };
