@@ -4,9 +4,6 @@
   "schedule": [
     "on Friday"
   ],
-  "extends": [
-    "group:allNonMajor"
-  ],
   "packageRules": [
     {
       "matchPackagePatterns": ["^trinsic"],
