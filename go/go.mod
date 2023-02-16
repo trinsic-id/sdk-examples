@@ -19,5 +19,5 @@ require (
 
 require (
 	github.com/stretchr/testify v1.8.1
-	github.com/trinsic-id/sdk/go v1.8.1
+	github.com/trinsic-id/sdk/go v1.9.0
 )
