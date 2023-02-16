@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
 
         try {
             OidcClientOptions options = new() {
-                Authority = "https://connect.trinsic.cloud",
+                Authority = "https://dev-connect.trinsic.cloud",
                 ClientId = "urn:wallets:123",
                 RedirectUri = "mauiverifier://callback",
                 Browser = new PlatformBrowser(),

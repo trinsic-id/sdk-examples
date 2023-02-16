@@ -33,7 +33,7 @@
 
             <Entry
                 x:Name="SchemaEntry"
-                Text="https://schema.trinsic.cloud/default/attendance-badge"
+                Text="https://dev-schema.trinsic.cloud/default/attendance-badge"
                 HorizontalOptions="{OnPlatform iOS='FillAndExpand', Android='FillAndExpand',Default='Center'}"
                 WidthRequest="{OnPlatform MacCatalyst=350}"
                 Placeholder="Required credential schema" />

@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 
     private async void OnSignInClicked(object sender, EventArgs e)
     {
-        var authToken = await _accountService.LoginAnonymousAsync();
+        var authToken = await _accountService.LoginAnonymousAsync("default");
         AuthTokenLabel.Text = $"Success! [auth_token = {authToken.Substring(0, 16)}...]";
 
         SemanticScreenReader.Announce(AuthTokenLabel.Text);

@@ -29,21 +29,29 @@ namespace Blazor.Shared
 
         private async Task SignIn()
         {
-            _loginResponse = await AccountService!.LoginAsync(new()
+            try
             {
-                EcosystemId = "default",
-                Email = Model.Email ?? string.Empty
-            });
+                _loginResponse = await AccountService!.LoginAsync(new()
+                {
+                    EcosystemId = "default",
+                    Email = Model.Email ?? string.Empty
+                });
 
-            if  (_loginResponse.Profile is null)
-            {
-                protection = true;
+                if (_loginResponse.Profile is null)
+                {
+                    protection = true;
+                }
+                else
+                {
+                    (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
+                }
+
+                StateHasChanged();
             }
-            else
+            catch (Exception exception)
             {
-                (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
+                Console.WriteLine(exception);
             }
-            StateHasChanged();
         }
 
         private async Task OnUnprotect()
