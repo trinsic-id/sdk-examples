@@ -6,7 +6,6 @@ async function signedInSearch() {
   let service = new TrinsicService();
   let loginResponse = await service.account().login({
     email: "scott.phillips@trinsic.id",
-    ecosystemId: "",
     ecosystemId: "default"
   });
   let code =
