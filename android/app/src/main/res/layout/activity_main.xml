@@ -25,37 +25,23 @@
             <EditText android:id="@+id/email" android:layout_width="225dp"/>
 
             <Button
-                android:id="@+id/signin"
-                android:text="Sign in"  android:onClick="signinButton_click"/>
+                android:id="@+id/login"
+                android:text="Login"  android:onClick="loginButton_click"/>
         </TableRow>
         <TableRow>
             <TextView android:text="Code:" />
-            <EditText android:id="@+id/oberonCode"/>
+            <EditText android:id="@+id/confirmationCode"/>
             <Button
-                android:id="@+id/unprotect"
-                android:text="Unprotect"  android:onClick="unprotectButton_click"/>
-        </TableRow>
-        <TableRow>
-            <TextView android:text="Proof:" />
-            <Button
-                android:id="@+id/createProof"
-                android:text="Create Proof" android:onClick="createProofButton_click" />
-        </TableRow>
-        <TableRow>
-            <TextView android:text="Target:" />
-            <EditText android:id="@+id/targetEmail" android:layout_width="225dp"/>
-
-            <Button
-                android:id="@+id/sendCredential"
-                android:text="Send Cred"  android:onClick="sendCredentialButton_click"/>
+                android:id="@+id/confirm"
+                android:text="Confirm"  android:onClick="loginConfirmButton_click"/>
         </TableRow>
         <TableRow>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:id="@+id/credentialProofText"
+                android:id="@+id/authToken"
                 android:layout_span="3"
-                android:text="Credential Proof Appears Here" />
+                android:text="Auth token will appear here" />
         </TableRow>
         <TableRow>
             <androidx.cardview.widget.CardView>

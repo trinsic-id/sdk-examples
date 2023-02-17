@@ -17,52 +17,20 @@ import java.lang.reflect.Type
 class DriversLicenseDemo {
     val service = TrinsicService(null)
 
-    private lateinit var allison: LoginResponse
-    private lateinit var allisonUnprotected: String
-    private lateinit var credentialProofJson: String
+    private lateinit var profile: LoginResponse
+    public lateinit var authToken: String
 
-    fun signin(email: String) {
-        allison = service.account().login(
+    fun login(email: String) {
+        profile = service.account().login(
             LoginRequest.newBuilder().setEmail(email).setEcosystemId("default").build()
         ).get()
         Log.d("Login", "Login started, check email for code")
     }
 
-    fun unprotectAccount(code: String) {
-        allisonUnprotected = service.account().loginConfirm(allison.challenge, code).get()
+    fun loginConfirm(code: String) {
+        authToken = service.account().loginConfirm(profile.challenge, code).get()
         Log.d("Login", "Login complete, account unprotected")
-        service.setAuthToken(allisonUnprotected)
-    }
-
-    fun parseJson(jsonString: String): Map<String, Any> {
-        val empMapType: Type = object : TypeToken<Map<String, Any>>() {}.type
-        return Gson().fromJson(jsonString, empMapType)
-    }
-
-    fun getLatestCredential(): String {
-        // Note - I test this query on the python side where the iteration time is easier
-        val query =
-            "SELECT * FROM c WHERE ARRAY_CONTAINS(c.data.type, 'Iso18013DriversLicenseCredential') ORDER BY c.data.proof.created DESC"
-        val walletContents =
-            service.wallet().searchWallet(SearchRequest.newBuilder().setQuery(query).build()).get()
-        return walletContents.itemsList.first() ?: ""
-    }
-
-    fun createProof(credentialFrameString: String, itemId: String): String {
-        // SHARE CREDENTIAL
-        val createProofResponse = service.credential().createProof(
-            CreateProofRequest.newBuilder()
-                .setDocumentJson(credentialFrameString).setItemId(itemId).build()
-        ).get()
-        this.credentialProofJson = createProofResponse.proofDocumentJson
-        return this.credentialProofJson
-    }
-
-    fun sendCredential(sendToEmail: String) {
-        service.credential().send(
-            SendRequest.newBuilder().setEmail(sendToEmail)
-                .setDocumentJson(this.credentialProofJson).build()
-        )
+        service.setAuthToken(authToken)
     }
 
     @Throws(JSONException::class)
