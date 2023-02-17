@@ -2,18 +2,7 @@ import express from "express";
 import { Express, Request, Response } from "express";
 import "dotenv/config";
 import {
-  CreateCredentialTemplateRequest,
-  CreateEcosystemRequest,
-  CreateProofRequest,
-  FieldType,
-  InsertItemRequest,
-  IssueFromTemplateRequest,
-  TemplateData,
-  TemplateField,
-  TrinsicService,
-  VerifyProofRequest,
-  ServiceOptions,
-  EcosystemInfoRequest,
+  TrinsicService
 } from "@trinsic/trinsic";
 
 //-----------------
@@ -22,17 +11,18 @@ const port = 8000;
 
 //-----------------
 async function getEcoSystemId() {
-  const trinsic = new TrinsicService();
+  try {
+    const trinsic = new TrinsicService();
 
-  trinsic.setAuthToken(process.env.AUTHTOKEN || "");
+    trinsic.setAuthToken(process.env.AUTHTOKEN || "");
 
-  const infoResponse = await trinsic
-    .provider()
-    .ecosystemInfo(EcosystemInfoRequest.fromPartial({}));
-
-  const ecosystem = infoResponse.ecosystem;
-
-  return ecosystem?.id;
+    const accountInfo = await trinsic.account().info();
+    return accountInfo.ecosystemId;
+  }
+  catch(e){
+    console.error(e);
+    return "ERROR" + e;
+  }
 }
 
 //-----------------

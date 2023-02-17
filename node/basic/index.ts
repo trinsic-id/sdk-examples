@@ -6,8 +6,7 @@ async function signedInSearch() {
   let service = new TrinsicService();
   let loginResponse = await service.account().login({
     email: "scott.phillips@trinsic.id",
-    ecosystemId: "",
-    invitationCode: "",
+    ecosystemId: "default"
   });
   let code =
     rlsync.question("Enter the security code sent to your email:") ?? "";
@@ -22,7 +21,8 @@ async function signedInSearch() {
 
 async function main() {
   let service = new TrinsicService();
-  await service.account().loginAnonymous();
+  const authenticationToken = await service.account().loginAnonymous("default");
+  console.log("Authentication token", authenticationToken)
 
   let searchResponse = await service.wallet().searchWallet();
   console.log(searchResponse.items);

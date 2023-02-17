@@ -46,10 +46,8 @@ async function start() {
     })
 
     app.post('/login',async (req, res) => {
-        systemState.loginResponse = await trinsicService.account().login({email: req.body.emailAddress,
-        ecosystemId: "default",
-        invitationCode: undefined
-        });
+        systemState.userAccountString = req.body.emailAddress;
+        systemState.loginResponse = await trinsicService.account().login({email: req.body.emailAddress, ecosystemId: "default"});
         res.render('login', systemState)
     })
 
