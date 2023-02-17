@@ -1,0 +1,41 @@
+﻿@using Trinsic
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+        
+        <button @onclick="SignIn">
+            Sign in
+        </button>
+    </main>
+</div>
+
+@code {
+    async Task SignIn()
+    {
+        try
+        {
+            var trinsicService = new TrinsicService();
+            var authToken = await trinsicService.Account.LoginAnonymousAsync("default");
+            trinsicService.SetAuthToken(authToken);
+            var info = await trinsicService.Account.InfoAsync();
+            Console.WriteLine(info);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+}
