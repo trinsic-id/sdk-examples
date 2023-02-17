@@ -17,7 +17,10 @@ export function AppContent(props: { authService: AuthService }) {
   }, [props.authService]);
   return (
     <>
-      <button onClick={() => props.authService.login()}>
+      <button onClick={() => {
+        console.log("Logging in");
+        props.authService.login().then(() => console.log("Logged in")).catch(e => console.error(e))
+      }}>
         Share Credential
       </button>
       <br />

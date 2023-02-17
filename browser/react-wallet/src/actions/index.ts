@@ -2,8 +2,6 @@ import { Dispatch } from "redux";
 import { AuthenticationAction } from "../reducers/Authentication";
 import {
   CreateCredentialTemplateRequest,
-  CreateEcosystemRequest,
-  Ecosystem,
   InsertItemRequest,
   IssueFromTemplateRequest,
   LoginRequest,
@@ -17,7 +15,6 @@ import {
 import { TemplateAction } from "../reducers/Templates";
 import { WalletAction } from "../reducers/Wallet";
 import { CredentialAction } from "../reducers/Credential";
-import { EcosystemAction } from "../reducers/Ecosystems";
 import { ThunkAction } from "redux-thunk";
 import { ActionState, EcosystemType } from "../types";
 
@@ -243,58 +240,5 @@ export const CLOSE_NOTIFICATION = "CLOSE_NOTIFICATION";
 export function closeNotification() {
   return {
     type: CLOSE_NOTIFICATION,
-  };
-}
-
-export const CREATE_ECOSYSTEM = "CREATE_ECOSYSTEM";
-
-export function createEcosystem(
-  ecosystem: EcosystemType
-): ThunkAction<void, ActionState, undefined, any> {
-  return async (
-    dispatch: Dispatch<EcosystemAction>,
-    getState: () => ActionState
-  ) => {
-    setAuthTokenFromState(getState);
-    let request = CreateEcosystemRequest.fromPartial({
-      name: ecosystem.ecosystemName,
-      description: ecosystem.description,
-      uri: ecosystem.uri,
-      details: {
-        name: ecosystem.name,
-        email: ecosystem.email,
-        sms: ecosystem.sms,
-      },
-    });
-
-    let response = await service.provider().createEcosystem(request);
-
-    dispatch({
-      type: CREATE_ECOSYSTEM,
-      ecosystem: response.ecosystem,
-    });
-  };
-}
-
-export const GET_ECOSYSTEM_INFO = "GET_ECOSYSTEM_INFO";
-
-export function getEcosystemInfo(): ThunkAction<
-  void,
-  ActionState,
-  undefined,
-  any
-> {
-  return async (
-    dispatch: Dispatch<EcosystemAction>,
-    getState: () => ActionState
-  ) => {
-    setAuthTokenFromState(getState);
-    let request = Ecosystem.fromPartial({});
-    let response = await service.provider().ecosystemInfo(request);
-
-    dispatch({
-      type: GET_ECOSYSTEM_INFO,
-      ecosystem: response.ecosystem,
-    });
   };
 }

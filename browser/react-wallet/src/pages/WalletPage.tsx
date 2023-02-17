@@ -6,11 +6,10 @@ import StoreItemPage from './StoreItemPage';
 import VerifyCredentialPage from './VerifyCredentialPage';
 import ItemsListPage from './ItemsListPage';
 import PrivateRoute from '../components/PrivateRoute';
-import {getEcosystemInfo, getWalletItems} from '../actions';
+import {getWalletItems} from '../actions';
 import WalletNavbar from '../components/WalletNavbar';
 import CredentialTemplatesPage from './CredentialTemplatesPage';
 import CreateCredentialTemplatePage from './CreateCredentialTemplatePage';
-import EcosystemsPage from './EcosystemsPage';
 import {ActionState} from "../types";
 import {ThunkDispatch} from "redux-thunk";
 
@@ -23,8 +22,6 @@ interface WalletProps {
     }
 
     getItems(): any
-
-    getEcosystemInformation(): any
 }
 
 interface WalletState {
@@ -43,9 +40,8 @@ export class WalletPage extends React.Component<WalletProps, WalletState> {
     }
 
     componentDidMount() {
-        console.warn("Disabled getItems() and getEcosystemInfo()")
+        console.warn("Disabled getItems()")
         this.props.getItems();
-        this.props.getEcosystemInformation();
     }
 
     navigateTo(location: string) {
@@ -80,7 +76,6 @@ export class WalletPage extends React.Component<WalletProps, WalletState> {
                         <Route path="/templates" element={<PrivateRoute><CredentialTemplatesPage/></PrivateRoute>}/>
                         <Route path="/templates/generator"
                                element={<PrivateRoute><CreateCredentialTemplatePage/></PrivateRoute>}/>
-                        <Route path="/ecosystems" element={<PrivateRoute><EcosystemsPage/></PrivateRoute>}/>
                     </Routes>
                 </div>
             </div>
@@ -97,8 +92,7 @@ function mapStateToProps(state: ActionState) {
 
 function mapDispatchToProps(dispatch: ThunkDispatch<ActionState, undefined, any>) {
     return {
-        getItems: () => dispatch(getWalletItems()),
-        getEcosystemInformation: () => dispatch(getEcosystemInfo())
+        getItems: () => dispatch(getWalletItems())
     }
 }
 
