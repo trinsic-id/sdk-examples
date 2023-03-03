@@ -10,8 +10,8 @@ dependencyResolutionManagement {
 //            name = "Github Packages"
 //            url = "https://maven.pkg.github.com/trinsic-id/okapi"
 //            credentials {
-//                username = lucasamonrc // This is your github username
-//                password = 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 // This is a github personal access token: https://github.com/settings/tokens with `read:packages` permission
+//                username = System.getenv("GITHUB_ACTOR") // This is your github username
+//                password = System.getenv("GITHUB_TOKEN") // This is a github personal access token: https://github.com/settings/tokens with `read:packages` permission
 //            }
 //        }
     }
