@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:isScrollContainer="true"
+    android:keepScreenOn="true"
+    android:overScrollMode="always"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical"
+    tools:context=".MainActivity">
+
+    S
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="Email:" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="200dp" />
+
+                <Button
+                    android:id="@+id/login"
+                    android:onClick="loginButton_click"
+                    android:text="Login" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView android:text="Code:" />
+
+                <EditText
+                    android:id="@+id/confirmationCode"
+                    android:layout_width="141dp" />
+
+                <Button
+                    android:id="@+id/confirm"
+                    android:onClick="loginConfirmButton_click"
+                    android:text="Confirm" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/authToken"
+                    android:layout_width="357dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:paddingLeft="10dp"
+                    android:text="Auth token will appear here" />
+            </TableRow>
+
+            <TableRow>
+
+                <androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </androidx.cardview.widget.CardView>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/namerow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="Name:" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="182dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/dobrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="DOB:" />
+
+                <EditText
+                    android:id="@+id/dob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/licenserow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="License #:" />
+
+                <EditText
+                    android:id="@+id/licenseNumber"
+                    android:layout_width="191dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/issrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="ISS:" />
+
+                <EditText
+                    android:id="@+id/iss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/exprow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView android:text="EXP:" />
+
+                <EditText
+                    android:id="@+id/exp"
+                    android:layout_width="122dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/issuerow"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/issueBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_span="3"
+                    android:onClick="issueButton_click"
+                    android:text="Issue" />
+            </TableRow>
+
+            <TableRow android:id="@+id/itemrow">
+
+                <TextView
+                    android:id="@+id/itemId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="Credential id will show here" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/verifyrow"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/verifyBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_span="3"
+                    android:onClick="verifyButton_click"
+                    android:text="Verify" />
+            </TableRow>
+
+            <TableRow android:id="@+id/statusrow">
+
+                <TextView
+                    android:id="@+id/verifyStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="" />
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
