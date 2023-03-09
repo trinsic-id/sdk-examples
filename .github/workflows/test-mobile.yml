@@ -33,16 +33,30 @@ jobs:
         shell: pwsh
         working-directory: dotnet
 
-  test_android_native:
-    name: Build Android Native Samples
+  test_android_native_wallet_sample:
+    name: Build Android Native Wallet Sample
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Android build
+      - name: Android build (wallet-sample)
         run: |
           gradle build
           gradle test
         shell: pwsh
-        working-directory: android
+        working-directory: android/wallet-sample
+        
+  test_android_native_verifier_sample:
+    name: Build Android Native Verifier Sample
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Android build (verifier-sample)
+        run: |
+          gradle build
+          gradle test
+        shell: pwsh
+        working-directory: android/verifier-sample
