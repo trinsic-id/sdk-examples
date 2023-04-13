@@ -5,11 +5,16 @@
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationId>com.companyname.AndroidApp</ApplicationId>
+    <ApplicationId>id.trinsic.AndroidApp</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.8.4" />
+    <PackageReference Include="Trinsic" Version="1.9.1" />
+    <PackageReference Include="Okapi.Net" Version="1.6.4" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PreBuildEvent>echo Runtime Identifier = $(RuntimeIdentifier) TargetFramework=$(TargetFrameworkIdentifier)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
