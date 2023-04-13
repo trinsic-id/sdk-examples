@@ -14,6 +14,6 @@
     "webpack-dev-server": "4.10.1"
   },
   "dependencies": {
-    "@trinsic/trinsic": "1.10.0"
+    "@trinsic/trinsic": "file:../../../sdk/web"
   }
 }

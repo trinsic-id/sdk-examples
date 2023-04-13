@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@trinsic/trinsic": "1.10.0",
+    "@trinsic/trinsic": "file:../../../sdk/web",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "uuid": "^9.0.0"
