@@ -1,7 +1,6 @@
 import {TrinsicService} from "@trinsic/trinsic";
 
 async function signIn() {
-
     const trinsicService = new TrinsicService();
     const createWalletResponse = await trinsicService.wallet().createWallet({ecosystemId:"default"});
     trinsicService.setAuthToken(createWalletResponse.authToken);

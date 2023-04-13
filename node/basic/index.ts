@@ -4,7 +4,7 @@ import * as rlsync from "readline-sync";
 
 async function signedInSearch() {
   let service = new TrinsicService();
-  let loginResponse = await service.wallet().createWallet({
+  let createWalletResponse = await service.wallet().createWallet({
     ecosystemId: "default"
   });
   let addEmail = await service.wallet().addExternalIdentityInit({

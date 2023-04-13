@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import {TrinsicService} from "@trinsic/trinsic/lib/browser"
+import {TrinsicService} from "@trinsic/trinsic"
 
 const trinsicService = new TrinsicService();
 
@@ -10,9 +10,13 @@ function App() {
   const [info, setInfo] = useState({ accountInfo: "", authToken: "" });
   useEffect(() => {
     const fetchAuthToken = async () => {
-      const authToken = await trinsicService.account().loginAnonymous("default");
-      const accountInfo = await trinsicService.account().getInfo();
-      setInfo({ accountInfo: JSON.stringify(accountInfo, null, 4), authToken: authToken });
+      const createWalletResponse = await trinsicService.wallet().createWallet({ecosystemId:"default"});
+      trinsicService.setAuthToken(createWalletResponse.authToken);
+      const accountInfo = await trinsicService.wallet().getMyInfo({});
+      setInfo({
+        accountInfo: JSON.stringify(accountInfo, null, 4),
+        authToken: createWalletResponse.authToken,
+    });
     };
     fetchAuthToken().catch((e) => console.error(e));
   }, []);
