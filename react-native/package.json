@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
-    "android": "expo run:android",
+    "android": "expo run:android -d SM_F926U1",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
