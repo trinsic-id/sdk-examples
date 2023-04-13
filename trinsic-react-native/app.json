@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "trinsic-react-native",
+    "slug": "trinsic-react-native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "trinsic-react-native"
+}
