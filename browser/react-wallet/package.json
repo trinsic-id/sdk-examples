@@ -41,7 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@redux-devtools/extension": "3.2.3",
+    "@redux-devtools/extension": "3.2.5",
     "autoprefixer": "9.8.8",
     "postcss": "7.0.39",
     "postcss-loader": "4.3.0",
