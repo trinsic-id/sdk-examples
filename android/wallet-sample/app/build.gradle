@@ -64,7 +64,7 @@ dependencies {
     implementation 'io.grpc:grpc-netty-shaded:1.49.2'
     implementation 'io.grpc:grpc-okhttp:1.49.0'
     implementation 'io.grpc:grpc-protobuf:1.49.2'
-    implementation 'io.grpc:grpc-stub:1.49.2'
+    implementation 'io.grpc:grpc-stub:1.54.0'
     implementation 'net.java.dev.jna:jna:5.12.1@aar'
 
     implementation urlFile('https://github.com/trinsic-id/okapi/releases/download/v1.6.0/trinsic-okapi-1.6.2.aar', 'trinsic-okapi-1.6.2.aar')
