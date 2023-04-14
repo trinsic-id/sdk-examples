@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@types/jest": "29.0.0",
-    "@types/node": "18.7.15",
+    "@types/node": "18.15.11",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
     "@craco/craco": "7.0.0-alpha.7",
