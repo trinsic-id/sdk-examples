@@ -14,7 +14,7 @@
     "@types/node": "18.7.15",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
-    "@craco/craco": "7.0.0-alpha.7",
+    "@craco/craco": "7.1.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",

@@ -10,7 +10,7 @@
     "web-vitals": "3.0.1"
   },
   "devDependencies": {
-    "@craco/craco": "6.4.5",
+    "@craco/craco": "7.1.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "11.2.7",
     "@testing-library/user-event": "14.4.3"
