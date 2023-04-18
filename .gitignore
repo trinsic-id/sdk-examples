@@ -135,3 +135,5 @@ browser/react-wallet/.idea/
 node/kubernetes/.idea/
 browser/basic-webpack/.idea/
 android/app/build/
+go/.idea/workspace.xml
+ios/ExampleApp/.idea/workspace.xml
