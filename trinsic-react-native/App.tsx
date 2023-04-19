@@ -1,35 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import {CreateWalletRequest, TrinsicService} from "@trinsic/trinsic";
+import {CreateWalletRequest, TrinsicService} from "./src";
+import {BrowserProvider} from "./src/providers";
+import {NodeReactNativeHttpTransport} from "./NodeReactNativeTransport";
 
 interface DemoData {
   authToken: string;
   accountInfo: string;
 }
 
-function getRuntime(): string {
-    // https://stackoverflow.com/a/39473604
-    if (typeof document !== 'undefined') {
-        // I'm on the web!
-        console.warn("Web!");
-        return "web";
-    }
-    else if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-        // I'm in react-native
-        console.warn("React native!");
-        return "react-native";
-    }
-    else {
-        console.warn("Node.js!");
-        // I'm in node js
-        return "node";
-    }
-}
-
 async function fetchAuthToken(): Promise<DemoData> {
-    getRuntime();
     try {
+        BrowserProvider.overrideTransport = NodeReactNativeHttpTransport();
         const trinsicService = new TrinsicService();
         console.log("Service connection", trinsicService);
         console.log(await trinsicService.provider().getOberonKey());

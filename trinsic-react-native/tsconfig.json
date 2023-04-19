@@ -1,6 +1,7 @@
 {
     "extends": "@tsconfig/react-native/tsconfig.json",
     "compilerOptions": {
+        "lib": ["dom", "es2018"],
         "esModuleInterop": true
     }
 }
