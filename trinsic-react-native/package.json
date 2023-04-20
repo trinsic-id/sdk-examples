@@ -10,11 +10,10 @@
   },
   "dependencies": {
     "@expo/webpack-config": "18.0.1",
-    "@trinsic/trinsic": "1.11.0-rc4",
+    "@trinsic/trinsic": "1.11.0-rc5",
     "expo": "48.0.10",
     "expo-splash-screen": "0.18.1",
     "expo-status-bar": "1.4.4",
-    "nice-grpc-web": "^3.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.6",
