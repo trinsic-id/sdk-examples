@@ -6,7 +6,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.mjs', '.js', '.json']
   },
-  entry: "./src/index.ts",
+  entry: "./src/index.js",
   plugins: [
     new SourceMapDevToolPlugin({
       filename: null,
