@@ -2,14 +2,11 @@ import {throwIfAborted} from 'abort-controller-x';
 import {Base64} from 'js-base64';
 import {ClientError, Metadata, Status} from 'nice-grpc-common';
 import {Transport} from 'nice-grpc-web/src/client/Transport';
+import {FetchTransportConfig} from "nice-grpc-web/lib/client/transports/fetch";
 
 // @ts-ignore
-import {fetch} from "react-native-fetch-api";
-
-export interface FetchTransportConfig {
-    credentials?: RequestCredentials;
-}
-
+// import {fetch} from "react-native-fetch-api";
+import { fetch } from "whatwg-fetch";
 /**
  * Transport for browsers based on `fetch` API.
  */
@@ -31,6 +28,7 @@ export function FetchReactNativeTransport(config?: FetchTransportConfig): Transp
             let iterator: AsyncIterator<Uint8Array> | undefined;
 
             requestBody = new ReadableStream({
+                // @ts-ignore
                 type: 'bytes',
                 start() {
                     iterator = body[Symbol.asyncIterator]();
@@ -51,7 +49,7 @@ export function FetchReactNativeTransport(config?: FetchTransportConfig): Transp
             });
         }
 
-        const response = await fetch(url, {
+        const response: Response = await fetch(url, {
             method: 'POST',
             body: requestBody,
             headers: metadataToHeaders(metadata),
@@ -66,7 +64,7 @@ export function FetchReactNativeTransport(config?: FetchTransportConfig): Transp
             header: headersToMetadata(response.headers),
         };
 
-        if (!response.ok && response.status != 415) {
+        if (!response.ok) {
             const responseText = await response.text();
 
             throw new ClientError(
@@ -78,35 +76,55 @@ export function FetchReactNativeTransport(config?: FetchTransportConfig): Transp
 
         throwIfAborted(signal);
 
-        const reader = response.body?.getReader();
-
-        const abortListener = () => {
-            reader?.cancel().catch(() => {});
-        };
-
-        signal.addEventListener('abort', abortListener);
+        // This is the only value that works, blob(), stream(), etc all fail.
+        // It is a mix of binary data
+        const reader = await response.text();
 
         try {
-            while (reader !== undefined) {
-                const {done, value} = await reader.read();
-
-                if (value != null) {
+            // const value = stringToArrayBuffer(reader);
+            const value = new Uint8Array(stringToArrayBuffer(reader));
+            for (const uint8Array of [value]) {
+                if (uint8Array !== null) {
                     yield {
                         type: 'data',
-                        data: value,
+                        data: uint8Array,
                     };
-                }
-
-                if (done) {
-                    break;
                 }
             }
         } finally {
-            signal.removeEventListener('abort', abortListener);
-
             throwIfAborted(signal);
         }
+
+        // const trailerData = new Metadata();
+        // trailerData.set('grpc-status', getStatusFromHttpCode(response.status).toString());
+        // trailerData.set('grpc-message', "OK");
+        // yield {
+        //     type: 'trailer',
+        //     trailer: trailerData
+        // };
     };
+}
+
+// Lifted from: https://github.com/improbable-eng/grpc-web/blob/master/client/grpc-web-react-native-transport/src/index.ts
+function stringToArrayBuffer(str: string): Uint8Array {
+    const asArray = new Uint8Array(str.length);
+    let arrayIndex = 0;
+    for (let i = 0; i < str.length; i++) {
+        const codePoint = (String.prototype as any).codePointAt ? (str as any).codePointAt(i) : codePointAtPolyfill(str, i);
+        asArray[arrayIndex++] = codePoint & 0xFF;
+    }
+    return asArray;
+}
+
+function codePointAtPolyfill(str: string, index: number) {
+    let code = str.charCodeAt(index);
+    if (code >= 0xd800 && code <= 0xdbff) {
+        const surr = str.charCodeAt(index + 1);
+        if (surr >= 0xdc00 && surr <= 0xdfff) {
+            code = 0x10000 + ((code - 0xd800) << 10) + (surr - 0xdc00);
+        }
+    }
+    return code;
 }
 
 function metadataToHeaders(metadata: Metadata): Headers {
@@ -127,6 +145,7 @@ function metadataToHeaders(metadata: Metadata): Headers {
 function headersToMetadata(headers: Headers): Metadata {
     const metadata = new Metadata();
 
+    // @ts-ignore
     for (const [key, value] of headers) {
         if (key.endsWith('-bin')) {
             for (const item of value.split(/,\s?/)) {
@@ -142,6 +161,8 @@ function headersToMetadata(headers: Headers): Metadata {
 
 function getStatusFromHttpCode(statusCode: number): Status {
     switch (statusCode) {
+        case 200:
+            return Status.OK;
         case 400:
             return Status.INTERNAL;
         case 401:

@@ -2,8 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {CreateWalletRequest, TrinsicService} from "./src";
-import {BrowserProvider} from "./src/providers";
-import {NodeReactNativeHttpTransport} from "./NodeReactNativeTransport";
 
 interface DemoData {
   authToken: string;
@@ -12,10 +10,10 @@ interface DemoData {
 
 async function fetchAuthToken(): Promise<DemoData> {
     try {
-        BrowserProvider.overrideTransport = NodeReactNativeHttpTransport();
         const trinsicService = new TrinsicService();
         console.log("Service connection", trinsicService);
-        console.log(await trinsicService.provider().getOberonKey());
+        const myKey = (await trinsicService.provider().getOberonKey()).key ?? "";
+        console.log("Oberon key", myKey);
         const walletService = trinsicService.wallet();
         const request = CreateWalletRequest.fromPartial({ecosystemId:"default"});
         console.log(walletService, CreateWalletRequest.encode(request).finish());
@@ -28,6 +26,7 @@ async function fetchAuthToken(): Promise<DemoData> {
             authToken: createWalletResponse.authToken!,
             accountInfo: JSON.stringify(accountInfo, null, 3)
         }
+        // return { authToken:myKey, accountInfo: ""};
     } catch (e: any) {
         console.error("Uncaught error", e.stack);
         return { authToken: "", accountInfo: ""};
