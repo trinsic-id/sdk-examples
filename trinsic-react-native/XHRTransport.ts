@@ -54,7 +54,7 @@ async function xhrPost(url: string, metadata: Metadata, requestBody: BodyInit): 
 /**
  * Transport for browsers based on `XMLHttpRequest` API.
  */
-export function XHRTransport(config?: FetchTransportConfig): Transport {
+export function XHRTransportReactNative(config?: FetchTransportConfig): Transport {
     return async function* fetchTransport({url, body, metadata, signal, method}) {
         let requestBody: BodyInit;
 
