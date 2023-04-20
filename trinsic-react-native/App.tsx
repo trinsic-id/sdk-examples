@@ -2,8 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {CreateWalletRequest, TrinsicService} from "@trinsic/trinsic";
-import {XHRTransportReactNative} from "./XHRTransport";
-import {TransportProvider} from "@trinsic/trinsic/lib/src/providers";
 
 interface DemoData {
   authToken: string;
@@ -12,7 +10,6 @@ interface DemoData {
 
 async function fetchAuthToken(): Promise<DemoData> {
     try {
-        TransportProvider.overrideTransport = XHRTransportReactNative();
         const trinsicService = new TrinsicService();
         console.log("Service connection", trinsicService);
         const myKey = (await trinsicService.provider().getOberonKey()).key ?? "";

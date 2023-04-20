@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@expo/webpack-config": "18.0.1",
-    "@trinsic/trinsic": "1.11.0-rc2",
+    "@trinsic/trinsic": "1.11.0-rc4",
+    "base64-js": "1.5.1",
     "expo": "48.0.10",
     "expo-splash-screen": "0.18.1",
     "expo-status-bar": "1.4.4",
@@ -20,6 +21,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.71.6",
     "react-native-fetch-api": "^3.0.0",
+    "react-native-fetch-polyfill": "1.1.3",
     "react-native-web": "0.18.10"
   },
   "devDependencies": {

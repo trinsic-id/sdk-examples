@@ -43,6 +43,10 @@ export function WebsocketReactNativeTransport(): Transport {
             }
         });
 
+        webSocket.addEventListener("error", event => {
+            console.warn(event);
+        })
+
         webSocket.addEventListener('close', event => {
             if (event.wasClean) {
                 frames.end();
