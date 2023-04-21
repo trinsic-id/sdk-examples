@@ -1,0 +1,21 @@
+{
+  "name": "wallet-prefill",
+  "version": "1.0.0",
+  "description": "Example using the Trinsic SDK to prefill wallets with data from a database",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npx ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Coffey",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@trinsic/trinsic": "1.11.0-rc5",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.6"
+  }
+}
