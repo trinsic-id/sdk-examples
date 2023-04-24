@@ -9,7 +9,7 @@ import org.json.JSONObject
 import trinsic.services.TrinsicService
 import trinsic.services.account.v1.LoginRequest
 import trinsic.services.account.v1.LoginResponse
-import trinsic.services.universalwallet.v1.SearchRequest
+import trinsic.services.universalwallet.v1.*
 import trinsic.services.verifiablecredentials.v1.CreateProofRequest
 import trinsic.services.verifiablecredentials.v1.IssueFromTemplateRequest
 import trinsic.services.verifiablecredentials.v1.SendRequest
@@ -19,7 +19,7 @@ import java.lang.reflect.Type
 class DriversLicenseDemo {
     val service = TrinsicService(null)
 
-    private lateinit var profile: LoginResponse
+    private lateinit var authResponse: AuthenticateInitResponse
     private lateinit var email: String
 
     lateinit var authToken: String
@@ -27,15 +27,18 @@ class DriversLicenseDemo {
     lateinit var credential: String
 
     fun login(email: String) {
-        profile = service.account().login(
-            LoginRequest.newBuilder().setEmail(email).setEcosystemId("default").build()
+        authResponse = service.wallet().authenticateInit(
+            AuthenticateInitRequest.newBuilder().setIdentity(email).setProvider(IdentityProvider.EMAIL).setEcosystemId("default").build()
         ).get()
         this.email = email
         Log.d("Login", "Login started, check email for code")
     }
 
     fun loginConfirm(code: String) {
-        authToken = service.account().loginConfirm(profile.challenge, code).get()
+        val authenticateWallet = service.wallet().authenticateConfirm(AuthenticateConfirmRequest.newBuilder()
+            .setChallenge(authResponse.challenge).setResponse(code).build()
+        ).get()
+        authToken = authenticateWallet.authToken;
         Log.d("Login", "Login complete, account unprotected")
         service.setAuthToken(authToken)
     }
