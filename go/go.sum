@@ -68,12 +68,16 @@ github.com/trinsic-id/okapi/go v1.6.0 h1:6qVjc41lpqD9gK46B+GLQ+q5KnPp7jhiG+6lRDD
 github.com/trinsic-id/okapi/go v1.6.0/go.mod h1:aU28oQqJLtqfidWi+z+s9yyl3ejNOdm/MEI+QGpfqpI=
 github.com/trinsic-id/okapi/go v1.6.1 h1:mdp/ixgCgV+E/ptZQBpwE3iK3ZIl+ynQpnxMxB3c58k=
 github.com/trinsic-id/okapi/go v1.6.1/go.mod h1:Is/+ttfc/M1XS+84JTztm7oqV0vrqwzA6qyuufIs5Cg=
+github.com/trinsic-id/okapi/go v1.6.2 h1:cPNIj+F8k2BOYhh9D62pS9SWzwxJhLSZPZxzaMRK3kw=
+github.com/trinsic-id/okapi/go v1.6.2/go.mod h1:Is/+ttfc/M1XS+84JTztm7oqV0vrqwzA6qyuufIs5Cg=
 github.com/trinsic-id/sdk/go v1.8.0 h1:tiyqviP1BNy4MsRd2bVqxoYznhG4ojoZPBdYJZASyI0=
 github.com/trinsic-id/sdk/go v1.8.0/go.mod h1:fWDQx2uKUWS6KIoQA4jUOffj7cRp+zjnHIp1GVhTzdo=
 github.com/trinsic-id/sdk/go v1.8.1 h1:yhF13/hTyaQ6zINSJpYYqm0AxGMXhcJPHgaUp/MfLTo=
 github.com/trinsic-id/sdk/go v1.8.1/go.mod h1:BRhiB8lIZ4esmcHJ0G+XkFQQp3tYX1ZFE1SQSeJOOZI=
 github.com/trinsic-id/sdk/go v1.9.0 h1:aXk/3JVwjT1EehsnQubpWJXaiHpJsxEPYy3lf0Yaxgg=
 github.com/trinsic-id/sdk/go v1.9.0/go.mod h1:BRhiB8lIZ4esmcHJ0G+XkFQQp3tYX1ZFE1SQSeJOOZI=
+github.com/trinsic-id/sdk/go v1.10.0 h1:vspnoNtqaaIjTBvoL9ce2JyoWBs8XJsgNP6F6g+fH+w=
+github.com/trinsic-id/sdk/go v1.10.0/go.mod h1:HSgNIC3vEtYzPaClw5uFU0bJ/d3AYmnZjXzEBibGyRY=
 go.opentelemetry.io/proto/otlp v0.7.0/go.mod h1:PqfVotwruBrMGOCsRd/89rSnXhoiJIqeYNgFYFoEGnI=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
