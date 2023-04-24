@@ -7,16 +7,20 @@ namespace HauiMaui;
 
 public partial class MainPage : ContentPage
 {
-    private AccountService _accountService = new();
-
     public MainPage() {
         InitializeComponent();
     }
 
     private async void OnSignInClicked(object sender, EventArgs e)
     {
-        var authToken = await _accountService.LoginAnonymousAsync();
-        AuthTokenLabel.Text = $"Success! [auth_token = {authToken.Substring(0, 16)}...]";
+        var trinsicService = new TrinsicService();
+        var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() {EcosystemId ="default"});
+        trinsicService.Options.AuthToken = newWallet.AuthToken;
+        Console.WriteLine($"AuthToken: {newWallet.AuthToken}");
+
+        var items = await trinsicService.Wallet.SearchAsync(new());
+        Console.WriteLine($"Items: {items}");
+        AuthTokenLabel.Text = $"Success! [auth_token = {newWallet.AuthToken.Substring(0, 16)}...]";
 
         SemanticScreenReader.Announce(AuthTokenLabel.Text);
     }

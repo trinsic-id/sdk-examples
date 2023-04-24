@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Trinsic;
 
@@ -7,17 +6,17 @@ namespace Blazor.Security;
 
 public class AuthTokenStateProvider : AuthenticationStateProvider
 {
-    public AuthTokenStateProvider(ITokenProvider tokenProvider) {
-        _tokenProvider = tokenProvider;
+    public AuthTokenStateProvider(TrinsicService myTrinsicService) {
+        _trinsicService = myTrinsicService;
     }
 
-    private readonly ITokenProvider _tokenProvider;
+    private readonly TrinsicService _trinsicService;
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var authToken = await _tokenProvider!.GetAsync();
+        var authToken = _trinsicService.Options.AuthToken;
 
-        if (authToken is null)
+        if (string.IsNullOrWhiteSpace(authToken))
         {
             var anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity() { }));
             return anonymous;
