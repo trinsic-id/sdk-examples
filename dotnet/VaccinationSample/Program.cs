@@ -21,13 +21,13 @@ var ecosystemId = ecosystem.Id;
 // SETUP ACTORS
 // Create 3 different profiles for each participant in the scenario
 // setupActors() {
-var allison = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
-var clinic = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
-var airline = await trinsicService.Account.LoginAnonymousAsync(ecosystemId );
+var allison = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = ecosystemId });
+var clinic = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = ecosystemId });
+var airline = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = ecosystemId });
 // }
 
-trinsicService.Options.AuthToken = clinic;
-var info = await trinsicService.Account.GetInfoAsync();
+trinsicService.Options.AuthToken = clinic.AuthToken;
+var info = await trinsicService.Wallet.GetMyInfoAsync(new());
 info.Should().NotBeNull();
 
 // ISSUE CREDENTIAL
@@ -35,7 +35,7 @@ info.Should().NotBeNull();
 // issueCredential() {
 // Set active profile to 'clinic' so we can issue credential signed
 // with the clinic's signing keys
-trinsicService.Options.AuthToken = clinic;
+trinsicService.Options.AuthToken = clinic.AuthToken;
 
 // Read the JSON credential data
 var credentialJson = await File.ReadAllTextAsync(VaccinationCertificateUnsigned);
@@ -46,19 +46,19 @@ Console.WriteLine($"Credential:\n{credential.SignedDocumentJson}");
 
 // storeAndRecallProfile {
 // Serialize auth token by exporting it to file
-File.WriteAllText("allison.txt", allison);
+File.WriteAllText("allison.txt", allison.AuthToken);
 // Create auth token from existing data
-allison = File.ReadAllText("allison.txt");
+allison.AuthToken = File.ReadAllText("allison.txt");
 // }
 
 // STORE CREDENTIAL
 // Allison stores the credential in her cloud wallet.
 // storeCredential() {
 // Set active profile to 'allison' so we can manage her cloud wallet
-trinsicService.Options.AuthToken = allison;
+trinsicService.Options.AuthToken = allison.AuthToken;
 
 var insertItemResponse = await trinsicService.Wallet.InsertItemAsync(new InsertItemRequest { ItemJson = credential.SignedDocumentJson });
-var walletItems = await trinsicService.Wallet.SearchAsync(new SearchRequest() {Query = "SELECT * FROM _"});
+var walletItems = await trinsicService.Wallet.SearchAsync(new SearchRequest() { Query = "SELECT * FROM _" });
 Console.WriteLine($"Last wallet item:\n{walletItems.Items.ToList().Last()}");
 // }
 
@@ -86,7 +86,7 @@ Console.WriteLine(credentialProof.ProofDocumentJson);
 // VERIFY CREDENTIAL
 // verifyCredential() {
 // The airline verifies the credential
-trinsicService.Options.AuthToken = airline;
+trinsicService.Options.AuthToken = airline.AuthToken;
 
 // Check for valid signature
 var verifyProofResponse = await trinsicService.Credential.VerifyProofAsync(new VerifyProofRequest

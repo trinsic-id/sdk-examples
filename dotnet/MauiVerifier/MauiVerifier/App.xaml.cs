@@ -1,13 +1,14 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;
-using Application=Microsoft.Maui.Controls.Application;
+using Application = Microsoft.Maui.Controls.Application;
 
 namespace MauiVerifier
 {
     public partial class App : Application
     {
-        public App() {
+        public App()
+        {
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());

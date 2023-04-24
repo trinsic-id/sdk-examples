@@ -5,11 +5,11 @@
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationId>com.companyname.AndroidApp</ApplicationId>
+    <ApplicationId>id.trinsic.AndroidApp</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.10.0" />
+    <PackageReference Include="Trinsic" Version="1.11.0-rc1" />
   </ItemGroup>
 </Project>

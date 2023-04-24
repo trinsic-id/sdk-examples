@@ -1,7 +1,6 @@
 ﻿@page "/wallet"
 @using Trinsic.Services.UniversalWallet.V1
-@inject WalletService WalletService
-@inject ITokenProvider TokenProvider
+@inject TrinsicService TrinsicService
 
 <PageTitle>Wallet</PageTitle>
 
@@ -34,8 +33,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        WalletService.Options.AuthToken = await TokenProvider.GetAsync();
-        var items = await WalletService.SearchAsync(new SearchRequest());
+        var items = await TrinsicService.Wallet.SearchAsync(new SearchRequest());
 
         Console.WriteLine(items);
     }

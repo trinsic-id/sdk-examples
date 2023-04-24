@@ -8,7 +8,7 @@ using UIKit;
 namespace MauiVerifier
 {
     [Register("AppDelegate")]
-    public class AppDelegate : MauiUIApplicationDelegate,  IASWebAuthenticationPresentationContextProviding
+    public class AppDelegate : MauiUIApplicationDelegate, IASWebAuthenticationPresentationContextProviding
     {
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 
