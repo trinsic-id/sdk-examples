@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Trinsic" Version="1.10.0" />
+    <PackageReference Include="Trinsic" Version="1.11.0-rc1" />
   </ItemGroup>
 
 </Project>
