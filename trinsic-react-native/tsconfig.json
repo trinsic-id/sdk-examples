@@ -1,0 +1,8 @@
+{
+    "extends": "@tsconfig/react-native/tsconfig.json",
+    "compilerOptions": {
+        "lib": ["dom", "es2022", "esnext.asynciterable"],
+        "target": "ES2022",
+        "esModuleInterop": true
+    }
+}
