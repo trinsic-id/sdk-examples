@@ -58,7 +58,7 @@ allison.AuthToken = File.ReadAllText("allison.txt");
 trinsicService.Options.AuthToken = allison.AuthToken;
 
 var insertItemResponse = await trinsicService.Wallet.InsertItemAsync(new InsertItemRequest { ItemJson = credential.SignedDocumentJson });
-var walletItems = await trinsicService.Wallet.SearchAsync(new SearchRequest() {Query = "SELECT * FROM _"});
+var walletItems = await trinsicService.Wallet.SearchAsync(new SearchRequest() { Query = "SELECT * FROM _" });
 Console.WriteLine($"Last wallet item:\n{walletItems.Items.ToList().Last()}");
 // }
 

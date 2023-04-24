@@ -7,7 +7,8 @@ namespace HauiMaui;
 
 public partial class App : Application
 {
-    public App() {
+    public App()
+    {
         InitializeComponent();
 
         MainPage = new MainPage();

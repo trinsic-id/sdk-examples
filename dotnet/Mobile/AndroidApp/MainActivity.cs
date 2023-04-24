@@ -18,11 +18,11 @@ namespace AndroidApp
         private static async void SignIn()
         {
             var trinsicService = new TrinsicService();
-            var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = "default"});
+            var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = "default" });
             trinsicService.Options.AuthToken = newWallet.AuthToken;
             Console.WriteLine($"AuthToken: {newWallet.AuthToken}");
 
-            var items = await trinsicService.Wallet.SearchAsync(new ());
+            var items = await trinsicService.Wallet.SearchAsync(new());
 
             Console.WriteLine($"Items: {items}");
         }

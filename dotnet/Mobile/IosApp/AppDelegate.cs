@@ -37,7 +37,7 @@ public class AppDelegate : UIApplicationDelegate
     private static async void SignIn()
     {
         var trinsicService = new TrinsicService();
-        var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() {EcosystemId ="default"});
+        var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() { EcosystemId = "default" });
         trinsicService.Options.AuthToken = newWallet.AuthToken;
         Console.WriteLine($"AuthToken: {newWallet.AuthToken}");
 

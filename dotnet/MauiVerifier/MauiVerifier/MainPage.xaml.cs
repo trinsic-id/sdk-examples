@@ -9,19 +9,23 @@ namespace MauiVerifier;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage() {
+    public MainPage()
+    {
         InitializeComponent();
     }
 
-    private async void OnShareCredential(object sender, EventArgs e) {
+    private async void OnShareCredential(object sender, EventArgs e)
+    {
 
         BusyIndicator.IsRunning = BusyIndicator.IsVisible = true;
         ResultLabel.Text = "";
 
         await Task.Yield();
 
-        try {
-            OidcClientOptions options = new() {
+        try
+        {
+            OidcClientOptions options = new()
+            {
                 Authority = "https://connect.trinsic.cloud",
                 ClientId = "urn:wallets:123",
                 RedirectUri = "mauiverifier://callback",
@@ -30,27 +34,32 @@ public partial class MainPage : ContentPage
                 HttpClientFactory = _ => new HttpClient(),
             };
             OidcClient client = new(options);
-            
-            var result = await client.LoginAsync(new LoginRequest {
+
+            var result = await client.LoginAsync(new LoginRequest
+            {
                 FrontChannelExtraParameters = new Parameters {
                     { "trinsic:ecosystem", EcosystemEntry.Text },
                     { "trinsic:schema", SchemaEntry.Text }
                 }
             });
 
-            if (result.IsError) {
+            if (result.IsError)
+            {
                 ResultLabel.Text = "Action canceled or error occured";
             }
-            else {
+            else
+            {
                 ResultLabel.Text = "Success!";
-                
+
                 await Navigation.PushAsync(new CredentialPage(result.IdentityToken), true);
             }
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Console.WriteLine(ex);
         }
-        finally {
+        finally
+        {
             BusyIndicator.IsRunning = BusyIndicator.IsVisible = false;
         }
     }

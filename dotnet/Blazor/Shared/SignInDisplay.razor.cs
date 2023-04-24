@@ -18,8 +18,8 @@ namespace Blazor.Shared
         public SignInModel Model { get; set; } = new();
         public ProtectionModel UnprotectModel { get; set; } = new();
 
-        [Inject]public AuthenticationStateProvider? StateProvider { get; set; }
-        [Inject]public TrinsicService? MyTrinsicService { get; set; }
+        [Inject] public AuthenticationStateProvider? StateProvider { get; set; }
+        [Inject] public TrinsicService? MyTrinsicService { get; set; }
 
         protected bool protection = false;
         protected string? authToken;
@@ -34,7 +34,7 @@ namespace Blazor.Shared
                 Provider = IdentityProvider.Email
             });
 
-                (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
+            (StateProvider! as AuthTokenStateProvider)!.NotifyProfileChanged();
             StateHasChanged();
         }
 
@@ -42,7 +42,8 @@ namespace Blazor.Shared
         {
             var authenticateConfirmResponse = await MyTrinsicService!.Wallet.AuthenticateConfirmAsync(new()
             {
-                Challenge = authenticateInitResponse.Challenge, Response = UnprotectModel.SecurityCode
+                Challenge = authenticateInitResponse.Challenge,
+                Response = UnprotectModel.SecurityCode
             });
             authToken = authenticateConfirmResponse.AuthToken;
             MyTrinsicService.Options.AuthToken = authToken;

@@ -6,7 +6,8 @@ namespace Blazor.Security;
 
 public class AuthTokenStateProvider : AuthenticationStateProvider
 {
-    public AuthTokenStateProvider(TrinsicService myTrinsicService) {
+    public AuthTokenStateProvider(TrinsicService myTrinsicService)
+    {
         _trinsicService = myTrinsicService;
     }
 
