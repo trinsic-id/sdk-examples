@@ -15,7 +15,4 @@
     <PackageReference Include="Trinsic.Web" Version="1.11.0-rc1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Security\" />
-  </ItemGroup>
 </Project>
