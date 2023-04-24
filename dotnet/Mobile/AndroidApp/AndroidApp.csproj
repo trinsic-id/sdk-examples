@@ -12,8 +12,4 @@
   <ItemGroup>
     <PackageReference Include="Trinsic" Version="1.11.0-rc1" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <PreBuildEvent>echo Runtime Identifier = $(RuntimeIdentifier) TargetFramework=$(TargetFrameworkIdentifier)</PreBuildEvent>
-  </PropertyGroup>
 </Project>

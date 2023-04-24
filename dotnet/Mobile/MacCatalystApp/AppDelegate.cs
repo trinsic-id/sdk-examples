@@ -33,13 +33,12 @@ public class AppDelegate : UIApplicationDelegate {
 
 	private static async void SignIn()
 	{
-		var accountService = new AccountService();
-        var authToken = await accountService.LoginAnonymousAsync();
+		var trinsicService = new TrinsicService();
+        var newWallet = await trinsicService.Wallet.CreateWalletAsync(new() {EcosystemId ="default"});
+        trinsicService.Options.AuthToken = newWallet.AuthToken;
+        Console.WriteLine($"AuthToken: {newWallet.AuthToken}");
 
-        Console.WriteLine($"AuthToken: {authToken}");
-
-        var walletService = new WalletService();
-        var items = await walletService.SearchAsync(new());
+        var items = await trinsicService.Wallet.SearchAsync(new());
 
         Console.WriteLine($"Items: {items}");
 	}
