@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:trinsic_dart/trinsic.dart';
+import 'package:trinsic_flutter/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,29 +52,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TrinsicService _trinsicService = TrinsicService(null);
   String _authToken = "";
   String _accountInformationJson = "";
+  late AuthenticateInitResponse _authenticateInitResponse;
 
-  Future<void> createWallet() async {
-    var trinsicService = TrinsicService(null);
-    var newWallet = await trinsicService.wallet().createWallet(CreateWalletRequest(ecosystemId: "default"));
-    trinsicService.serviceOptions.authToken = newWallet.authToken;
-    var walletInfo = await trinsicService.wallet().getMyInfo(GetMyInfoRequest());
+  void _walletSmsSend(String phoneNumber) async {
+    _authenticateInitResponse = await _trinsicService.wallet().authenticateInit(
+        AuthenticateInitRequest(
+            provider: IdentityProvider.PHONE,
+            identity: phoneNumber,
+            ecosystemId: defaultEcosystemId));
+    setState(() {});
+  }
+
+  Future<void> getWalletInformation() async {
+    var walletInfo =
+        await _trinsicService.wallet().getMyInfo(GetMyInfoRequest());
     JsonEncoder encoder = const JsonEncoder.withIndent('  ');
     String prettyprint = encoder.convert(walletInfo.writeToJsonMap());
-    _authToken = newWallet.authToken;
+    _authToken = _trinsicService.serviceOptions.authToken;
     _accountInformationJson = prettyprint;
   }
 
-  void _incrementCounter() async {
-    await createWallet();
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-    });
+  void _walletSmsConfirm(String smsCode) async {
+    var confirmResponse = await _trinsicService.wallet().authenticateConfirm(
+        AuthenticateConfirmRequest(
+            challenge: _authenticateInitResponse.challenge, response: smsCode));
+    _trinsicService.serviceOptions.authToken = confirmResponse.authToken;
+    await getWalletInformation();
+    setState(() {});
   }
 
   @override
@@ -110,23 +118,54 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Phone Number:'),
+                Expanded(
+                  child: TextField(
+                    autofocus: true,
+                    keyboardType: TextInputType.phone,
+                    maxLines: 1,
+                    onSubmitted: _walletSmsSend,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('SMS Code:'),
+                Expanded(
+                  child: TextField(
+                    autofocus: true,
+                    keyboardType: TextInputType.phone,
+                    maxLines: 1,
+                    onSubmitted: _walletSmsConfirm,
+                  ),
+                ),
+              ],
+            ),
             const Text(
               'Auth Token:',
             ),
             Text(
-              '$_authToken',
+              _authToken,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const Text('Account Information',),
-            Text('$_accountInformationJson', style: Theme.of(context).textTheme.bodySmall)
+            const Text(
+              'Account Information',
+            ),
+            Text(_accountInformationJson,
+                style: Theme.of(context).textTheme.bodySmall)
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _addNewWallet,
+      //   tooltip: 'Add New Wallet',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

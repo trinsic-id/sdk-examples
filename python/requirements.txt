@@ -1,0 +1,2 @@
+trinsic-sdk==1.9.0
+deprecation

@@ -195,6 +195,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  mobile_number:
+    dependency: "direct main"
+    description:
+      name: mobile_number
+      sha256: "4c3ef292b198c8607385a75f6afae73b34026a9238931d116b42e2c7120c8eec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   path:
     dependency: transitive
     description:
@@ -276,10 +284,10 @@ packages:
     dependency: "direct main"
     description:
       name: trinsic_dart
-      sha256: "10788e4b1388408a69dae0ed72448bae534b6d929910528f9ce3ac1886e2f043"
+      sha256: eeaa1805e9107226ef882fe09829dde961a2d8e0479b9210476fa89f8f16dca1
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.0-rc4"
+    version: "1.11.0"
   typed_data:
     dependency: transitive
     description:
@@ -306,3 +314,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.6 <3.0.0"
+  flutter: ">=3.0.0"

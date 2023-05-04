@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  trinsic_dart: ^1.11.0-rc4
+  trinsic_dart: ^1.11.0
+  mobile_number: 2.1.1
 
 
   # The following adds the Cupertino Icons font to your application.

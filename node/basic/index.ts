@@ -3,18 +3,20 @@ import {IdentityProvider, TrinsicService} from "@trinsic/trinsic";
 import * as rlsync from "readline-sync";
 
 async function signedInSearch() {
-  let service = new TrinsicService();
-  let createWalletResponse = await service.wallet().createWallet({
+  let service = new TrinsicService({serverUseTls: false,
+  serverEndpoint:"localhost", serverPort: 5000});
+  // let createWalletResponse = await service.wallet().createWallet({
+  //   ecosystemId: "default"
+  // });
+  let addEmail = await service.wallet().authenticateInit({
+    identity: "polygonguru@gmail.com",
+    provider: IdentityProvider.EMAIL,
     ecosystemId: "default"
-  });
-  let addEmail = await service.wallet().addExternalIdentityInit({
-    identity: "scott.phillips@trinsic.id",
-    provider: IdentityProvider.EMAIL
   })
   let code =
     rlsync.question("Enter the security code sent to your email:") ?? "";
   let emailConfirmed = await service
-    .wallet().addExternalIdentityConfirm({
+    .wallet().authenticateConfirm({
         challenge: addEmail.challenge,
         response: code
       });
@@ -35,6 +37,6 @@ async function main() {
   console.log("Search complete");
 }
 
-main()
+signedInSearch()
   .then()
   .catch((reason) => console.error(reason));

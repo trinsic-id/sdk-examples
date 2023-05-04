@@ -139,3 +139,4 @@ android/app/build/
 trinsic-react-native/.yalc/
 go/.idea/workspace.xml
 ios/ExampleApp/.idea/workspace.xml
+android/verifier-sample/.gradle/

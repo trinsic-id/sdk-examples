@@ -1,0 +1,1 @@
+const String defaultEcosystemId = "test-for-josh";
