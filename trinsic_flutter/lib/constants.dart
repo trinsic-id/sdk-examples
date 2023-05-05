@@ -1,1 +1,1 @@
-const String defaultEcosystemId = "test-for-josh";
+const String defaultEcosystemId = "okeydoke";

@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         AuthenticateConfirmRequest(
             challenge: _authenticateInitResponse.challenge, response: smsCode));
     _trinsicService.serviceOptions.authToken = confirmResponse.authToken;
+    _trinsicService.wallet().serviceOptions.authToken = confirmResponse.authToken;
     await getWalletInformation();
     setState(() {});
   }
