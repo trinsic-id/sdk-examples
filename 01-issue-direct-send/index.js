@@ -36,12 +36,6 @@ const issueResponse = await trinsic.credential().issueFromTemplate({
     saveCopy: false,
 });
 
-console.dir(JSON.parse(issueResponse.documentJson), { depth: null, });
-
-const verifyResponse = await trinsic.credential().verifyProof({
-    proofDocumentJson: issueResponse.documentJson,
-});
-
 console.dir(verifyResponse, { depth: null });
 
 await trinsic.credential().send({
