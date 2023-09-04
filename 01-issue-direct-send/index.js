@@ -41,4 +41,5 @@ console.dir(verifyResponse, { depth: null });
 await trinsic.credential().send({
     documentJson: issueResponse.documentJson,
     email: "<EMAIL>",
+    sendNotification: true,
 });
