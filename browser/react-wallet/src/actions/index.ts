@@ -21,14 +21,14 @@ import { ActionState, EcosystemType } from "../types";
 const serviceOptions = ServiceOptions.fromPartial({
   serverEndpoint: "dev-internal.trinsic.cloud",
 });
-const service = new TrinsicService(serviceOptions);
+const trinsic = new TrinsicService(serviceOptions);
 
 export const ERROR = "ERROR";
 export const LOGIN = "LOGIN";
 
 function setAuthTokenFromState(getState: () => ActionState) {
   const auth = getState().authentication;
-  service.setAuthToken(auth.profile);
+  trinsic.setAuthToken(auth.profile);
 }
 
 export function login(
@@ -36,7 +36,7 @@ export function login(
   name: string
 ): ThunkAction<void, ActionState, undefined, any> {
   return async (dispatch: Dispatch<AuthenticationAction>) => {
-    const loginResponse: LoginResponse = await service.account().login(
+    const loginResponse: LoginResponse = await trinsic.account().login(
       LoginRequest.fromPartial({
         email,
         //Change this to your ecosystem id
@@ -63,10 +63,10 @@ export function verifyEmail(
     getState: () => ActionState
   ) => {
     const auth = getState().authentication;
-    const authToken = await service
+    const authToken = await trinsic
       .account()
       .loginConfirm(auth.challenge, securityCode);
-    service.setAuthToken(authToken);
+    trinsic.setAuthToken(authToken);
     dispatch({
       type: VERIFY_EMAIL,
       user: auth.user,
@@ -100,7 +100,7 @@ export function getCredentialTemplates(): ThunkAction<
     let request = SearchCredentialTemplatesRequest.fromPartial({
       query: "select * from c order by c.name",
     });
-    let response = await service.template().search(request);
+    let response = await trinsic.template().search(request);
     let items = JSON.parse(response.itemsJson!);
 
     dispatch({
@@ -126,7 +126,7 @@ export function createCredentialTemplate(
       fields: fields,
     });
 
-    let response = await service.template().create(request);
+    let response = await trinsic.template().create(request);
 
     dispatch({
       type: CREATE_CREDENTIAL_TEMPLATE,
@@ -148,7 +148,7 @@ export function getWalletItems(): ThunkAction<
     getState: () => ActionState
   ) => {
     setAuthTokenFromState(getState);
-    let response = await service.wallet().searchWallet();
+    let response = await trinsic.wallet().searchWallet();
     let items = response.items!.map((item) => JSON.parse(item));
 
     dispatch({
@@ -177,7 +177,7 @@ export function insertWalletItem(
       itemJson: JSON.stringify(item),
     });
 
-    let response = await service.wallet().insertItem(request);
+    let response = await trinsic.wallet().insertItem(request);
 
     dispatch({
       type: INSERTED_WALLET_ITEM,
@@ -201,7 +201,7 @@ export function sendCredential(
       documentJson: JSON.stringify(credential),
       email: email,
     });
-    let response = await service.credential().send(request);
+    let response = await trinsic.credential().send(request);
 
     dispatch({
       type: SEND_CREDENTIAL,
@@ -226,7 +226,7 @@ export function issueCredential(
       valuesJson: JSON.stringify(values),
     });
 
-    let response = await service.credential().issueFromTemplate(request);
+    let response = await trinsic.credential().issueFromTemplate(request);
 
     dispatch({
       type: ISSUE_CREDENTIAL,

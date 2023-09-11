@@ -10,7 +10,7 @@ import {
 const app = express()
 const port = process.env.PORT || 3000
 
-const trinsicService = new TrinsicService()
+const trinsic = new TrinsicService()
 
 let systemState = {
     loginResponse: LoginResponse.fromPartial({}),
@@ -20,8 +20,8 @@ let systemState = {
 }
 
 async function searchWallet() {
-    trinsicService.options.authToken = systemState.userAccountString
-    const searchResponse = await trinsicService.wallet().search({query: "SELECT * FROM _"})
+    trinsic.options.authToken = systemState.userAccountString
+    const searchResponse = await trinsic.wallet().search({ query: "SELECT * FROM _" })
     systemState.walletEntries = searchResponse.items!
     // TODO - Order by newest?
 }
@@ -37,7 +37,7 @@ async function start() {
 
     app.get('/', async (req, res) => {
         if (!systemState.userLoggedIn)
-            res.render('login',systemState)
+            res.render('login', systemState)
         else {
             await searchWallet();
             res.render('wallet', systemState)
@@ -45,30 +45,30 @@ async function start() {
         // aWVu86LK7UVI8XEs8Gyh5k3iI
     })
 
-    app.post('/login',async (req, res) => {
+    app.post('/login', async (req, res) => {
         systemState.userAccountString = req.body.emailAddress;
-        systemState.loginResponse = await trinsicService.account().login({email: req.body.emailAddress, ecosystemId: "default"});
+        systemState.loginResponse = await trinsic.account().login({ email: req.body.emailAddress, ecosystemId: "default" });
         res.render('login', systemState)
     })
 
-    app.post('/verify_email', async(req, res) => {
+    app.post('/verify_email', async (req, res) => {
         // for @trinsic/trinsic 1.4.0 - throws RST_STREAM_ERROR code 0
         // const profile = await accountService.unprotect(AccountProfile.deserializeBinary(toUint8Array(systemState.userAccountString)), req.body.unblindCode)
         // systemState.userAccountString = fromUint8Array(profile.serializeBinary(), true);
 
         // for @trinsic/trinsic 1.4.2 - does not throw!
-        systemState.userAccountString = await trinsicService.account().loginConfirm(systemState.loginResponse.challenge, req.body.unblindCode);
+        systemState.userAccountString = await trinsic.account().loginConfirm(systemState.loginResponse.challenge, req.body.unblindCode);
         systemState.userLoggedIn = true
 
         res.redirect('/');
     })
 
-    app.post('/refresh', async(req, res) => {
+    app.post('/refresh', async (req, res) => {
         await searchWallet();
         res.redirect('/');
     })
 
-    app.post('/issue_credential', async(req, res) => {
+    app.post('/issue_credential', async (req, res) => {
         console.log('TODO - Issue Credential')
         res.redirect('/');
     })

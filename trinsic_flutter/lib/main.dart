@@ -55,10 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _accountInformationJson = "";
 
   Future<void> createWallet() async {
-    var trinsicService = TrinsicService(null);
-    var newWallet = await trinsicService.wallet().createWallet(CreateWalletRequest(ecosystemId: "default"));
-    trinsicService.serviceOptions.authToken = newWallet.authToken;
-    var walletInfo = await trinsicService.wallet().getMyInfo(GetMyInfoRequest());
+    var trinsic = TrinsicService(null);
+    var newWallet = await trinsic.wallet().createWallet(CreateWalletRequest(ecosystemId: "default"));
+    trinsic.serviceOptions.authToken = newWallet.authToken;
+    var walletInfo = await trinsic.wallet().getMyInfo(GetMyInfoRequest());
     JsonEncoder encoder = const JsonEncoder.withIndent('  ');
     String prettyprint = encoder.convert(walletInfo.writeToJsonMap());
     _authToken = newWallet.authToken;
