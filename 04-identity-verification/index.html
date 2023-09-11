@@ -17,8 +17,8 @@
       </div>
     </div>
 
-    <script src="https://unpkg.com/@trinsic/trinsic@1.11.3-pre.7/dist/trinsic.min.js" defer></script>
-    <!-- <script src="./trinsic.js"></script> -->
+    <script src="https://unpkg.com/@trinsic/trinsic@1.11.3-pre.10/dist/trinsic.min.js" defer></script>
+
     <script>
       // initialize the credential handler polyfill when the page loads
 
@@ -27,16 +27,15 @@
         const client = new ConnectClient();
 
         // 1. Get a valid session from the backend
-        const session = await fetch({
-          url: "/api/create-session",
-          method: "POST",
-          body: "{}"
+        const sessionResponse = await fetch("/api/create-session", {
+          method: "POST"
         });
+        const session = await sessionResponse.json();
 
-        console.log(session.json());
+        console.log(session);
 
         // 2. Perform identity verification
-        const vp = await client.identityVerification({});
+        const vp = await client.identityVerification(session.clientToken);
 
         // 3. Check the verification status
         const response = await fetch({

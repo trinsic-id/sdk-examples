@@ -10,13 +10,13 @@ const trinsic = new TrinsicService({
 
 app.post('/api/create-session', async (req, res) => {
   const verifyResponse = await trinsic.connection().createSession({
-    requestedVerifications: [
+    verifications: [
       { type: VerificationType.GOVERNMENT_ID }
     ]
   });
 
   console.log(verifyResponse);
-  res.json(verifyResponse);
+  res.json(verifyResponse.session);
 });
 
 // Serve static files from the 'public' folder
